@@ -1,17 +1,34 @@
-﻿namespace Raunstrup.Core.Domain
+﻿using System;
+
+namespace Raunstrup.Core.Domain
 {
     public class Project
     {
-        private Draft _draft;
+        public readonly Draft Draft;
+        // TODO: Consider renaming this to something more related to "beginning a project".
+        public readonly DateTime OrderDate;
 
-        public Project(Draft draft)
+        private int _id;
+
+        public int Id
         {
-            _draft = draft;
+            get { return _id; }
+            set
+            {
+                if (_id != default(int))
+                {
+                    // TODO: Handle object apparently already being persisted.
+                }
+
+                _id = value;
+            }
         }
 
-        public Draft GetDraft()
+        public Project(Draft draft/*, DateTime orderDate*/)
         {
-            return _draft;
+            Draft = draft;
+            // TODO: Consider whether OrderDate is a dependency?
+            //OrderDate = orderDate;
         }
     }
 }

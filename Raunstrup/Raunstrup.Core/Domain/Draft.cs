@@ -1,73 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting;
 
 namespace Raunstrup.Core.Domain
 {
     public class Draft
     {
-        private int _id = -1;
-        private Customer _customer;
-        private Employee _responsiblEmployee;
-        private string _title;
-        private string _description;
-        private DateTime _createDate;
-        private DateTime _startDate;
-        private DateTime _endDate;
-        private List<OrderLine> _orderLines = new List<OrderLine>();
+        public readonly Customer Customer;
 
-        public Draft(Customer customer, string title, Employee responsibleEmployee)
-        {
-            _customer = customer;
-            _title = title;
-            _responsiblEmployee = responsibleEmployee;
-            _createDate = DateTime.Now;
-            _startDate = DateTime.Now;
-            _endDate = DateTime.Now.AddDays(7);
-        }
+        private int _id;
+        private readonly IList<OrderLine> _orderLines = new List<OrderLine>();
 
-        public void SetResponsibleEmployee(Employee responsibleEmployee)
+        public int Id
         {
-            _responsiblEmployee = responsibleEmployee;
-        }
-
-        public void ChangeTitle(string title)
-        {
-            _title = title;
-        }
-
-        public void ChangeDescription(string description)
-        {
-            _description = description;
-        }
-        public void SetId(int id)
-        {
-            if (_id == -1)
+            get { return _id; }
+            set
             {
-                _id = id;
-            }
-            else
-            {
-                throw new Exception("_id has already been set");
+                if (_id != default(int))
+                {
+                    // TODO: Handle object apparently already being persisted.
+                }
+
+                _id = value;
             }
         }
-        public List<OrderLine> GetOrderLines()
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public Employee ResponsiblEmployee { get; set; }
+
+        public Draft(Customer customer)
         {
-            return _orderLines;
+            Customer = customer;
+
+            CreationDate = DateTime.Now;
+            StartDate = DateTime.Now;
+            // TODO: Consider how long the "buffer period" should be.
+            EndDate = DateTime.Now.AddDays(7);
         }
 
-        public void SetStartDate(DateTime startDate)
-        {
-            _startDate = startDate;
-        }
-
-        public void SetEndDate(DateTime endDate)
-        {
-            _endDate = endDate;
-        }
         public void AddOrderLine(Product item, int quantity)
         {
             _orderLines.Add(new OrderLine(item,quantity));
+        }
+
+        public List<OrderLine> GetOrderLines()
+        {
+            throw new NotImplementedException();
         }
     }
 }

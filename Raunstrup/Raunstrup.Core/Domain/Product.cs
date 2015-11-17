@@ -2,21 +2,24 @@
 {
     public class Product
     {
-        protected string Name;
+        private int _id;
 
-        public Product(string name)
+        public int Id
         {
-            Name = name;
+            get { return _id; }
+            set
+            {
+                if (_id != default(int))
+                {
+                    // TODO: Handle object apparently already being persisted.
+                }
+
+                _id = value;
+            }
         }
 
-        protected Product()
-        {
-            //This needs to be here for the derived classes
-        }
+        public string Name { get; set; }
 
-        public string GetName()
-        {
-            return Name;
-        }
+        public decimal SalesPrice { get; set; }
     }
 }
