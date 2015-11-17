@@ -1,12 +1,14 @@
 ﻿using Raunstrup.Core.Domain;
+using Raunstrup.Core.Repositories;
 using Raunstrup.Core.statistics;
 
 namespace Raunstrup.Core.Controllers
 {
     public class ReportController
     {
-        ReportRepository _reportRepository;
-        public ReportController(ReportRepository reportRepository)
+        private readonly IReportRepository _reportRepository;
+
+        public ReportController(IReportRepository reportRepository)
         {
             _reportRepository = reportRepository;
         }
