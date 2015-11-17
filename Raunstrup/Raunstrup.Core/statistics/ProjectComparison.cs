@@ -20,7 +20,7 @@ namespace Raunstrup.Core.statistics
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
-            List<OrderLine> orderLines = _project.Draft.GetOrderLines();
+            IList<OrderLine> orderLines = _project.Draft.GetOrderLines();
             Dictionary<Product, int> amountsInOrderlines = new Dictionary<Product, int>();
             foreach (var line in orderLines)
             {
@@ -65,16 +65,6 @@ namespace Raunstrup.Core.statistics
 
         }
 
-        public void Print()
-        {
-            // Print Lines
-            foreach (var line in _comparisonLines)
-            {
-                line.PrintLine();
-            }
-            //Print total
-            Console.WriteLine(GetTotalPercent());
-        }
         public double GetTotalPercent()
         {
             int totalOrder = 0;
