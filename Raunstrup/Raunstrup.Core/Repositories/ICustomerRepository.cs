@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    public interface IDraftRepository : IRepository<Draft>
+    public interface ICustomerRepository : IRepository<Customer>
     {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Raunstrup.Core.Domain;
 
 namespace Raunstrup.Core.Repositories
@@ -16,6 +17,11 @@ namespace Raunstrup.Core.Repositories
         }
 
         public void Delete(Report entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Report> FindByProject(Project project)
         {
             throw new NotImplementedException();
         }

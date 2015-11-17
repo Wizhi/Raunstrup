@@ -1,22 +1,32 @@
-﻿using Raunstrup.Core.Domain;
+﻿using System.Collections.Generic;
+using Raunstrup.Core.Domain;
 
 namespace Raunstrup.Core.Repositories
 {
     class ProductRepository : IProductRepository
     {
+        private readonly IDictionary<int, Product> _storage = new Dictionary<int, Product>(); 
+
         public Product Get(int id)
         {
-            throw new System.NotImplementedException();
+            Product product;
+
+            if (_storage.TryGetValue(id, out product))
+            {
+                return product;
+            }
+
+            throw new KeyNotFoundException();
         }
 
         public void Save(Product entity)
         {
-            throw new System.NotImplementedException();
+            _storage[entity.Id] = entity;
         }
 
         public void Delete(Product entity)
         {
-            throw new System.NotImplementedException();
+            _storage.Remove(entity.Id);
         }
     }
 }
