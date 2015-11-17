@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
-using System.Xml.Schema;
 using Raunstrup.Core.Domain;
 using Raunstrup.Core.Repos;
 
@@ -8,16 +8,18 @@ namespace Raunstrup.Core.Xml
 {
     public class XmlReportParser
     {
-        private ProductRepository productRepository;
-        private EmployeeRepository employeeRepository;
+        private readonly ProjectRepository _projectRepository;
+        private readonly EmployeeRepository _employeeRepository;
+        private readonly ProductRepository _productRepository;
 
-        public XmlReportParser(ProductRepository productRepository, EmployeeRepository employeeRepository)
+        public XmlReportParser(ProjectRepository projectRepository, EmployeeRepository employeeRepository, ProductRepository productRepository)
         {
-            this.productRepository = productRepository;
-            this.employeeRepository = employeeRepository;
+            _projectRepository = projectRepository;
+            _employeeRepository = employeeRepository;
+            _productRepository = productRepository;
         }
 
-        public XmlDocument Parse(string xml)
+        public Report Parse(string xml)
         {
             var settings = new XmlReaderSettings();
 
@@ -26,17 +28,25 @@ namespace Raunstrup.Core.Xml
 
             var reader = XmlReader.Create(new StringReader(xml), settings);
             var document = new XmlDocument();
-
+            
             document.Load(reader);
-            document.Validate(ValidationHandler);
 
+            var rootNode = document["report"];
+            var report = new Report(
+                _employeeRepository.Get(Convert.ToInt32(rootNode.Attributes["employeeId"].Value)), 
+                _projectRepository.Get(Convert.ToInt32(rootNode.Attributes["projectId"].Value))
+            );
 
-            return document;
-        }
+            foreach (XmlNode node in document.SelectNodes(@"\report\materials"))
+            {
+                // TODO: Find a better way to do this, wtf.
+                report.AddReportLine(
+                    _productRepository.Get(Convert.ToInt32(node.Value)),
+                    Convert.ToInt32(node.Attributes["quantity"])
+                );
+            }
 
-        private void ValidationHandler(object sender, ValidationEventArgs validationEventArgs)
-        {
-            // TODO: Handle validation errors.
+            return report;
         }
     }
 }

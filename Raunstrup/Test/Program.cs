@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Raunstrup.Core;
-using Raunstrup.Core.Domain;
 using Raunstrup.Core.Repos;
-using Raunstrup.Core.statistics;
+using Raunstrup.Core.Xml;
 
 namespace Test
 {
@@ -14,15 +8,23 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            TestProjectComparison();
+            TestParser();
             Console.ReadKey();
+        }
+
+        static void TestParser()
+        {
+            var parser = new XmlReportParser(new ProjectRepository(), new EmployeeRepository(), new ProductRepository());
+
+            var report = parser.Parse(@"Xml/report.xml");
         }
 
         private static void TestProjectComparison()
         {
-            LineItem glas = new Material("glas");
-            LineItem tree = new Material("træ");
-            LineItem croc = new Material("krokodille");
+            /*
+            Product glas = new Material("glas");
+            Product tree = new Material("træ");
+            Product croc = new Material("krokodille");
             Project proc1 = new Project(new Draft());
             proc1.GetDraft().AddOrderLine(glas, 3);
             proc1.GetDraft().AddOrderLine(tree, 27);
@@ -39,6 +41,7 @@ namespace Test
             reports.Add(report2);
             ProjectComparison comparison = new ProjectComparison(proc1, new ReportRepo());
             comparison.Print();
+             * */
         }
     }
 }
