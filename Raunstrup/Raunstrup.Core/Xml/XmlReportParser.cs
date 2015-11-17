@@ -8,11 +8,11 @@ namespace Raunstrup.Core.Xml
 {
     public class XmlReportParser
     {
-        private readonly ProjectRepository _projectRepository;
-        private readonly EmployeeRepository _employeeRepository;
-        private readonly ProductRepository _productRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IProductRepository _productRepository;
 
-        public XmlReportParser(ProjectRepository projectRepository, EmployeeRepository employeeRepository, ProductRepository productRepository)
+        public XmlReportParser(IProjectRepository projectRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository)
         {
             _projectRepository = projectRepository;
             _employeeRepository = employeeRepository;
