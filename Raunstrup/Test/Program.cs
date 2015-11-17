@@ -35,9 +35,9 @@ namespace Test
         {
             var products = new[]
             {
-                new Product { Id = 1, Name = "Foo", SalesPrice = 123.4M }, 
-                new Product { Id = 2, Name = "Bar", SalesPrice = 200M }, 
-                new Product { Id = 3, Name = "Baz", SalesPrice = 321.2M }, 
+                new Product { Name = "Foo", SalesPrice = 123.4M }, 
+                new Product { Name = "Bar", SalesPrice = 200M }, 
+                new Product { Name = "Baz", SalesPrice = 321.2M }, 
             };
 
             foreach (var product in products)
@@ -50,8 +50,8 @@ namespace Test
         {
             var customers = new[]
             {
-                new Customer { Id = 1, Name = "Kunde #1" },
-                new Customer { Id = 2, Name = "Kunde #2" },
+                new Customer { Name = "Kunde #1" },
+                new Customer { Name = "Kunde #2" },
             };
 
             foreach (var customer in customers)
@@ -64,9 +64,9 @@ namespace Test
         {
             var employees = new[]
             {
-                new Employee { Id = 1, Name = "Emil" },
-                new Employee { Id = 2, Name = "Tobias" },
-                new Employee { Id = 3, Name = "Simon" },
+                new Employee { Name = "Emil" },
+                new Employee { Name = "Tobias" },
+                new Employee { Name = "Simon" },
             };
 
             foreach (var employee in employees)
@@ -81,25 +81,21 @@ namespace Test
             {
                 new Draft(_company.CustomerRepository.Get(1))
                 {
-                    Id = 1,
                     Title = "Draft #1", 
                     ResponsiblEmployee = _company.EmployeeRepository.Get(1)
                 },
                 new Draft(_company.CustomerRepository.Get(1))
                 {
-                    Id = 2,
                     Title = "Draft #2", 
                     ResponsiblEmployee = _company.EmployeeRepository.Get(2)
                 },
                 new Draft(_company.CustomerRepository.Get(2))
                 {
-                    Id = 3,
                     Title = "Draft #3", 
                     ResponsiblEmployee = _company.EmployeeRepository.Get(3)
                 },
                 new Draft(_company.CustomerRepository.Get(2))
                 {
-                    Id = 4,
                     Title = "Draft #4", 
                     ResponsiblEmployee = _company.EmployeeRepository.Get(1)
                 },
@@ -128,9 +124,9 @@ namespace Test
         {
             var projects = new[]
             {
-                new Project(_company.DraftRepository.Get(1)) { Id = 1 }, 
-                new Project(_company.DraftRepository.Get(2)) { Id = 2 }, 
-                new Project(_company.DraftRepository.Get(3)) { Id = 3 }, 
+                new Project(_company.DraftRepository.Get(1)), 
+                new Project(_company.DraftRepository.Get(2)), 
+                new Project(_company.DraftRepository.Get(3)), 
             };
 
             foreach (var project in projects)
@@ -196,7 +192,7 @@ namespace Test
 
         private static void TestProjectComparison()
         {
-            var comparison = new ProjectComparison(_company.ProjectRepository.Get(2), _company.ReportRepository);
+            var comparison = new ProjectComparison(_company.ProjectRepository.Get(1), _company.ReportRepository);
 
             // Print Lines
             foreach (var line in comparison.GetComparisonLines())
