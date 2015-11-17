@@ -2,16 +2,16 @@
 {
     public class OrderLine
     {
-        private LineItem _item;
+        private Product _item;
         private int _quantity;
         private double _unitPrice;
 
-        public OrderLine(LineItem item, int quantity)
+        public OrderLine(Product item, int quantity)
         {
             _item = item;
             _quantity = quantity;
         }
-        public LineItem GetLineItem()
+        public Product GetLineItem()
         {
             return _item;
         }

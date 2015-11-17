@@ -24,24 +24,24 @@ namespace Raunstrup.Core.Domain
             _createDate = DateTime.Now;
             _startDate = DateTime.Now;
             _endDate = DateTime.Now;
-            _endDate.AddDays(7);
+            _endDate = _endDate.AddDays(7);
         }
 
-        public void setResponsibleEmployee(Employee responsibleEmployee)
+        public void SetResponsibleEmployee(Employee responsibleEmployee)
         {
             _responsiblEmployee = responsibleEmployee;
         }
 
-        public void changeTitle(string title)
+        public void ChangeTitle(string title)
         {
             _title = title;
         }
 
-        public void changeDescription(string description)
+        public void ChangeDescription(string description)
         {
             _description = description;
         }
-        public void setID(int id)
+        public void SetId(int id)
         {
             if (_id == -1)
             {
@@ -57,16 +57,16 @@ namespace Raunstrup.Core.Domain
             return _orderLines;
         }
 
-        public void setStartDate(DateTime startDate)
+        public void SetStartDate(DateTime startDate)
         {
             _startDate = startDate;
         }
 
-        public void setEndDate(DateTime endDate)
+        public void SetEndDate(DateTime endDate)
         {
             _endDate = endDate;
         }
-        public void AddOrderLine(LineItem item, int quantity)
+        public void AddOrderLine(Product item, int quantity)
         {
             _orderLines.Add(new OrderLine(item,quantity));
         }
