@@ -8,7 +8,22 @@ namespace Raunstrup.Core.Domain
         public readonly Employee Employee;
         public readonly Project Project;
 
+        private int _id;
         private readonly IList<ReportLine> _lines = new List<ReportLine>();
+
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id == default(int))
+                {
+                    // TODO: Handle object apparently already being persisted.
+                }
+
+                _id = value;
+            }
+        }
 
         public DateTime Date { get; set; }
 

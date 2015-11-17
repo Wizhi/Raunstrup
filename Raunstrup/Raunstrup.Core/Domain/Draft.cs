@@ -51,9 +51,9 @@ namespace Raunstrup.Core.Domain
             _orderLines.Add(new OrderLine(item,quantity));
         }
 
-        public List<OrderLine> GetOrderLines()
+        public IList<OrderLine> GetOrderLines()
         {
-            throw new NotImplementedException();
+            return _orderLines;
         }
     }
 }
