@@ -20,7 +20,7 @@ namespace Raunstrup.Core.Repositories
 
         public void Save(TValue entity)
         {
-            Storage.Add(GetKey(entity), entity);
+            Storage[GetKey(entity)] = entity;
         }
 
         public void Delete(TValue entity)
