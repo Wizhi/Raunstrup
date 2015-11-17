@@ -49,6 +49,8 @@
     <Compile Include="Domain\Material.cs" />
     <Compile Include="Domain\OrderLine.cs" />
     <Compile Include="Domain\ProjectComparison.cs" />
+    <Compile Include="Domain\ReportController.cs" />
+    <Compile Include="Domain\ReportRepo.cs" />
     <Compile Include="Domain\WorkHour.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

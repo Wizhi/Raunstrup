@@ -10,8 +10,9 @@ namespace Raunstrup.Domain
     {
         private Project project;
         private List<ProjectComparisonLine> comparisonLines = new List<ProjectComparisonLine>(); 
-        public ProjectComparison(Project project, List<Report> reports)
+        public ProjectComparison(Project project, ReportRepo repo)
         {
+            List<Report> reports = repo.getByProject(project);
             this.project = project;
             CompareProject(reports);
         }
@@ -73,6 +74,10 @@ namespace Raunstrup.Domain
                 line.printLine();
             }
             //Print total
+            Console.WriteLine(getTotalPercent());
+        }
+        public double getTotalPercent()
+        {
             int totalOrder = 0;
             int totalUsed = 0;
             foreach (var line in comparisonLines)
@@ -80,7 +85,11 @@ namespace Raunstrup.Domain
                 totalOrder += line.getOrdered();
                 totalUsed += line.getUsed();
             }
-            Console.WriteLine("Total " + " : " + totalOrder + " : " + totalUsed + " : " + ((Convert.ToDouble(totalUsed) / Convert.ToDouble(totalOrder)) * 100) + "%");
+            return ((Convert.ToDouble(totalUsed) / Convert.ToDouble(totalOrder)) * 100);
+        }
+        public List<ProjectComparisonLine> getComparisonLines()
+        {
+            return comparisonLines;
         }
     }
 
