@@ -21,20 +21,20 @@ namespace Raunstrup.Core.statistics
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
             List<OrderLine> orderLines = _project.GetDraft().GetOrderLines();
-            Dictionary<LineItem,int> amountsInOrderlines = new Dictionary<LineItem, int>();
+            Dictionary<Product, int> amountsInOrderlines = new Dictionary<Product, int>();
             foreach (var line in orderLines)
             {
-                if (amountsInOrderlines.ContainsKey(line.GetLineItem()))
+                if (amountsInOrderlines.ContainsKey(line.GetProduct()))
                 {
-                    amountsInOrderlines[line.GetLineItem()] += line.GetQuantity();
+                    amountsInOrderlines[line.GetProduct()] += line.GetQuantity();
                 }
                 else
                 {
-                    amountsInOrderlines.Add(line.GetLineItem(), line.GetQuantity()); 
+                    amountsInOrderlines.Add(line.GetProduct(), line.GetQuantity()); 
                 }
             }
             //Do the same for the report lines
-            Dictionary<LineItem,int> amountsInReportLines = new Dictionary<LineItem, int>();
+            Dictionary<Product, int> amountsInReportLines = new Dictionary<Product, int>();
             foreach (var report in reports)
             {
                 foreach (var line in report.GetLines())
@@ -94,11 +94,11 @@ namespace Raunstrup.Core.statistics
 
     public class ProjectComparisonLine
     {
-        private LineItem _item;
+        private Product _item;
         private int _amountOrdered;
         private int _amountUsed;
 
-        public ProjectComparisonLine(LineItem item, int amountOrdered, int amountUsed)
+        public ProjectComparisonLine(Product item, int amountOrdered, int amountUsed)
         {
             _item = item;
             _amountOrdered = amountOrdered;

@@ -15,7 +15,7 @@ namespace Raunstrup.Core.Domain
             return _lines;
         }
 
-        public void AddReportLine(LineItem item, int quantity)
+        public void AddReportLine(Product item, int quantity)
         {
             _lines.Add(new ReportLine(item,quantity));
         }

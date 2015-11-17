@@ -66,7 +66,7 @@ namespace Raunstrup.Core.Domain
         {
             _endDate = endDate;
         }
-        public void AddOrderLine(LineItem item, int quantity)
+        public void AddOrderLine(Product item, int quantity)
         {
             _orderLines.Add(new OrderLine(item,quantity));
         }
