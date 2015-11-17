@@ -37,7 +37,7 @@ namespace Test
             List<Report> reports = new List<Report>();
             reports.Add(report1);
             reports.Add(report2);
-            ProjectComparison comparison = new ProjectComparison(proc1, new ReportRepo());
+            ProjectComparison comparison = new ProjectComparison(proc1, new ReportRepository());
             comparison.Print();
         }
     }

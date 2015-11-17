@@ -3,7 +3,7 @@ using Raunstrup.Core.Domain;
 
 namespace Raunstrup.Core.Repos
 {
-    public class ReportRepo
+    public class ReportRepository
     {
         public List<Report> GetByProject(Project project)
         {

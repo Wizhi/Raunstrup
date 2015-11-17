@@ -56,7 +56,7 @@
     <Compile Include="Repos\EmployeeRepository.cs" />
     <Compile Include="Repos\IRepository.cs" />
     <Compile Include="Repos\ProductRepository.cs" />
-    <Compile Include="Repos\ReportRepo.cs" />
+    <Compile Include="Repos\ReportRepository.cs" />
     <Compile Include="statistics\ProjectComparison.cs" />
   </ItemGroup>
   <ItemGroup>

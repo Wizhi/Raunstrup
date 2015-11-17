@@ -9,9 +9,9 @@ namespace Raunstrup.Core.statistics
     {
         private Project _project;
         private List<ProjectComparisonLine> _comparisonLines = new List<ProjectComparisonLine>(); 
-        public ProjectComparison(Project project, ReportRepo repo)
+        public ProjectComparison(Project project, ReportRepository repository)
         {
-            List<Report> reports = repo.GetByProject(project);
+            List<Report> reports = repository.GetByProject(project);
             _project = project;
             CompareProject(reports);
         }
