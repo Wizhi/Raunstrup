@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Raunstrup.Core.Domain;
+using Raunstrup.Core.Repositories;
 
 namespace Raunstrup.Core.statistics
 {
@@ -8,14 +9,14 @@ namespace Raunstrup.Core.statistics
     {
         private Project _project;
         private List<ProjectComparisonLine> _comparisonLines = new List<ProjectComparisonLine>(); 
-        public ProjectComparison(Project project, ReportRepository repository)
+        public ProjectComparison(Project project, IReportRepository repository)
         {
-            List<Report> reports = repository.GetByProject(project);
+            IList<Report> reports = repository.FindByProject(project);
             _project = project;
             CompareProject(reports);
         }
 
-        private void CompareProject(List<Report> reports)
+        private void CompareProject(IList<Report> reports)
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
