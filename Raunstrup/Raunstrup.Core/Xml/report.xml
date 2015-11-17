@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<report 
+  xmlns="http://raunstrup.com/EAL"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://raunstrup.com/EAL report.xsd"
+  projectId="12"
+  employeeId="23"
+>
+  <date>2015-11-17</date>
+  <hours type="1">123</hours>
+  <transport>123</transport>
+  <materials>
+    <material quantity="234">1</material>
+    <material quantity="234">3</material>
+    <material quantity="234">2</material>
+    <material quantity="234">5</material>
+    <material quantity="234">7</material>
+  </materials>
+</report>

@@ -2,15 +2,15 @@
 {
     public class ReportLine
     {
-        private LineItem item;
+        private Product item;
         private int quantity;
 
-        public ReportLine(LineItem item, int quantity)
+        public ReportLine(Product item, int quantity)
         {
             this.item = item;
             this.quantity = quantity;
         }
-        public LineItem getLineItem()
+        public Product getLineItem()
         {
             return item;
         }

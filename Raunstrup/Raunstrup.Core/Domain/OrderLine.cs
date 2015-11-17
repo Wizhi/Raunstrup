@@ -2,16 +2,16 @@
 {
     public class OrderLine
     {
-        private LineItem item;
+        private Product item;
         private int quantity;
         private double unitPrice;
 
-        public OrderLine(LineItem item, int quantity)
+        public OrderLine(Product item, int quantity)
         {
             this.item = item;
             this.quantity = quantity;
         }
-        public LineItem getLineItem()
+        public Product getLineItem()
         {
             return item;
         }

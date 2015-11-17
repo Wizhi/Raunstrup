@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Core.Domain
 {
-    public class Material : LineItem
+    public class Material : Product
     {
         public Material(string name)
         {

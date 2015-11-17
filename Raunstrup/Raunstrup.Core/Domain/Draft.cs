@@ -11,7 +11,7 @@ namespace Raunstrup.Core.Domain
             return OrderLines;
         }
 
-        public void addOrderLine(LineItem item, int quantity)
+        public void addOrderLine(Product item, int quantity)
         {
             OrderLines.Add(new OrderLine(item,quantity));
         }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Raunstrup.Core.Domain;
+using Raunstrup.Core.Repos;
 using Raunstrup.Core.statistics;
+using Raunstrup.Core.Xml;
 
 namespace Test
 {
@@ -12,9 +15,29 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            LineItem glas = new Material("glas");
-            LineItem tree = new Material("træ");
-            LineItem croc = new Material("krokodille");
+            TestParser();
+            Console.ReadKey();
+        }
+
+        static void TestParser()
+        {
+
+
+            var parser = new XmlReportParser(new ProductRepository(), new EmployeeRepository());
+
+            var t = parser.Parse(File.ReadAllText("Xml/report.xml"));
+
+            Console.WriteLine(t.SelectSingleNode(@"report\transport").Value);
+
+
+
+        }
+
+        static void TestComparison()
+        {/*
+            Product glas = new Material("glas");
+            Product tree = new Material("træ");
+            Product croc = new Material("krokodille");
             Project proc1 = new Project(new Draft());
             proc1.GetDraft().addOrderLine(glas, 3);
             proc1.GetDraft().addOrderLine(tree, 27);
@@ -31,7 +54,7 @@ namespace Test
             reports.Add(report2);
             ProjectComparison comparison = new ProjectComparison(proc1, reports);
             comparison.print();
-            Console.ReadKey();
+          * */
         }
     }
 }

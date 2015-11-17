@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Core.Domain
 {
-    class WorkHour : LineItem
+    class WorkHour : Product
     {
     }
 }

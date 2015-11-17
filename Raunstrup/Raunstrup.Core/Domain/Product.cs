@@ -1,15 +1,15 @@
 ﻿namespace Raunstrup.Core.Domain
 {
-    public class LineItem
+    public class Product
     {
         protected string name;
 
-        public LineItem(string name)
+        public Product(string name)
         {
             this.name = name;
         }
 
-        protected LineItem()
+        protected Product()
         {
             //This needs to be here for the derived classes
         }
