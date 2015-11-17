@@ -2,9 +2,14 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    internal class ProductRepository : GenericInMemoryStorage<int, Product>, IProductRepository
+    internal class ProductRepository : GenericInMemoryStorage<Product>, IProductRepository
     {
-        protected override int GetKey(Product entity)
+        protected override void SetId(Product entity, int id)
+        {
+            entity.Id = id;
+        }
+
+        protected override int GetId(Product entity)
         {
             return entity.Id;
         }

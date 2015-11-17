@@ -2,9 +2,14 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    class DraftRepository : GenericInMemoryStorage<int, Draft>, IDraftRepository
+    class DraftRepository : GenericInMemoryStorage<Draft>, IDraftRepository
     {
-        protected override int GetKey(Draft entity)
+        protected override void SetId(Draft entity, int id)
+        {
+            entity.Id = id;
+        }
+
+        protected override int GetId(Draft entity)
         {
             return entity.Id;
         }

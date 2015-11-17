@@ -2,9 +2,14 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    class ProjectRepository : GenericInMemoryStorage<int, Project>, IProjectRepository
+    class ProjectRepository : GenericInMemoryStorage<Project>, IProjectRepository
     {
-        protected override int GetKey(Project entity)
+        protected override void SetId(Project entity, int id)
+        {
+            entity.Id = id;
+        }
+
+        protected override int GetId(Project entity)
         {
             return entity.Id;
         }

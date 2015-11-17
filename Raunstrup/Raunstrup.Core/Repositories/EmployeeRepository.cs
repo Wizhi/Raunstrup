@@ -2,9 +2,14 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    class EmployeeRepository : GenericInMemoryStorage<int, Employee>, IEmployeeRepository
+    class EmployeeRepository : GenericInMemoryStorage<Employee>, IEmployeeRepository
     {
-        protected override int GetKey(Employee entity)
+        protected override void SetId(Employee entity, int id)
+        {
+            entity.Id = id;
+        }
+
+        protected override int GetId(Employee entity)
         {
             return entity.Id;
         }

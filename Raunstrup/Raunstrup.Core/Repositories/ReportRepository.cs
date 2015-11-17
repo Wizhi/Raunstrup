@@ -4,14 +4,19 @@ using Raunstrup.Core.Domain;
 
 namespace Raunstrup.Core.Repositories
 {
-    class ReportRepository : GenericInMemoryStorage<int, Report>, IReportRepository
+    class ReportRepository : GenericInMemoryStorage<Report>, IReportRepository
     {
         public IList<Report> FindByProject(Project project)
         {
             return Storage.Values.Where(x => x.Project == project).ToList();
         }
 
-        protected override int GetKey(Report entity)
+        protected override void SetId(Report entity, int id)
+        {
+            entity.Id = id;
+        }
+
+        protected override int GetId(Report entity)
         {
             return entity.Id;
         }
