@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    public class EmployeeRepository : IRepository<Employee>
+    class EmployeeRepository : IEmployeeRepository
     {
         public Employee Get(int id)
         {

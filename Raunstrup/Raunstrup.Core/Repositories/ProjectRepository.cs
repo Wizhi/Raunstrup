@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    public class ProjectRepository : IRepository<Project>
+    class ProjectRepository : IProjectRepository
     {
         public Project Get(int id)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Core.Repositories
 {
-    interface IRepository<TEntity>
+    public interface IRepository<TEntity>
     {
         TEntity Get(int id);
         void Save(TEntity entity);

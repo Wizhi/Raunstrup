@@ -1,13 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Raunstrup.Core.Domain;
 
-namespace Raunstrup.Core.Repos
+namespace Raunstrup.Core.Repositories
 {
-    public class ReportRepository
+    class ReportRepository : IReportRepository
     {
-        public List<Report> GetByProject(Project project)
+        public Report Get(int id)
         {
-            return null;
+            throw new NotImplementedException();
+        }
+
+        public void Save(Report entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Report entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
