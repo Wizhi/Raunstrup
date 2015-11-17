@@ -6,14 +6,14 @@ namespace Raunstrup.Core.Controllers
 {
     public class ReportController
     {
-        ReportRepo _reportRepo;
-        public ReportController(ReportRepo reportRepo)
+        ReportRepository _reportRepository;
+        public ReportController(ReportRepository reportRepository)
         {
-            _reportRepo = reportRepo;
+            _reportRepository = reportRepository;
         }
         public ProjectComparison GetProjectComparison(Project project)
         {
-            return new ProjectComparison(project, _reportRepo);
+            return new ProjectComparison(project, _reportRepository);
         }
     }
 }
