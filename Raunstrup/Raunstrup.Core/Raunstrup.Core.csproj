@@ -53,6 +53,7 @@
     <Compile Include="Domain\WorkHour.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\DraftRepository.cs" />
+    <Compile Include="Repositories\GenericInMemoryStorage.cs" />
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IDraftRepository.cs" />
     <Compile Include="Repositories\IEmployeeRepository.cs" />

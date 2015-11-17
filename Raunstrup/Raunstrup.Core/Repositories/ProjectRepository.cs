@@ -1,33 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Raunstrup.Core.Domain;
+﻿using Raunstrup.Core.Domain;
 
 namespace Raunstrup.Core.Repositories
 {
-    class ProjectRepository : IProjectRepository
+    class ProjectRepository : GenericInMemoryStorage<int, Project>, IProjectRepository
     {
-        private readonly IDictionary<int, Project> _storage = new Dictionary<int, Project>();
-
-        public Project Get(int id)
+        protected override int GetKey(Project entity)
         {
-            Project project;
-
-            if (_storage.TryGetValue(id, out project))
-            {
-                return project;
-            }
-
-            throw new KeyNotFoundException();
-        }
-
-        public void Save(Project entity)
-        {
-            _storage[entity.Id] = entity;
-        }
-
-        public void Delete(Project entity)
-        {
-            _storage.Remove(entity.Id);
+            return entity.Id;
         }
     }
 }

@@ -1,29 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Raunstrup.Core.Domain;
 
 namespace Raunstrup.Core.Repositories
 {
-    class ReportRepository : IReportRepository
+    class ReportRepository : GenericInMemoryStorage<int, Report>, IReportRepository
     {
-        public Report Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(Report entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Report entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<Report> FindByProject(Project project)
         {
-            throw new NotImplementedException();
+            return Storage.Values.Where(x => x.Project == project).ToList();
+        }
+
+        protected override int GetKey(Report entity)
+        {
+            return entity.Id;
         }
     }
 }
