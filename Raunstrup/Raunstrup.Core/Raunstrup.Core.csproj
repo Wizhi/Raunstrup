@@ -50,13 +50,17 @@
     <Compile Include="Domain\Report.cs" />
     <Compile Include="Domain\ReportLine.cs" />
     <Compile Include="Domain\WorkHour.cs" />
+    <Compile Include="Repositories\IEmployeeRepository.cs" />
+    <Compile Include="Repositories\IProductRepository.cs" />
+    <Compile Include="Repositories\IProjectRepository.cs" />
+    <Compile Include="Repositories\IReportRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
+    <Compile Include="Repositories\ReportRepository.cs" />
     <Compile Include="Xml\XmlReportParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
-    <Compile Include="Repositories\ReportRepo.cs" />
     <Compile Include="statistics\ProjectComparison.cs" />
   </ItemGroup>
   <ItemGroup>
