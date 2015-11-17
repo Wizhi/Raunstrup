@@ -10,6 +10,12 @@ namespace Raunstrup.Core.Domain
         private Project _project;
         private List<ReportLine> _lines = new List<ReportLine>();
 
+        public Report(Employee employee, Project project)
+        {
+            _employee = employee;
+            _project = project;
+        }
+
         public List<ReportLine> GetLines()
         {
             return _lines;
