@@ -1,8 +1,8 @@
 ﻿namespace Raunstrup.Core.Repos
 {
-    interface IRepository<in TIdentifier, TEntity>
+    interface IRepository<TEntity>
     {
-        TEntity Get(TIdentifier id);
+        TEntity Get(int id);
         void Save(TEntity entity);
         void Delete(TEntity entity);
     }
