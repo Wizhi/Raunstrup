@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Raunstrup.Core;
 using Raunstrup.Core.Domain;
+using Raunstrup.Core.statistics;
 using Raunstrup.Core.Xml;
 
 namespace Test
@@ -15,7 +17,7 @@ namespace Test
             _company = new Company();
 
             SetupTestData();
-            TestParser();
+            TestProjectComparison();
             Console.ReadKey();
         }
 
@@ -26,6 +28,7 @@ namespace Test
             SetupEmployees();
             SetupDrafts();
             SetupProjects();
+            SetupReports();
         }
 
         static void SetupProducts()
@@ -136,6 +139,47 @@ namespace Test
             }
         }
 
+        static void SetupReports()
+        {
+            var reports = new[]
+            {
+                new Report(_company.EmployeeRepository.Get(1), _company.ProjectRepository.Get(1))
+                {
+                    Date = _company.ProjectRepository.Get(1).OrderDate.AddDays(1)
+                },
+                new Report(_company.EmployeeRepository.Get(2), _company.ProjectRepository.Get(1))
+                {
+                    Date = _company.ProjectRepository.Get(1).OrderDate.AddDays(2)
+                },
+                new Report(_company.EmployeeRepository.Get(2), _company.ProjectRepository.Get(2))
+                {
+                    Date = _company.ProjectRepository.Get(2).OrderDate.AddDays(2)
+                },
+                new Report(_company.EmployeeRepository.Get(3), _company.ProjectRepository.Get(2))
+                {
+                    Date = _company.ProjectRepository.Get(2).OrderDate.AddDays(4)
+                },
+            };
+
+            reports[0].AddReportLine(_company.ProductRepository.Get(1), 4);
+            reports[0].AddReportLine(_company.ProductRepository.Get(3), 2);
+            reports[0].AddReportLine(_company.ProductRepository.Get(2), 1);
+
+            reports[1].AddReportLine(_company.ProductRepository.Get(3), 4);
+            reports[1].AddReportLine(_company.ProductRepository.Get(2), 6);
+
+            reports[2].AddReportLine(_company.ProductRepository.Get(3), 7);
+
+            reports[3].AddReportLine(_company.ProductRepository.Get(2), 2);
+            reports[3].AddReportLine(_company.ProductRepository.Get(3), 4);
+            reports[3].AddReportLine(_company.ProductRepository.Get(1), 7);
+
+            foreach (var report in reports)
+            {
+                _company.ReportRepository.Save(report);
+            }
+        }
+
         static void TestParser()
         {
             var parser = new XmlReportParser(_company.ProjectRepository, _company.EmployeeRepository, _company.ProductRepository);
@@ -152,27 +196,15 @@ namespace Test
 
         private static void TestProjectComparison()
         {
-            /*
-            Product glas = new Material("glas");
-            Product tree = new Material("træ");
-            Product croc = new Material("krokodille");
-            Project proc1 = new Project(new Draft());
-            proc1.GetDraft().AddOrderLine(glas, 3);
-            proc1.GetDraft().AddOrderLine(tree, 27);
-            proc1.GetDraft().AddOrderLine(croc, 3);
-            proc1.GetDraft().AddOrderLine(glas, 6);
-            Report report1 = new Report();
-            report1.AddReportLine(glas, 3);
-            report1.AddReportLine(glas, 1);
-            report1.AddReportLine(tree, 20);
-            Report report2 = new Report();
-            report2.AddReportLine(tree, 7);
-            List<Report> reports = new List<Report>();
-            reports.Add(report1);
-            reports.Add(report2);
-            ProjectComparison comparison = new ProjectComparison(proc1, new ReportRepository());
-            comparison.Print();
-             * */
+            var comparison = new ProjectComparison(_company.ProjectRepository.Get(2), _company.ReportRepository);
+
+            // Print Lines
+            foreach (var line in comparison.GetComparisonLines())
+            {
+                line.PrintLine();
+            }
+            //Print total
+            Console.WriteLine(comparison.GetTotalPercent());
         }
     }
 }
