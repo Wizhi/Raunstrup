@@ -44,26 +44,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Draft.cs" />
-    <Compile Include="Domain\Employee.cs" />
-    <Compile Include="Domain\Material.cs" />
-    <Compile Include="Domain\OrderLine.cs" />
-    <Compile Include="Domain\ProjectComparison.cs" />
-    <Compile Include="Domain\ReportController.cs" />
-    <Compile Include="Domain\ReportRepo.cs" />
-    <Compile Include="Domain\WorkHour.cs" />
+    <Compile Include="Core\Domain\Draft.cs" />
+    <Compile Include="Core\Domain\Employee.cs" />
+    <Compile Include="Core\Domain\Material.cs" />
+    <Compile Include="Core\Domain\OrderLine.cs" />
+    <Compile Include="Core\statistics\ProjectComparison.cs" />
+    <Compile Include="Core\Controllers\ReportController.cs" />
+    <Compile Include="Core\Repos\ReportRepo.cs" />
+    <Compile Include="Core\Domain\WorkHour.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Domain\LineItem.cs" />
+    <Compile Include="Core\Domain\LineItem.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Domain\Project.cs" />
+    <Compile Include="Core\Domain\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Domain\Report.cs" />
-    <Compile Include="Domain\ReportLine.cs" />
+    <Compile Include="Core\Domain\Report.cs" />
+    <Compile Include="Core\Domain\ReportLine.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
