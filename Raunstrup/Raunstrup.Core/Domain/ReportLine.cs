@@ -2,22 +2,22 @@
 {
     public class ReportLine
     {
-        private LineItem item;
-        private int quantity;
+        private LineItem _item;
+        private int _quantity;
 
         public ReportLine(LineItem item, int quantity)
         {
-            this.item = item;
-            this.quantity = quantity;
+            _item = item;
+            _quantity = quantity;
         }
-        public LineItem getLineItem()
+        public LineItem GetLineItem()
         {
-            return item;
+            return _item;
         }
 
-        public int getQuantity()
+        public int GetQuantity()
         {
-            return quantity;
+            return _quantity;
         }
     }
 }

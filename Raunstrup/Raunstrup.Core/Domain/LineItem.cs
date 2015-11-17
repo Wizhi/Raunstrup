@@ -2,11 +2,11 @@
 {
     public class LineItem
     {
-        protected string name;
+        protected string Name;
 
         public LineItem(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         protected LineItem()
@@ -14,9 +14,9 @@
             //This needs to be here for the derived classes
         }
 
-        public string getName()
+        public string GetName()
         {
-            return name;
+            return Name;
         }
     }
 }

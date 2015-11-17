@@ -2,16 +2,16 @@
 {
     public class Project
     {
-        private Draft draft;
+        private Draft _draft;
 
         public Project(Draft draft)
         {
-            this.draft = draft;
+            _draft = draft;
         }
 
         public Draft GetDraft()
         {
-            return draft;
+            return _draft;
         }
     }
 }

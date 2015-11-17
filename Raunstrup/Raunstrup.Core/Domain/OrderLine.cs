@@ -2,28 +2,28 @@
 {
     public class OrderLine
     {
-        private LineItem item;
-        private int quantity;
-        private double unitPrice;
+        private LineItem _item;
+        private int _quantity;
+        private double _unitPrice;
 
         public OrderLine(LineItem item, int quantity)
         {
-            this.item = item;
-            this.quantity = quantity;
+            _item = item;
+            _quantity = quantity;
         }
-        public LineItem getLineItem()
+        public LineItem GetLineItem()
         {
-            return item;
-        }
-
-        public int getQuantity()
-        {
-            return quantity;
+            return _item;
         }
 
-        public double getTotal()
+        public int GetQuantity()
         {
-            return unitPrice * quantity; 
+            return _quantity;
+        }
+
+        public double GetTotal()
+        {
+            return _unitPrice * _quantity; 
         }
     }
 }

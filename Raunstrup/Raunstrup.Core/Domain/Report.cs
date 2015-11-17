@@ -5,19 +5,19 @@ namespace Raunstrup.Core.Domain
 {
     public class Report
     {
-        private DateTime date;
-        private Employee employee;
-        private Project project;
-        private List<ReportLine> lines = new List<ReportLine>();
+        private DateTime _date;
+        private Employee _employee;
+        private Project _project;
+        private List<ReportLine> _lines = new List<ReportLine>();
 
-        public List<ReportLine> getLines()
+        public List<ReportLine> GetLines()
         {
-            return lines;
+            return _lines;
         }
 
-        public void addReportLine(LineItem item, int quantity)
+        public void AddReportLine(LineItem item, int quantity)
         {
-            lines.Add(new ReportLine(item,quantity));
+            _lines.Add(new ReportLine(item,quantity));
         }
     }
 
