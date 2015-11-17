@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Domain\Customer.cs" />
     <Compile Include="Domain\Draft.cs" />
     <Compile Include="Domain\Employee.cs" />
     <Compile Include="Domain\Product.cs" />

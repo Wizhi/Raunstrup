@@ -7,12 +7,12 @@ namespace Raunstrup.Core.statistics
 {
     public class ProjectComparison
     {
-        private Project project;
-        private List<ProjectComparisonLine> comparisonLines = new List<ProjectComparisonLine>(); 
+        private Project _project;
+        private List<ProjectComparisonLine> _comparisonLines = new List<ProjectComparisonLine>(); 
         public ProjectComparison(Project project, ReportRepo repo)
         {
-            List<Report> reports = repo.getByProject(project);
-            this.project = project;
+            List<Report> reports = repo.GetByProject(project);
+            _project = project;
             CompareProject(reports);
         }
 
@@ -20,32 +20,32 @@ namespace Raunstrup.Core.statistics
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
-            List<OrderLine> orderLines = project.GetDraft().GetOrderLines();
-            Dictionary<Product,int> amountsInOrderlines = new Dictionary<Product, int>();
+            List<OrderLine> orderLines = _project.GetDraft().GetOrderLines();
+            Dictionary<LineItem,int> amountsInOrderlines = new Dictionary<LineItem, int>();
             foreach (var line in orderLines)
             {
-                if (amountsInOrderlines.ContainsKey(line.getLineItem()))
+                if (amountsInOrderlines.ContainsKey(line.GetLineItem()))
                 {
-                    amountsInOrderlines[line.getLineItem()] += line.getQuantity();
+                    amountsInOrderlines[line.GetLineItem()] += line.GetQuantity();
                 }
                 else
                 {
-                    amountsInOrderlines.Add(line.getLineItem(), line.getQuantity()); 
+                    amountsInOrderlines.Add(line.GetLineItem(), line.GetQuantity()); 
                 }
             }
             //Do the same for the report lines
-            Dictionary<Product,int> amountsInReportLines = new Dictionary<Product, int>();
+            Dictionary<LineItem,int> amountsInReportLines = new Dictionary<LineItem, int>();
             foreach (var report in reports)
             {
-                foreach (var line in report.getLines())
+                foreach (var line in report.GetLines())
                 {
-                    if (amountsInReportLines.ContainsKey(line.getLineItem()))
+                    if (amountsInReportLines.ContainsKey(line.GetLineItem()))
                     {
-                        amountsInReportLines[line.getLineItem()] += line.getQuantity();
+                        amountsInReportLines[line.GetLineItem()] += line.GetQuantity();
                     }
                     else
                     {
-                        amountsInReportLines.Add(line.getLineItem(), line.getQuantity());
+                        amountsInReportLines.Add(line.GetLineItem(), line.GetQuantity());
                     }
                 }
             }
@@ -54,75 +54,75 @@ namespace Raunstrup.Core.statistics
             {
                 if (amountsInReportLines.ContainsKey(pair.Key))
                 {
-                    comparisonLines.Add(new ProjectComparisonLine(pair.Key,pair.Value,amountsInReportLines[pair.Key]));
+                    _comparisonLines.Add(new ProjectComparisonLine(pair.Key,pair.Value,amountsInReportLines[pair.Key]));
                 }
                 else
                 {
-                    comparisonLines.Add(new ProjectComparisonLine(pair.Key, pair.Value, 0));
+                    _comparisonLines.Add(new ProjectComparisonLine(pair.Key, pair.Value, 0));
                 }
             }
 
 
         }
 
-        public void print()
+        public void Print()
         {
             // Print Lines
-            foreach (var line in comparisonLines)
+            foreach (var line in _comparisonLines)
             {
-                line.printLine();
+                line.PrintLine();
             }
             //Print total
-            Console.WriteLine(getTotalPercent());
+            Console.WriteLine(GetTotalPercent());
         }
-        public double getTotalPercent()
+        public double GetTotalPercent()
         {
             int totalOrder = 0;
             int totalUsed = 0;
-            foreach (var line in comparisonLines)
+            foreach (var line in _comparisonLines)
             {
-                totalOrder += line.getOrdered();
-                totalUsed += line.getUsed();
+                totalOrder += line.GetOrdered();
+                totalUsed += line.GetUsed();
             }
             return ((Convert.ToDouble(totalUsed) / Convert.ToDouble(totalOrder)) * 100);
         }
-        public List<ProjectComparisonLine> getComparisonLines()
+        public List<ProjectComparisonLine> GetComparisonLines()
         {
-            return comparisonLines;
+            return _comparisonLines;
         }
     }
 
     public class ProjectComparisonLine
     {
-        private Product item;
-        private int amountOrdered;
-        private int amountUsed;
+        private LineItem _item;
+        private int _amountOrdered;
+        private int _amountUsed;
 
-        public ProjectComparisonLine(Product item, int amountOrdered, int amountUsed)
+        public ProjectComparisonLine(LineItem item, int amountOrdered, int amountUsed)
         {
-            this.item = item;
-            this.amountOrdered = amountOrdered;
-            this.amountUsed = amountUsed;
+            _item = item;
+            _amountOrdered = amountOrdered;
+            _amountUsed = amountUsed;
         }
 
-        public double calculatePercentage()
+        public double CalculatePercentage()
         {
-            return (Convert.ToDouble(amountUsed) / Convert.ToDouble(amountOrdered)) * 100;
+            return (Convert.ToDouble(_amountUsed) / Convert.ToDouble(_amountOrdered)) * 100;
         }
 
-        public void printLine()
+        public void PrintLine()
         {
-            Console.WriteLine(item.getName() + " : " + amountOrdered + " : " + amountUsed + " : " + calculatePercentage() + "%");
+            Console.WriteLine(_item.GetName() + " : " + _amountOrdered + " : " + _amountUsed + " : " + CalculatePercentage() + "%");
         }
 
-        public int getOrdered()
+        public int GetOrdered()
         {
-            return amountOrdered;
+            return _amountOrdered;
         }
 
-        public int getUsed()
+        public int GetUsed()
         {
-            return amountUsed;
+            return _amountUsed;
         }
     }
 }

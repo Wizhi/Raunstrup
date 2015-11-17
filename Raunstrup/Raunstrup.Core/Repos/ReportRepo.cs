@@ -5,7 +5,7 @@ namespace Raunstrup.Core.Repos
 {
     public class ReportRepo
     {
-        public List<Report> getByProject(Project project)
+        public List<Report> GetByProject(Project project)
         {
             return null;
         }

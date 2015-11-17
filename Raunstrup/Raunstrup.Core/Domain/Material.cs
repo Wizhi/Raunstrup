@@ -4,8 +4,8 @@
     {
         public Material(string name)
         {
-            this.name = name;
+            Name = name;
         }
-        private double CostPrice;
+        private double _costPrice;
     }
 }

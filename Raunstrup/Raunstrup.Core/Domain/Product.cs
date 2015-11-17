@@ -2,11 +2,11 @@
 {
     public class Product
     {
-        protected string name;
+        protected string Name;
 
         public Product(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         protected Product()
@@ -14,9 +14,9 @@
             //This needs to be here for the derived classes
         }
 
-        public string getName()
+        public string GetName()
         {
-            return name;
+            return Name;
         }
     }
 }
