@@ -11,7 +11,7 @@
             _item = item;
             _quantity = quantity;
         }
-        public Product GetLineItem()
+        public Product GetProduct()
         {
             return _item;
         }

@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Core.Repos
 {
-    public class ProductRepository : IRepository<int, Product>
+    public class ProductRepository : IRepository<Product>
     {
         public Product Get(int id)
         {
