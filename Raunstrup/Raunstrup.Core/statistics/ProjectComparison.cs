@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Raunstrup.Core.Domain;
+using Raunstrup.Core.Repos;
 
-namespace Raunstrup.Domain
+namespace Raunstrup.Core.statistics
 {
     public class ProjectComparison
     {

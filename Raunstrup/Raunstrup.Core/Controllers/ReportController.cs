@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Raunstrup.Core.Domain;
+using Raunstrup.Core.Repos;
+using Raunstrup.Core.statistics;
 
-namespace Raunstrup.Domain
+namespace Raunstrup.Core.Controllers
 {
     public class ReportController
     {

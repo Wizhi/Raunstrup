@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Raunstrup.Core.Domain;
 
-namespace Raunstrup.Domain
+namespace Raunstrup.Core.Repos
 {
     public class ReportRepo
     {
