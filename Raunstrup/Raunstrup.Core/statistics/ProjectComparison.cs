@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Raunstrup.Core.Domain;
-using Raunstrup.Core.Repos;
 
 namespace Raunstrup.Core.statistics
 {

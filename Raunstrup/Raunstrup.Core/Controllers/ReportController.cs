@@ -1,5 +1,4 @@
 ﻿using Raunstrup.Core.Domain;
-using Raunstrup.Core.Repos;
 using Raunstrup.Core.statistics;
 
 namespace Raunstrup.Core.Controllers

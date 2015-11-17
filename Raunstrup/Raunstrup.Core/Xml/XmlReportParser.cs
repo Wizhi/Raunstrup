@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 using Raunstrup.Core.Domain;
-using Raunstrup.Core.Repos;
+using Raunstrup.Core.Repositories;
 
 namespace Raunstrup.Core.Xml
 {

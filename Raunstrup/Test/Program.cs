@@ -1,5 +1,5 @@
 ﻿using System;
-using Raunstrup.Core.Repos;
+using Raunstrup.Core.Repositories;
 using Raunstrup.Core.Xml;
 
 namespace Test

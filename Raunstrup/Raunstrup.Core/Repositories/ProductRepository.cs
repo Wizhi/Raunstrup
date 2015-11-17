@@ -1,20 +1,20 @@
 ﻿using Raunstrup.Core.Domain;
 
-namespace Raunstrup.Core.Repos
+namespace Raunstrup.Core.Repositories
 {
-    public class EmployeeRepository : IRepository<Employee>
+    public class ProductRepository : IRepository<Product>
     {
-        public Employee Get(int id)
+        public Product Get(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Save(Employee entity)
+        public void Save(Product entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(Employee entity)
+        public void Delete(Product entity)
         {
             throw new System.NotImplementedException();
         }
