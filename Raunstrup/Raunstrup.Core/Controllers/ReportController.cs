@@ -9,7 +9,11 @@ namespace Raunstrup.Core.Controllers
 {
     public class ReportController
     {
-        // TODO: Consider Inversion of Control instead of all these.
+        // TODO Consider Inversion of Control instead of all these.
+        // Kan vi ikke bare gemme alle vores repos i Company, og så skal hver
+        // controller havde en reference til store
+        // vi kan også bruge company til at gemme alle vores controllere
+        // så på den måde bliver company det centrale "acces point" til hele bussiness logikken
         private readonly IReportRepository _reportRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly IEmployeeRepository _employeeRepository;
