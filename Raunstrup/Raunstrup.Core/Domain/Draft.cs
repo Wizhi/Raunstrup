@@ -5,10 +5,8 @@ namespace Raunstrup.Core.Domain
 {
     public class Draft
     {
-        public readonly Customer Customer;
 
         private int _id;
-        private readonly IList<OrderLine> _orderLines = new List<OrderLine>();
 
         public int Id
         {
@@ -18,9 +16,54 @@ namespace Raunstrup.Core.Domain
                 if (_id != default(int))
                 {
                     // TODO: Handle object apparently already being persisted.
+                    throw new Exception("Object ID is already set");
                 }
 
                 _id = value;
+            }
+        }
+
+        private DateTime _startDate;
+
+        public DateTime StartDate
+        {
+            get
+            {
+                return _startDate;
+            }
+            set
+            {
+                //TODO: Test to see if compareTo behaves correctly 1
+                if (value.CompareTo(EndDate) <= 0)
+                {
+                    _startDate = value;
+                }
+                else
+                {
+                    throw new Exception("Start date have to be earlier than end date");
+                }
+            }
+        }
+
+        private DateTime _endDate;
+
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
+            set
+            {
+                if (value.CompareTo(StartDate) >= 0)
+                {
+                    _endDate = value;
+                }
+                else
+                {
+                    //TODO: Test to see if compareTo behaves correctly 2
+                    throw new Exception("End date have to be later than start date");
+                }
             }
         }
 
@@ -28,13 +71,14 @@ namespace Raunstrup.Core.Domain
 
         public string Description { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
-
         public Employee ResponsiblEmployee { get; set; }
+
+        public readonly DateTime CreationDate;
+
+        public readonly Customer Customer;
+
+        public readonly IList<OrderLine> OrderLines = new List<OrderLine>();
+
 
         public Draft(Customer customer)
         {
@@ -42,18 +86,18 @@ namespace Raunstrup.Core.Domain
 
             CreationDate = DateTime.Now;
             StartDate = DateTime.Now;
-            // TODO: Consider how long the "buffer period" should be.
             EndDate = DateTime.Now.AddDays(7);
         }
 
         public void AddOrderLine(Product item, int quantity)
         {
-            _orderLines.Add(new OrderLine(item,quantity));
+            OrderLines.Add(new OrderLine(item,quantity));
         }
 
+        //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
         {
-            return _orderLines;
+            return OrderLines;
         }
     }
 }
