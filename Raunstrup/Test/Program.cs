@@ -18,6 +18,14 @@ namespace Test
 
             SetupTestData();
             TestProjectComparison();
+
+            Console.WriteLine();
+            //TestParser();
+
+            //InvoiceConsolePrinter consolePrinter = new InvoiceConsolePrinter();
+
+            //consolePrinter.PrintInvoice(_company.DraftRepository.Get(1));
+
             Console.ReadKey();
         }
 

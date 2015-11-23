@@ -51,6 +51,8 @@
     <Compile Include="Domain\Report.cs" />
     <Compile Include="Domain\ReportLine.cs" />
     <Compile Include="Domain\WorkHour.cs" />
+    <Compile Include="InvoiceConsolePrinter.cs" />
+    <Compile Include="IInvoicePrinter.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\DraftRepository.cs" />
     <Compile Include="Repositories\GenericInMemoryStorage.cs" />
