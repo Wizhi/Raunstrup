@@ -40,7 +40,7 @@ namespace Raunstrup.Core.Domain
                 }
                 else
                 {
-                    throw new Exception("Start date have to be earlier than end date");
+                    //throw new Exception("Start date have to be earlier than end date");
                 }
             }
         }

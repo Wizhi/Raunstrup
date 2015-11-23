@@ -22,9 +22,9 @@ namespace Test
             Console.WriteLine();
             //TestParser();
 
-            //InvoiceConsolePrinter consolePrinter = new InvoiceConsolePrinter();
+            InvoiceFilePrinter filePrinter = new InvoiceFilePrinter();
 
-            //consolePrinter.PrintInvoice(_company.DraftRepository.Get(1));
+            filePrinter.PrintInvoice(_company.DraftRepository.Get(1));
 
             Console.ReadKey();
         }
