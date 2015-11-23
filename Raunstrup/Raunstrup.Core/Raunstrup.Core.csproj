@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Company.cs" />
-    <Compile Include="Controllers\CreateDraftController.cs" />
+    <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Domain\Customer.cs" />
     <Compile Include="Domain\Draft.cs" />
@@ -49,6 +49,7 @@
     <Compile Include="Domain\Material.cs" />
     <Compile Include="Domain\OrderLine.cs" />
     <Compile Include="Domain\Project.cs" />
+    <Compile Include="Domain\ReadOnlyDraft.cs" />
     <Compile Include="Domain\Report.cs" />
     <Compile Include="Domain\ReportLine.cs" />
     <Compile Include="Domain\WorkHour.cs" />
