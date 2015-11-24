@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Raunstrup.Model
+namespace Raunstrup.Model.ViewObjects
 {
     public class ReadOnlyDraft
     {
