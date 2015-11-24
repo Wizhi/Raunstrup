@@ -1,8 +1,8 @@
-﻿using Raunstrup.Core.Domain;
+﻿using Raunstrup.Model;
 
 namespace Raunstrup.Core.Repositories
 {
-    class ProjectRepository : GenericInMemoryStorage<Project>, IProjectRepository
+    public class ProjectRepository : GenericInMemoryStorage<Project>, IProjectRepository
     {
         protected override void SetId(Project entity, int id)
         {

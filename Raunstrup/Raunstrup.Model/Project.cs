@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Raunstrup.Core.Domain
+namespace Raunstrup.Model
 {
     public class Project
     {

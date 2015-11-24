@@ -1,6 +1,6 @@
-﻿namespace Raunstrup.Core.Domain
+﻿namespace Raunstrup.Model
 {
-    public class Employee
+    public class Customer
     {
         private int _id;
 
@@ -9,7 +9,7 @@
             get { return _id; }
             set
             {
-                if (_id == default(int))
+                if (_id != default(int))
                 {
                     // TODO: Handle object apparently already being persisted.
                 }
@@ -19,5 +19,13 @@
         }
 
         public string Name { get; set; }
+
+        public string SteetName { get; set; }
+
+        public string StreetNumer { get; set; }
+
+        public string City { get; set; }
+
+        public string PostalCode { get; set; }
     }
 }

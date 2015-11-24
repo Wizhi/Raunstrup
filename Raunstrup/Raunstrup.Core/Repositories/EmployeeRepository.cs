@@ -1,8 +1,8 @@
-﻿using Raunstrup.Core.Domain;
+﻿using Raunstrup.Model;
 
 namespace Raunstrup.Core.Repositories
 {
-    class EmployeeRepository : GenericInMemoryStorage<Employee>, IEmployeeRepository
+    public class EmployeeRepository : GenericInMemoryStorage<Employee>, IEmployeeRepository
     {
         protected override void SetId(Employee entity, int id)
         {

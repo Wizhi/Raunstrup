@@ -1,8 +1,8 @@
-﻿using Raunstrup.Core.Domain;
+﻿using Raunstrup.Model;
 
 namespace Raunstrup.Core.Repositories
 {
-    class DraftRepository : GenericInMemoryStorage<Draft>, IDraftRepository
+    public class DraftRepository : GenericInMemoryStorage<Draft>, IDraftRepository
     {
         protected override void SetId(Draft entity, int id)
         {

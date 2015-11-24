@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,6 +52,18 @@
     <ProjectReference Include="..\Raunstrup.Core\Raunstrup.Core.csproj">
       <Project>{C983682A-3706-438D-B66F-29DAD7DD70B5}</Project>
       <Name>Raunstrup.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Raunstrup.Data.Sql\Raunstrup.Data.Sql.csproj">
+      <Project>{a5f0005e-aa00-480b-a2f6-4f45d1d0fce0}</Project>
+      <Name>Raunstrup.Data.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
+      <Project>{6df9e89c-588a-4152-9b52-e4ed9c58825f}</Project>
+      <Name>Raunstrup.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Raunstrup.Model\Raunstrup.Model.csproj">
+      <Project>{13e3f6b0-9ed3-4196-bdfe-84081db76e5b}</Project>
+      <Name>Raunstrup.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

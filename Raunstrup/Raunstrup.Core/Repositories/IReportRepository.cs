@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Raunstrup.Core.Domain;
+using Raunstrup.Model;
 
 namespace Raunstrup.Core.Repositories
 {

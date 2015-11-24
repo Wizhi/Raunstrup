@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Raunstrup.Core;
-using Raunstrup.Core.Domain;
 using Raunstrup.Core.statistics;
 using Raunstrup.Core.Xml;
+using Raunstrup.Model;
 
 namespace Test
 {

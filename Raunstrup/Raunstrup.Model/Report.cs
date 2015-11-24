@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Raunstrup.Core.Domain
+namespace Raunstrup.Model
 {
     public class Report
     {

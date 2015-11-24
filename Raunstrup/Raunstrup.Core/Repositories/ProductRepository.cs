@@ -1,8 +1,8 @@
-﻿using Raunstrup.Core.Domain;
+﻿using Raunstrup.Model;
 
 namespace Raunstrup.Core.Repositories
 {
-    internal class ProductRepository : GenericInMemoryStorage<Product>, IProductRepository
+    public class ProductRepository : GenericInMemoryStorage<Product>, IProductRepository
     {
         protected override void SetId(Product entity, int id)
         {

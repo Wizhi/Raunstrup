@@ -1,4 +1,4 @@
-﻿namespace Raunstrup.Core.Domain
+﻿namespace Raunstrup.Model
 {
     class WorkHour : Product
     {

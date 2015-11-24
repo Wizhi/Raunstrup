@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Raunstrup.Core.Repositories
 {
-    abstract class GenericInMemoryStorage<T>
+    public abstract class GenericInMemoryStorage<T>
     {
         protected readonly IDictionary<int, T> Storage = new Dictionary<int, T>();
 

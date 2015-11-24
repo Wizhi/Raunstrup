@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Raunstrup.Core.Domain;
+using Raunstrup.Model;
 
 namespace Raunstrup.Core.Repositories
 {
-    class ReportRepository : GenericInMemoryStorage<Report>, IReportRepository
+    public class ReportRepository : GenericInMemoryStorage<Report>, IReportRepository
     {
         public IList<Report> FindByProject(Project project)
         {

@@ -3,8 +3,8 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
-using Raunstrup.Core.Domain;
 using Raunstrup.Core.Repositories;
+using Raunstrup.Model;
 
 namespace Raunstrup.Core.Xml
 {
