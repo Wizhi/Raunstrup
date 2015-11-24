@@ -21,9 +21,9 @@ namespace Test
             Console.WriteLine();
             //TestParser();
 
-            InvoiceFilePrinter filePrinter = new InvoiceFilePrinter();
+            var testPrinter = new InvoiceFilePrinter();
 
-            filePrinter.PrintInvoice(_company.DraftRepository.Get(1));
+            testPrinter.PrintInvoice(_company.DraftRepository.Get(1));
 
             Console.ReadKey();
         }

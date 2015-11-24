@@ -12,14 +12,31 @@ namespace Raunstrup.Core
         protected StringBuilder BuildInvoice(Draft draft)
         {
             var sb = new StringBuilder();
+            string companyName = "Company adress, company city123123";
 
-            sb.AppendLine("--------------------------------------------------");
+            int temp = draft.OrderLines.Max(x => x.GetProduct().Name.Length);
+
+            if (temp < draft.Customer.Name.Length)
+            {
+                temp = draft.Customer.Name.Length;
+            }
+            //if (temp < draft.Customer.SteetName.Length + draft.Customer.StreetNumer.Length)
+            //{
+            //    temp = draft.Customer.SteetName.Length + draft.Customer.StreetNumer.Length;
+            //}
+            if (temp < companyName.Length)
+            {
+                temp = companyName.Length;
+            }
+            string spacing = new string('-', temp+10);
+
+            sb.AppendLine(spacing);
             sb.AppendLine(draft.Customer.Id.ToString());
             sb.AppendLine(draft.Customer.Name);
             sb.AppendLine(string.Format("{0} {1}", draft.Customer.SteetName, draft.Customer.StreetNumer));
             sb.AppendLine(string.Format("{0} {1}", draft.Customer.PostalCode, draft.Customer.City));
-            sb.AppendLine("--------------------------------------------------");
-            sb.AppendLine(string.Format(draft.StartDate.ToShortDateString() + new string(' ', 30) + draft.EndDate.ToShortDateString()));
+            sb.AppendLine(spacing);
+            sb.AppendLine(string.Format(draft.StartDate.ToShortDateString() + new string(' ', temp-10) + draft.EndDate.ToShortDateString()));
             sb.AppendLine();
             foreach (var orderLine in draft.OrderLines)
             {
@@ -30,9 +47,9 @@ namespace Raunstrup.Core
             sb.AppendLine();
             sb.AppendLine(string.Format("I ALT: {0}", total));
             sb.AppendLine(string.Format("MOMS  UDGØR: {0}", total * 0.80));
-            sb.AppendLine("--------------------------------------------------");
+            sb.AppendLine(spacing);
             sb.AppendLine("Company name");
-            sb.AppendLine("Company adress, company city");
+            sb.AppendLine(companyName);
             sb.AppendLine("CVR: company CVR");
 
 
