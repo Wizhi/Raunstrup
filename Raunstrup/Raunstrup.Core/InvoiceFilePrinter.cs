@@ -12,7 +12,7 @@ namespace Raunstrup.Core
     {
         public override void PrintInvoice(Draft draft)
         {
-            System.IO.File.WriteAllText(@"Tilbud_" + draft.Id + ".txt", BuildInvoice(draft).ToString());
+            System.IO.File.WriteAllText(String.Format(@"{0}_{1}.txt",draft.Title,DateTime.Now.ToShortDateString()), BuildInvoice(draft).ToString());
         }
 
 
