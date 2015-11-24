@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Model", "Raunstru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data.Sql", "Raunstrup.Data.Sql\Raunstrup.Data.Sql.csproj", "{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Forms", "Raunstrup.Forms\Raunstrup.Forms.csproj", "{3826A233-50F7-4AF7-B2FB-A761C106F1D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
