@@ -27,8 +27,9 @@ namespace Raunstrup.Core.Controllers
             _productRepository = productRepository;
         }
 
-        public ProjectComparison GetProjectComparison(Project project)
+        public ProjectComparison GetProjectComparison(int projectId)
         {
+            var project = _projectRepository.Get(projectId);
             return new ProjectComparison(project, _reportRepository);
         }
 

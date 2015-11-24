@@ -85,34 +85,34 @@ namespace Raunstrup.Core.statistics
     public class ProjectComparisonLine
     {
         private Product _item;
-        private int _amountOrdered;
-        private int _amountUsed;
+        public int AmountOrdered { get; private set; }
+        public int AmountUsed { get; private set; }
 
         public ProjectComparisonLine(Product item, int amountOrdered, int amountUsed)
         {
             _item = item;
-            _amountOrdered = amountOrdered;
-            _amountUsed = amountUsed;
+            AmountOrdered = amountOrdered;
+            AmountUsed = amountUsed;
         }
 
         public double CalculatePercentage()
         {
-            return (Convert.ToDouble(_amountUsed) / Convert.ToDouble(_amountOrdered)) * 100;
+            return (Convert.ToDouble(AmountUsed) / Convert.ToDouble(AmountOrdered)) * 100;
         }
 
         public void PrintLine()
         {
-            Console.WriteLine(_item.Name + " : " + _amountOrdered + " : " + _amountUsed + " : " + CalculatePercentage() + "%");
+            Console.WriteLine(_item.Name + " : " + AmountOrdered + " : " + AmountUsed + " : " + CalculatePercentage() + "%");
         }
 
         public int GetOrdered()
         {
-            return _amountOrdered;
+            return AmountOrdered;
         }
 
         public int GetUsed()
         {
-            return _amountUsed;
+            return AmountUsed;
         }
     }
 }

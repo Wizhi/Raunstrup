@@ -20,9 +20,9 @@ namespace Raunstrup.Core
             {
                 temp = draft.Customer.Name.Length;
             }
-            //if (temp < draft.Customer.SteetName.Length + draft.Customer.StreetNumer.Length)
+            //if (temp < draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length)
             //{
-            //    temp = draft.Customer.SteetName.Length + draft.Customer.StreetNumer.Length;
+            //    temp = draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length;
             //}
             if (temp < companyName.Length)
             {
@@ -33,7 +33,7 @@ namespace Raunstrup.Core
             sb.AppendLine(spacing);
             sb.AppendLine(draft.Customer.Id.ToString());
             sb.AppendLine(draft.Customer.Name);
-            sb.AppendLine(string.Format("{0} {1}", draft.Customer.SteetName, draft.Customer.StreetNumer));
+            sb.AppendLine(string.Format("{0} {1}", draft.Customer.SteetName, draft.Customer.StreetNumber));
             sb.AppendLine(string.Format("{0} {1}", draft.Customer.PostalCode, draft.Customer.City));
             sb.AppendLine(spacing);
             sb.AppendLine(string.Format(draft.StartDate.ToShortDateString() + new string(' ', temp-10) + draft.EndDate.ToShortDateString()));

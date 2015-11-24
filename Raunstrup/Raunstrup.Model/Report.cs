@@ -9,7 +9,7 @@ namespace Raunstrup.Model
         public readonly Project Project;
 
         private int _id;
-        private readonly IList<ReportLine> _lines = new List<ReportLine>();
+        public readonly IList<ReportLine> Lines = new List<ReportLine>();
 
         public int Id
         {
@@ -35,12 +35,12 @@ namespace Raunstrup.Model
 
         public IList<ReportLine> GetLines()
         {
-            return _lines;
+            return Lines;
         }
 
         public void AddReportLine(Product item, int quantity)
         {
-            _lines.Add(new ReportLine(item,quantity));
+            Lines.Add(new ReportLine(item,quantity));
         }
     }
 
