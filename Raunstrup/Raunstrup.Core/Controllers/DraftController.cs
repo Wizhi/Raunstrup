@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Raunstrup.Model;
+using Raunstrup.Model.ViewObjects;
 
 namespace Raunstrup.Core.Controllers
 {
@@ -17,8 +18,9 @@ namespace Raunstrup.Core.Controllers
             _company = company;
         }
 
-        public void CreateNewDraft(Customer customer)
+        public void CreateNewDraft(int customerId)
         {
+            var customer = _company.CustomerRepository.Get(customerId);
             _currentDraft = new Draft(customer);
         }
 
@@ -62,6 +64,11 @@ namespace Raunstrup.Core.Controllers
         public void SaveDraft()
         {
             _company.DraftRepository.Save(_currentDraft);
+        }
+
+        public ReadOnlyDraft GetDraft()
+        {
+            return new ReadOnlyDraft(_currentDraft);
         }
     }
 }

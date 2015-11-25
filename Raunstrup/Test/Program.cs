@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Raunstrup.Core;
+using Raunstrup.Core.Controllers;
 using Raunstrup.Core.statistics;
 using Raunstrup.Core.Xml;
 using Raunstrup.Model;
@@ -16,14 +17,14 @@ namespace Test
             _company = new Company();
 
             SetupTestData();
-            TestProjectComparison();
-
+            //TestProjectComparison();
+            createTestDraft();
             Console.WriteLine();
             //TestParser();
 
             var testPrinter = new InvoiceFilePrinter();
 
-            testPrinter.PrintInvoice(_company.DraftRepository.Get(1));
+            testPrinter.PrintInvoice(_company.DraftRepository.Get(5));
 
             Console.ReadKey();
         }
@@ -208,6 +209,22 @@ namespace Test
             }
             //Print total
             Console.WriteLine(comparison.GetTotalPercent());
+        }
+
+        public static void createTestDraft()
+        {
+            DraftController controller = new DraftController(_company);
+            controller.CreateNewDraft(1);
+            controller.AddOrderLine(3,5);
+            controller.AddOrderLine(1,2);
+            controller.AddOrderLine(2,2);
+            controller.SetResponsibleEmployee(1);
+            controller.SetTitle("Simons Legehus");
+            controller.SetDescription("Bla bla bla, bob bob bob");
+            controller.SaveDraft();
+            Console.WriteLine(controller.GetDraft().Id);
+            Console.WriteLine(controller.GetDraft().ResponsiblEmployee.Name);
+            Console.WriteLine(controller.GetDraft().Description);
         }
     }
 }
