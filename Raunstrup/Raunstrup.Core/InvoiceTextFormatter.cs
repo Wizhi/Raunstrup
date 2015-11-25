@@ -43,11 +43,11 @@ namespace Raunstrup.Core
                 sb.AppendLine(string.Format("{0} x{1}", orderLine.GetProduct().Name, orderLine.GetQuantity()));
                 sb.AppendLine(string.Format(" dkk {0}", orderLine.GetTotal()));
             }
-            //TODO HAR ÆNDRET GetTOTAL til at være decimal, har lige lavet et lille hack
-            double total = draft.OrderLines.Sum(x => Convert.ToDouble(x.GetTotal()));
+
+            var total = draft.OrderLines.Sum(x => x.GetTotal());
             sb.AppendLine();
             sb.AppendLine(string.Format("I ALT: {0}", total));
-            sb.AppendLine(string.Format("MOMS  UDGØR: {0}", total * 0.80));
+            sb.AppendLine(string.Format("MOMS  UDGØR: {0}", total * 0.20M));
             sb.AppendLine(spacing);
             sb.AppendLine("Company name");
             sb.AppendLine(companyName);
