@@ -70,13 +70,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
-      <Project>{6df9e89c-588a-4152-9b52-e4ed9c58825f}</Project>
-      <Name>Raunstrup.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Raunstrup.Model\Raunstrup.Model.csproj">
-      <Project>{13e3f6b0-9ed3-4196-bdfe-84081db76e5b}</Project>
-      <Name>Raunstrup.Model</Name>
+    <ProjectReference Include="..\Raunstrup.Domain\Raunstrup.Domain.csproj">
+      <Project>{dd7cdfa2-1b67-4b8d-97a2-9a51eb0e95cc}</Project>
+      <Name>Raunstrup.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

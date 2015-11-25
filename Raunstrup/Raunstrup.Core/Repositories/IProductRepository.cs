@@ -1,4 +1,4 @@
-﻿using Raunstrup.Model;
+﻿using Raunstrup.Domain;
 
 namespace Raunstrup.Core.Repositories
 {

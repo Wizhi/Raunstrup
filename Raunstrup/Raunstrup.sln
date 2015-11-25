@@ -4,16 +4,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B8991511-60F4-4053-98B4-11A24C0DD8B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC} = {DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Core", "Raunstrup.Core\Raunstrup.Core.csproj", "{C983682A-3706-438D-B66F-29DAD7DD70B5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data", "Raunstrup.Data\Raunstrup.Data.csproj", "{6DF9E89C-588A-4152-9B52-E4ED9C58825F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Model", "Raunstrup.Model\Raunstrup.Model.csproj", "{13E3F6B0-9ED3-4196-BDFE-84081DB76E5B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data.Sql", "Raunstrup.Data.Sql\Raunstrup.Data.Sql.csproj", "{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC} = {DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Forms", "Raunstrup.Forms\Raunstrup.Forms.csproj", "{3826A233-50F7-4AF7-B2FB-A761C106F1D6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC} = {DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Domain", "Raunstrup.Domain\Raunstrup.Domain.csproj", "{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,22 +34,14 @@ Global
 		{C983682A-3706-438D-B66F-29DAD7DD70B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C983682A-3706-438D-B66F-29DAD7DD70B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C983682A-3706-438D-B66F-29DAD7DD70B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DF9E89C-588A-4152-9B52-E4ED9C58825F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DF9E89C-588A-4152-9B52-E4ED9C58825F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DF9E89C-588A-4152-9B52-E4ED9C58825F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DF9E89C-588A-4152-9B52-E4ED9C58825F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13E3F6B0-9ED3-4196-BDFE-84081DB76E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13E3F6B0-9ED3-4196-BDFE-84081DB76E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13E3F6B0-9ED3-4196-BDFE-84081DB76E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13E3F6B0-9ED3-4196-BDFE-84081DB76E5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5F0005E-AA00-480B-A2F6-4F45D1D0FCE0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3826A233-50F7-4AF7-B2FB-A761C106F1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
