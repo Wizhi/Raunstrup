@@ -2,28 +2,29 @@
 {
     public class OrderLine
     {
-        private Product _item;
-        private int _quantity;
-        private double _unitPrice;
+        public Product Product { get; private set; }
+        public int Quantity { get; private set; }
+        public decimal UnitPrice { get; private set; }
 
         public OrderLine(Product item, int quantity)
         {
-            _item = item;
-            _quantity = quantity;
+            Product = item;
+            Quantity = quantity;
+            UnitPrice = item.SalesPrice;
         }
         public Product GetProduct()
         {
-            return _item;
+            return Product;
         }
 
         public int GetQuantity()
         {
-            return _quantity;
+            return Quantity;
         }
 
-        public double GetTotal()
+        public decimal GetTotal()
         {
-            return _unitPrice * _quantity; 
+            return UnitPrice * Quantity;
         }
     }
 }

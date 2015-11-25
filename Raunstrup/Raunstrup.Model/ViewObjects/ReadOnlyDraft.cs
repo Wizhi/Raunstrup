@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Raunstrup.Model.ViewObjects
 {
@@ -40,5 +41,29 @@ namespace Raunstrup.Model.ViewObjects
         {
             _draft = draft;
         }
+
+        public ReadOnlyEmployee ResponsiblEmployee
+        {
+            get { return new ReadOnlyEmployee(_draft.ResponsiblEmployee);}
+        }
+
+        public ReadOnlyCustomer Customer
+        {
+            get { return new ReadOnlyCustomer(_draft.Customer);}
+        }
+
+        public IList<ReadOnlyOrderLine> OrderLines
+        {
+            get
+            {
+                IList<OrderLine> originaLines = _draft.OrderLines;
+                IList<ReadOnlyOrderLine> returnLines = new List<ReadOnlyOrderLine>();
+                foreach (var line in originaLines)
+                {
+                    returnLines.Add(new ReadOnlyOrderLine(line));
+                }
+                return returnLines;
+            }
+        } 
     }
 }

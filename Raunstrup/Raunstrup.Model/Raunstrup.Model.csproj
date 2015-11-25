@@ -52,6 +52,7 @@
     <Compile Include="Report.cs" />
     <Compile Include="ReportLine.cs" />
     <Compile Include="ViewObjects\ReadOnlyEmployee.cs" />
+    <Compile Include="ViewObjects\ReadOnlyOrderLine.cs" />
     <Compile Include="ViewObjects\ReadOnlyProduct.cs" />
     <Compile Include="ViewObjects\ReadOnlyReport.cs" />
     <Compile Include="ViewObjects\ReadOnlyReportLine.cs" />

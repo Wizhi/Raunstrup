@@ -114,5 +114,10 @@ namespace Raunstrup.Core.statistics
         {
             return AmountUsed;
         }
+
+        public string GetProductName()
+        {
+            return _item.Name;
+        }
     }
 }
