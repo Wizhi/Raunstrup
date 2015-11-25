@@ -8,7 +8,7 @@ using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
 using Raunstrup.Core.statistics;
 using Raunstrup.Core.Xml;
-using Raunstrup.Model;
+using Raunstrup.Domain;
 
 namespace Raunstrup.Forms
 {

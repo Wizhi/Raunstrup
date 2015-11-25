@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Raunstrup.Model;
+using Raunstrup.Domain;
 
 namespace Raunstrup.Core.Repositories
 {

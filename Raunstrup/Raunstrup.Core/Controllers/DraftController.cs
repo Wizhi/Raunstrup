@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Raunstrup.Model;
-using Raunstrup.Model.ViewObjects;
+using Raunstrup.Domain;
+using Raunstrup.Domain.ViewObjects;
 
 namespace Raunstrup.Core.Controllers
 {

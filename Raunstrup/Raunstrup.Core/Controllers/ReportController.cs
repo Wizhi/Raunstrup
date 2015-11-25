@@ -3,7 +3,6 @@ using System.IO;
 using Raunstrup.Core.Repositories;
 using Raunstrup.Core.statistics;
 using Raunstrup.Core.Xml;
-using Raunstrup.Model;
 
 namespace Raunstrup.Core.Controllers
 {
