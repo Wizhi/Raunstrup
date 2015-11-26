@@ -44,7 +44,7 @@ namespace Test
             var products = new[]
             {
                 new Product { Name = "Foo", SalesPrice = 123.4M }, 
-                new Product { Name = "Bar", SalesPrice = 200M }, 
+                new Product { Name = "BarBarBarBarBarBarBarBarBar", SalesPrice = 200M }, 
                 new Product { Name = "Baz", SalesPrice = 321.2M }, 
             };
 

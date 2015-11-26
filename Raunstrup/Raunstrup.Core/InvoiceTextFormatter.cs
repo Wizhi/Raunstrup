@@ -16,9 +16,9 @@ namespace Raunstrup.Core
 
             int temp = 20;
 
-            if (temp < draft.OrderLines.Max(x => x.GetProduct().Name.Length))
+            if (temp < draft.OrderLines.Max(x => x.GetProduct().Name.Length + x.GetQuantity().ToString().Length))
             {
-                temp = draft.OrderLines.Max(x => x.GetProduct().Name.Length);
+                temp = draft.OrderLines.Max(x => x.GetProduct().Name.Length + x.GetQuantity().ToString().Length);
             }
             if (temp < draft.Customer.Name.Length)
             {
