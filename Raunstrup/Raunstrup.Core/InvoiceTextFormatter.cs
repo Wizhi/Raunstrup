@@ -12,10 +12,14 @@ namespace Raunstrup.Core
         protected StringBuilder BuildInvoice(Draft draft)
         {
             var sb = new StringBuilder();
-            string companyName = "Company adress, company city123123";
+            string companyName = "Robert Fultons Vej 22" + Environment.NewLine +"8200 Aarhus N";
 
-            int temp = draft.OrderLines.Max(x => x.GetProduct().Name.Length);
+            int temp = 20;
 
+            if (temp < draft.OrderLines.Max(x => x.GetProduct().Name.Length))
+            {
+                temp = draft.OrderLines.Max(x => x.GetProduct().Name.Length);
+            }
             if (temp < draft.Customer.Name.Length)
             {
                 temp = draft.Customer.Name.Length;
@@ -24,10 +28,10 @@ namespace Raunstrup.Core
             //{
             //    temp = draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length;
             //}
-            if (temp < companyName.Length)
-            {
-                temp = companyName.Length;
-            }
+            //if (temp < companyName.Length)
+            //{
+            //    temp = companyName.Length;
+            //}
             string spacing = new string('-', temp+10);
 
             sb.AppendLine(spacing);
@@ -49,9 +53,9 @@ namespace Raunstrup.Core
             sb.AppendLine(string.Format("I ALT: {0}", total));
             sb.AppendLine(string.Format("MOMS  UDGØR: {0}", total * 0.20M));
             sb.AppendLine(spacing);
-            sb.AppendLine("Company name");
+            sb.AppendLine("RAUNSTRUP A/S");
             sb.AppendLine(companyName);
-            sb.AppendLine("CVR: company CVR");
+            sb.AppendLine("CVR: 12345678");
 
 
             return sb;
