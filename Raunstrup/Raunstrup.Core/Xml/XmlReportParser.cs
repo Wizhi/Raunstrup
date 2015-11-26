@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using Raunstrup.Core.Repositories;
-using Raunstrup.Model;
+using Raunstrup.Domain;
 
 namespace Raunstrup.Core.Xml
 {

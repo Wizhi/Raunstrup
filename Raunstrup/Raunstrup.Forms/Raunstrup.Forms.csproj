@@ -45,16 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectComparisonForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProjectComparisonForm.Designer.cs">
-      <DependentUpon>ProjectComparisonForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ProjectComparisonForm.resx">
-      <DependentUpon>ProjectComparisonForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -82,9 +73,9 @@
       <Project>{c983682a-3706-438d-b66f-29dad7dd70b5}</Project>
       <Name>Raunstrup.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Raunstrup.Model\Raunstrup.Model.csproj">
-      <Project>{13e3f6b0-9ed3-4196-bdfe-84081db76e5b}</Project>
-      <Name>Raunstrup.Model</Name>
+    <ProjectReference Include="..\Raunstrup.Domain\Raunstrup.Domain.csproj">
+      <Project>{dd7cdfa2-1b67-4b8d-97a2-9a51eb0e95cc}</Project>
+      <Name>Raunstrup.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

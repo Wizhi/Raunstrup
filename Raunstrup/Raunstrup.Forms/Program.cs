@@ -8,7 +8,7 @@ using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
 using Raunstrup.Core.statistics;
 using Raunstrup.Core.Xml;
-using Raunstrup.Model;
+using Raunstrup.Domain;
 
 namespace Raunstrup.Forms
 {
@@ -25,7 +25,7 @@ namespace Raunstrup.Forms
             Application.SetCompatibleTextRenderingDefault(false);
             _company = new Company();
             SetupTestData();
-            Application.Run(new ProjectComparisonForm(new ReportController(_company.ReportRepository,_company.ProjectRepository,_company.EmployeeRepository,_company.ProductRepository),1));
+            //Application.Run(new ProjectComparisonForm(new ReportController(_company.ReportRepository,_company.ProjectRepository,_company.EmployeeRepository,_company.ProductRepository),1));
         }
                
 
