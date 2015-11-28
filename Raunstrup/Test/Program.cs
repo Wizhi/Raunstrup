@@ -16,19 +16,19 @@ namespace Test
         {
             _company = new Company();
 
-            SetupTestData();
+            //SetupTestData();
             //TestProjectComparison();
-            createTestDraft();
+            //createTestDraft();
             Console.WriteLine();
             //TestParser();
 
             var testPrinter = new InvoiceFilePrinter();
 
-            testPrinter.PrintInvoice(_company.DraftRepository.Get(5));
+            //testPrinter.PrintInvoice(_company.DraftRepository.Get(5));
 
             Console.ReadKey();
         }
-
+        /*
         static void SetupTestData()
         {
             SetupProducts();
@@ -226,5 +226,6 @@ namespace Test
             Console.WriteLine(controller.GetDraft().ResponsiblEmployee.Name);
             Console.WriteLine(controller.GetDraft().Description);
         }
+         */
     }
 }
