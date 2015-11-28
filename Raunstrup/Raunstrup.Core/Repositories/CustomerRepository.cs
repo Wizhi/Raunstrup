@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Core.Repositories
 {
-    class CustomerRepository : GenericInMemoryStorage<Customer>, ICustomerRepository
+    public class CustomerRepository : GenericInMemoryStorage<Customer>, ICustomerRepository
     {
         protected override void SetId(Customer entity, int id)
         {

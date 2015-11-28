@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Raunstrup.Core.Repositories;
 using Raunstrup.Domain;
 using Raunstrup.Domain.ViewObjects;
 
@@ -12,26 +13,34 @@ namespace Raunstrup.Core.Controllers
     {
         private Draft _currentDraft;
         private readonly Company _company;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IDraftRepository _draftRepository;
 
-        public DraftController(Company company)
+        public DraftController(ICustomerRepository customerRepository,IEmployeeRepository employeeRepository, IProductRepository productRepository, IDraftRepository draftRepository)
         {
-            _company = company;
+            _draftRepository = draftRepository;
+            _customerRepository = customerRepository;
+            _productRepository = productRepository;
+            _employeeRepository = employeeRepository;
+
         }
 
         public void CreateNewDraft(int customerId)
         {
-            var customer = _company.CustomerRepository.Get(customerId);
+            var customer = _customerRepository.Get(customerId);
             _currentDraft = new Draft(customer);
         }
 
         public void EditDraft(int id)
         {
-            _currentDraft = _company.DraftRepository.Get(id);
+            _currentDraft = _draftRepository.Get(id);
         }
 
         public void AddOrderLine(int id, int quantity)
         {
-            Product product = _company.ProductRepository.Get(id);
+            Product product = _productRepository.Get(id);
             _currentDraft.AddOrderLine(product,quantity);
         }
 
@@ -47,7 +56,7 @@ namespace Raunstrup.Core.Controllers
 
         public void SetResponsibleEmployee(int id)
         {
-            Employee employee = _company.EmployeeRepository.Get(id);
+            Employee employee = _employeeRepository.Get(id);
             _currentDraft.ResponsiblEmployee = employee;
         }
 
@@ -63,7 +72,7 @@ namespace Raunstrup.Core.Controllers
 
         public void SaveDraft()
         {
-            _company.DraftRepository.Save(_currentDraft);
+            _draftRepository.Save(_currentDraft);
         }
 
         public ReadOnlyDraft GetDraft()

@@ -1,15 +1,19 @@
-﻿using Raunstrup.Core.Repositories;
+﻿using System.Collections.Specialized;
+using Raunstrup.Core.Controllers;
+using Raunstrup.Core.Repositories;
 
 namespace Raunstrup.Core
 {
     public class Company
     {
-        public IDraftRepository DraftRepository { get; private set; }
-        public IProjectRepository ProjectRepository { get; private set; }
-        public ICustomerRepository CustomerRepository { get; private set; }
-        public IReportRepository ReportRepository { get; private set; }
-        public IEmployeeRepository EmployeeRepository { get; private set; }
-        public IProductRepository ProductRepository { get; private set; }
+        private IDraftRepository DraftRepository { get; set; }
+        private IProjectRepository ProjectRepository { get; set; }
+        private ICustomerRepository CustomerRepository { get; set; }
+        private IReportRepository ReportRepository { get; set; }
+        private IEmployeeRepository EmployeeRepository { get; set; }
+        private IProductRepository ProductRepository { get; set; }
+        public string Name { get; private set; }
+        public string Address { get; private set; }
 
         public Company()
         {
@@ -19,6 +23,16 @@ namespace Raunstrup.Core
             ReportRepository = new ReportRepository();
             EmployeeRepository = new EmployeeRepository();
             ProductRepository = new ProductRepository();
+        }
+
+        public ReportController GetReportController()
+        {
+            return new ReportController(ReportRepository,ProjectRepository,EmployeeRepository,ProductRepository);
+        }
+
+        public DraftController GetDraftController()
+        {
+            return new DraftController(CustomerRepository,EmployeeRepository,ProductRepository,DraftRepository);
         }
     }
 }
