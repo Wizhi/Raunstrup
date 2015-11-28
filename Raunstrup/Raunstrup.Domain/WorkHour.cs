@@ -1,6 +1,10 @@
 ﻿namespace Raunstrup.Domain
 {
-    class WorkHour : Product
+    public class WorkHour : Product
     {
+        public WorkHour(string name)
+        {
+            Name = name;
+        }
     }
 }

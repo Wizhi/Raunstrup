@@ -50,11 +50,11 @@ namespace Raunstrup.Core
 
         private void SetupProducts()
         {
-            var products = new[]
+            var products = new Product[]
             {
-                new Product { Name = "Foo", SalesPrice = 123.4M }, 
-                new Product { Name = "BarBarBarBarBarBarBarBarBar", SalesPrice = 200M }, 
-                new Product { Name = "Baz", SalesPrice = 321.2M }, 
+                new Material("Metal")  { SalesPrice = 123.4M }, 
+                new Material("Wood")  { SalesPrice = 200M }, 
+                new WorkHour("HandWorker Hour") { SalesPrice = 321.2M }, 
             };
 
             foreach (var product in products)

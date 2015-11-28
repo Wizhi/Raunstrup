@@ -1,8 +1,8 @@
 ﻿namespace Raunstrup.Domain
 {
-    public class Product
+    public abstract class Product
     {
-        private int _id;
+        protected int _id;
 
         public int Id
         {
