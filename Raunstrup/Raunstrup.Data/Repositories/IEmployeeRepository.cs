@@ -1,6 +1,6 @@
 ﻿using Raunstrup.Domain;
 
-namespace Raunstrup.Core.Repositories
+namespace Raunstrup.Data.Repositories
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {

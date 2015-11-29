@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Core.Repositories
+namespace Raunstrup.Data.Repositories
 {
     public interface IReportRepository : IRepository<Report>
     {

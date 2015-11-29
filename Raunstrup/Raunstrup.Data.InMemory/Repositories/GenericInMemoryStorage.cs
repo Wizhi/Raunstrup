@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Raunstrup.Core.Repositories
+namespace Raunstrup.Data.InMemory.Repositories
 {
     public abstract class GenericInMemoryStorage<T>
     {

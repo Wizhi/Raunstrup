@@ -1,4 +1,4 @@
-﻿namespace Raunstrup.Core.Repositories
+﻿namespace Raunstrup.Data.Repositories
 {
     public interface IRepository<TEntity>
     {

@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Forms", "Raunstru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Domain", "Raunstrup.Domain\Raunstrup.Domain.csproj", "{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data", "Raunstrup.Data\Raunstrup.Data.csproj", "{70066693-B510-4F8D-BFD8-E1296E14F83A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data.InMemory", "Raunstrup.Data.InMemory\Raunstrup.Data.InMemory.csproj", "{661B3ED6-6205-4B5C-945E-776123F69CA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,14 @@ Global
 		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD7CDFA2-1B67-4B8D-97A2-9A51EB0E95CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70066693-B510-4F8D-BFD8-E1296E14F83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70066693-B510-4F8D-BFD8-E1296E14F83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70066693-B510-4F8D-BFD8-E1296E14F83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70066693-B510-4F8D-BFD8-E1296E14F83A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

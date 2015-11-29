@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Core.Repositories
+namespace Raunstrup.Data.InMemory.Repositories
 {
     public class ReportRepository : GenericInMemoryStorage<Report>, IReportRepository
     {
