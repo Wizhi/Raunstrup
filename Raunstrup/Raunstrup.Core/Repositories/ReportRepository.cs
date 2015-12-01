@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Raunstrup.Domain;
 
@@ -9,6 +10,11 @@ namespace Raunstrup.Core.Repositories
         public IList<Report> FindByProject(Project project)
         {
             return Storage.Values.Where(x => x.Project == project).ToList();
+        }
+
+        public IList<Report> FindByDurationAndEmployee(DateTime start, DateTime end, Employee employee)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void SetId(Report entity, int id)
