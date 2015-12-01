@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C983682A-3706-438D-B66F-29DAD7DD70B5}</ProjectGuid>
+    <ProjectGuid>{661B3ED6-6205-4B5C-945E-776123F69CA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Raunstrup.Core</RootNamespace>
-    <AssemblyName>Raunstrup.Core</AssemblyName>
+    <RootNamespace>Raunstrup.Data.InMemory</RootNamespace>
+    <AssemblyName>Raunstrup.Data.InMemory</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,27 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InvoiceTextFormatter.cs" />
-    <Compile Include="Company.cs" />
-    <Compile Include="Controllers\DraftController.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="InvoiceFilePrinter.cs" />
-    <Compile Include="InvoiceConsolePrinter.cs" />
-    <Compile Include="IInvoicePrinter.cs" />
-    <Compile Include="Xml\XmlReportParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="statistics\ProjectComparison.cs" />
+    <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\DraftRepository.cs" />
+    <Compile Include="Repositories\EmployeeRepository.cs" />
+    <Compile Include="Repositories\GenericInMemoryStorage.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ProjectRepository.cs" />
+    <Compile Include="Repositories\ReportRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Xml\report.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Raunstrup.Data.InMemory\Raunstrup.Data.InMemory.csproj">
-      <Project>{661b3ed6-6205-4b5c-945e-776123f69ca2}</Project>
-      <Name>Raunstrup.Data.InMemory</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
       <Project>{70066693-b510-4f8d-bfd8-e1296e14f83a}</Project>
       <Name>Raunstrup.Data</Name>

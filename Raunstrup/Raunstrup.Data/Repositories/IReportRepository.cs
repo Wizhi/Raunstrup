@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using Raunstrup.Data.Specifications;
-using Raunstrup.Model;
+using Raunstrup.Domain;
 
 namespace Raunstrup.Data.Repositories
 {
-    public interface IReportRepository : IRepository<Report, IReportSpecification>
+    public interface IReportRepository : IRepository<Report>
     {
         IList<Report> FindByProject(Project project);
-
-        IList<Report> FindByEmployee(Employee employee);
     }
 }

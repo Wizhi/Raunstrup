@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Raunstrup.Core.Repositories;
+using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Core.statistics
