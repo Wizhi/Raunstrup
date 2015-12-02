@@ -32,6 +32,11 @@ namespace Raunstrup.Core.Controllers
             return new ProjectComparison(project, _reportRepository);
         }
 
+        public EmployeeStatistics GetHoursWorkedStatistics(int employeeID, DateTime start, DateTime end)
+        {
+            return new EmployeeStatistics(_reportRepository,_employeeRepository.Get(employeeID),start,end);
+        }
+
         public void UploadReport(string path)
         {
             try

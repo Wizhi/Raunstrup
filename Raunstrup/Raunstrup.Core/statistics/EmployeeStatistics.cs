@@ -18,17 +18,18 @@ namespace Raunstrup.Core.statistics
         public EmployeeStatistics(IReportRepository reportRepository, Employee employee, DateTime start, DateTime end)
         {
             Start = start.Date;
-            End = start.Date;
+            End = end.Date;
             _reportRepository = reportRepository;
             _employee = employee;
             if (Start.CompareTo(End) < 0)
             {
                 //Needs to check that start date is earlier than end enddate;
             }
-            setupDictionary();
+            SetupDictionary();
+            ProcessReports();
         }
 
-        private void setupDictionary()
+        private void SetupDictionary()
         {
             DateTime current = Start;
             while (current.CompareTo(End) < 0)
@@ -36,6 +37,25 @@ namespace Raunstrup.Core.statistics
                 HoursWorked.Add(current,0);
                 current = current.AddDays(1);
             }
+        }
+
+        //This gives a percent value according to how many hours have been invoiced
+        //compared to how many working hours there is in the period, it assumes each day is
+        //7 working hours, and does only checks for weekends, not holidays(as this would require
+        //a lot more work)
+        public double GetHoursInvoicedDegree()
+        {
+            int workingdays = 0;
+            int hoursinvoiced = 0;
+            foreach (var valuepair in HoursWorked)
+            {
+                if (valuepair.Key.DayOfWeek != DayOfWeek.Saturday && valuepair.Key.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    workingdays ++;
+                    hoursinvoiced += valuepair.Value;
+                }
+            }
+            return hoursinvoiced/(workingdays*7);
         }
 
         private void ProcessReports()
