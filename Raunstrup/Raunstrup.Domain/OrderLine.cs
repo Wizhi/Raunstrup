@@ -6,12 +6,15 @@
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
 
-        public OrderLine(Product item, int quantity)
+        public OrderLine(Product item, int quantity, decimal unitPrice)
         {
             Product = item;
             Quantity = quantity;
-            UnitPrice = item.SalesPrice;
+            UnitPrice = unitPrice;
         }
+
+        public OrderLine(Product item, int quantity) : this(item, quantity, item.SalesPrice) { }
+
         public Product GetProduct()
         {
             return Product;
