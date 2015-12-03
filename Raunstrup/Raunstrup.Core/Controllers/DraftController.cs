@@ -38,10 +38,10 @@ namespace Raunstrup.Core.Controllers
             _currentDraft = _draftRepository.Get(id);
         }
 
-        public void AddOrderLine(int id, int quantity)
+        public void AddOrderLine(int id, int quantity, decimal price)
         {
             Product product = _productRepository.Get(id);
-            _currentDraft.AddOrderLine(product,quantity);
+            _currentDraft.AddOrderLine(product,quantity,price);
         }
 
         public void SetStartDate(DateTime startDate)
