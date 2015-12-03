@@ -79,5 +79,26 @@ namespace Raunstrup.Core.Controllers
         {
             return new ReadOnlyDraft(_currentDraft);
         }
+
+        public List<ReadOnlyProduct> GetAllProducts()
+        {
+            IList<Product> products = _productRepository.GetAll();
+            List<ReadOnlyProduct> returnList = new List<ReadOnlyProduct>();
+            foreach (var product in products)
+            {
+                returnList.Add(new ReadOnlyProduct(product));
+            }
+            return returnList;
+        }
+        public List<ReadOnlyCustomer> GetAllCustomers()
+        {
+            IList<Customer> customers = _customerRepository.GetAll();
+            List<ReadOnlyCustomer> returnList = new List<ReadOnlyCustomer>();
+            foreach (var customer in customers)
+            {
+                returnList.Add(new ReadOnlyCustomer(customer));
+            }
+            return returnList;
+        } 
     }
 }
