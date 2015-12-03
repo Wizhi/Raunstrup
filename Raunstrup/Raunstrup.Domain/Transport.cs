@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Domain
 {
-    public class WorkHour : Product
+    public class Transport : Product
     {
     }
 }
