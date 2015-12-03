@@ -38,14 +38,18 @@
             this._startDateDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this._endDateDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this._endDateLabel = new System.Windows.Forms.Label();
-            this._discountInPercentTextBox = new System.Windows.Forms.TextBox();
             this._discountInPercentLabel = new System.Windows.Forms.Label();
             this._productOLV = new BrightIdeasSoftware.ObjectListView();
+            this.ProductName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.ProductPrice = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this._addToDraftOrderLineOLV = new System.Windows.Forms.Button();
             this._removeFromDraftOrderLineOLV = new System.Windows.Forms.Button();
             this._customerLabel = new System.Windows.Forms.Label();
+            this._saveDraftButton = new System.Windows.Forms.Button();
+            this._discountInPercentNumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this._draftOrderLineOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // _draftTitleLabel
@@ -75,11 +79,12 @@
             // _draftOrderLineOLV
             // 
             this._draftOrderLineOLV.CellEditUseWholeCell = false;
+            this._draftOrderLineOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._draftOrderLineOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._draftOrderLineOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._draftOrderLineOLV.Location = new System.Drawing.Point(232, 12);
             this._draftOrderLineOLV.Name = "_draftOrderLineOLV";
-            this._draftOrderLineOLV.Size = new System.Drawing.Size(256, 171);
+            this._draftOrderLineOLV.Size = new System.Drawing.Size(256, 180);
             this._draftOrderLineOLV.TabIndex = 3;
             this._draftOrderLineOLV.UseCompatibleStateImageBehavior = false;
             this._draftOrderLineOLV.View = System.Windows.Forms.View.Details;
@@ -133,14 +138,6 @@
             this._endDateLabel.TabIndex = 8;
             this._endDateLabel.Text = "Slut dato: ";
             // 
-            // _discountInPercentTextBox
-            // 
-            this._discountInPercentTextBox.Location = new System.Drawing.Point(83, 143);
-            this._discountInPercentTextBox.Multiline = true;
-            this._discountInPercentTextBox.Name = "_discountInPercentTextBox";
-            this._discountInPercentTextBox.Size = new System.Drawing.Size(134, 20);
-            this._discountInPercentTextBox.TabIndex = 11;
-            // 
             // _discountInPercentLabel
             // 
             this._discountInPercentLabel.AutoSize = true;
@@ -152,19 +149,40 @@
             // 
             // _productOLV
             // 
+            this._productOLV.AllColumns.Add(this.ProductName);
+            this._productOLV.AllColumns.Add(this.ProductPrice);
             this._productOLV.CellEditUseWholeCell = false;
+            this._productOLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ProductName,
+            this.ProductPrice});
+            this._productOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._productOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._productOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._productOLV.Location = new System.Drawing.Point(565, 12);
             this._productOLV.Name = "_productOLV";
-            this._productOLV.Size = new System.Drawing.Size(256, 171);
+            this._productOLV.Size = new System.Drawing.Size(256, 180);
             this._productOLV.TabIndex = 12;
             this._productOLV.UseCompatibleStateImageBehavior = false;
             this._productOLV.View = System.Windows.Forms.View.Details;
             // 
+            // ProductName
+            // 
+            this.ProductName.AspectName = "Name";
+            this.ProductName.Groupable = false;
+            this.ProductName.Text = "Vare";
+            this.ProductName.Width = 176;
+            // 
+            // ProductPrice
+            // 
+            this.ProductPrice.AspectName = "SalesPrice";
+            this.ProductPrice.AspectToStringFormat = "{0:c}";
+            this.ProductPrice.Groupable = false;
+            this.ProductPrice.Text = "Pris";
+            this.ProductPrice.Width = 80;
+            // 
             // _addToDraftOrderLineOLV
             // 
-            this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(494, 62);
+            this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(494, 71);
             this._addToDraftOrderLineOLV.Name = "_addToDraftOrderLineOLV";
             this._addToDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
             this._addToDraftOrderLineOLV.TabIndex = 13;
@@ -173,7 +191,7 @@
             // 
             // _removeFromDraftOrderLineOLV
             // 
-            this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(494, 91);
+            this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(494, 100);
             this._removeFromDraftOrderLineOLV.Name = "_removeFromDraftOrderLineOLV";
             this._removeFromDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
             this._removeFromDraftOrderLineOLV.TabIndex = 14;
@@ -189,16 +207,35 @@
             this._customerLabel.TabIndex = 15;
             this._customerLabel.Text = "Kunde: ";
             // 
+            // _saveDraftButton
+            // 
+            this._saveDraftButton.Location = new System.Drawing.Point(153, 169);
+            this._saveDraftButton.Name = "_saveDraftButton";
+            this._saveDraftButton.Size = new System.Drawing.Size(64, 23);
+            this._saveDraftButton.TabIndex = 16;
+            this._saveDraftButton.Text = "Opret";
+            this._saveDraftButton.UseVisualStyleBackColor = true;
+            this._saveDraftButton.Click += new System.EventHandler(this._saveDraftButton_Click);
+            // 
+            // _discountInPercentNumericUpDown
+            // 
+            this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(83, 143);
+            this._discountInPercentNumericUpDown.Name = "_discountInPercentNumericUpDown";
+            this._discountInPercentNumericUpDown.Size = new System.Drawing.Size(134, 20);
+            this._discountInPercentNumericUpDown.TabIndex = 17;
+            this._discountInPercentNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // DraftCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 195);
+            this.ClientSize = new System.Drawing.Size(833, 203);
+            this.Controls.Add(this._discountInPercentNumericUpDown);
+            this.Controls.Add(this._saveDraftButton);
             this.Controls.Add(this._customerLabel);
             this.Controls.Add(this._removeFromDraftOrderLineOLV);
             this.Controls.Add(this._addToDraftOrderLineOLV);
             this.Controls.Add(this._productOLV);
-            this.Controls.Add(this._discountInPercentTextBox);
             this.Controls.Add(this._discountInPercentLabel);
             this.Controls.Add(this._endDateDateTimePicker);
             this.Controls.Add(this._endDateLabel);
@@ -215,6 +252,7 @@
             this.Load += new System.EventHandler(this.DraftCreateForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this._draftOrderLineOLV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,11 +270,14 @@
         private System.Windows.Forms.DateTimePicker _startDateDateTimePicker;
         private System.Windows.Forms.DateTimePicker _endDateDateTimePicker;
         private System.Windows.Forms.Label _endDateLabel;
-        private System.Windows.Forms.TextBox _discountInPercentTextBox;
         private System.Windows.Forms.Label _discountInPercentLabel;
         private BrightIdeasSoftware.ObjectListView _productOLV;
         private System.Windows.Forms.Button _addToDraftOrderLineOLV;
         private System.Windows.Forms.Button _removeFromDraftOrderLineOLV;
         private System.Windows.Forms.Label _customerLabel;
+        private BrightIdeasSoftware.OLVColumn ProductName;
+        private BrightIdeasSoftware.OLVColumn ProductPrice;
+        private System.Windows.Forms.Button _saveDraftButton;
+        private System.Windows.Forms.NumericUpDown _discountInPercentNumericUpDown;
     }
 }
