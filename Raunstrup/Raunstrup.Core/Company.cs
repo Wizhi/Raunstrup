@@ -52,9 +52,9 @@ namespace Raunstrup.Core
         {
             var products = new Product[]
             {
-                new Material("Metal")  { SalesPrice = 123.4M }, 
-                new Material("Wood")  { SalesPrice = 200M }, 
-                new WorkHour("HandWorker Hour") { SalesPrice = 321.2M }, 
+                new Material { Name = "Metal", SalesPrice = 123.4M, CostPrice = 50M }, 
+                new Material { Name = "Wood", SalesPrice = 200M, CostPrice = 100M }, 
+                new WorkHour { Name = "HandWorker Hour", SalesPrice = 321.2M }, 
             };
 
             foreach (var product in products)

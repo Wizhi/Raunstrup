@@ -3,7 +3,7 @@
     public abstract class Product
     {
         protected int _id;
-
+        
         public int Id
         {
             get { return _id; }
