@@ -99,6 +99,17 @@ namespace Raunstrup.Core.Controllers
                 returnList.Add(new ReadOnlyCustomer(customer));
             }
             return returnList;
+        }
+
+        public List<ReadOnlyEmployee> GetAllEmployees()
+        {
+            IList<Employee> employees = _employeeRepository.GetAll();
+            List<ReadOnlyEmployee> returnList = new List<ReadOnlyEmployee>();
+            foreach (var employee in employees)
+            {
+                returnList.Add(new ReadOnlyEmployee(employee));
+            }
+            return returnList;
         } 
     }
 }
