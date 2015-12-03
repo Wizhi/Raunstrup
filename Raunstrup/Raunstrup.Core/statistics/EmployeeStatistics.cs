@@ -10,7 +10,7 @@ namespace Raunstrup.Core.statistics
 {
     public class EmployeeStatistics
     {
-        public readonly Dictionary<DateTime, int> HoursWorked = new Dictionary<DateTime, int>();
+        public readonly IDictionary<DateTime, int> HoursWorked = new Dictionary<DateTime, int>();
         public readonly DateTime Start;
         public readonly DateTime End;
         private readonly IReportRepository _reportRepository;
