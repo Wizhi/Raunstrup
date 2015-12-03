@@ -47,6 +47,12 @@
             this._customerLabel = new System.Windows.Forms.Label();
             this._saveDraftButton = new System.Windows.Forms.Button();
             this._discountInPercentNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this._employeeComboBox = new System.Windows.Forms.ComboBox();
+            this.OrderLineProduct = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.UnitPrice = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.Quantity = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.TotalPrice = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this._draftOrderLineOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
@@ -55,7 +61,7 @@
             // _draftTitleLabel
             // 
             this._draftTitleLabel.AutoSize = true;
-            this._draftTitleLabel.Location = new System.Drawing.Point(11, 42);
+            this._draftTitleLabel.Location = new System.Drawing.Point(11, 71);
             this._draftTitleLabel.Name = "_draftTitleLabel";
             this._draftTitleLabel.Size = new System.Drawing.Size(66, 13);
             this._draftTitleLabel.TabIndex = 0;
@@ -64,25 +70,34 @@
             // _customerComboBox
             // 
             this._customerComboBox.FormattingEnabled = true;
-            this._customerComboBox.Location = new System.Drawing.Point(83, 12);
+            this._customerComboBox.Location = new System.Drawing.Point(110, 12);
             this._customerComboBox.Name = "_customerComboBox";
             this._customerComboBox.Size = new System.Drawing.Size(134, 21);
             this._customerComboBox.TabIndex = 1;
             // 
             // _draftTitleTextBox
             // 
-            this._draftTitleTextBox.Location = new System.Drawing.Point(83, 39);
+            this._draftTitleTextBox.Location = new System.Drawing.Point(110, 68);
             this._draftTitleTextBox.Name = "_draftTitleTextBox";
             this._draftTitleTextBox.Size = new System.Drawing.Size(134, 20);
             this._draftTitleTextBox.TabIndex = 2;
             // 
             // _draftOrderLineOLV
             // 
+            this._draftOrderLineOLV.AllColumns.Add(this.OrderLineProduct);
+            this._draftOrderLineOLV.AllColumns.Add(this.UnitPrice);
+            this._draftOrderLineOLV.AllColumns.Add(this.Quantity);
+            this._draftOrderLineOLV.AllColumns.Add(this.TotalPrice);
             this._draftOrderLineOLV.CellEditUseWholeCell = false;
+            this._draftOrderLineOLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.OrderLineProduct,
+            this.UnitPrice,
+            this.Quantity,
+            this.TotalPrice});
             this._draftOrderLineOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._draftOrderLineOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._draftOrderLineOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
-            this._draftOrderLineOLV.Location = new System.Drawing.Point(232, 12);
+            this._draftOrderLineOLV.Location = new System.Drawing.Point(259, 12);
             this._draftOrderLineOLV.Name = "_draftOrderLineOLV";
             this._draftOrderLineOLV.Size = new System.Drawing.Size(256, 180);
             this._draftOrderLineOLV.TabIndex = 3;
@@ -91,7 +106,7 @@
             // 
             // _draftDescriptionTextBox
             // 
-            this._draftDescriptionTextBox.Location = new System.Drawing.Point(83, 65);
+            this._draftDescriptionTextBox.Location = new System.Drawing.Point(110, 94);
             this._draftDescriptionTextBox.Multiline = true;
             this._draftDescriptionTextBox.Name = "_draftDescriptionTextBox";
             this._draftDescriptionTextBox.Size = new System.Drawing.Size(134, 20);
@@ -100,7 +115,7 @@
             // _draftDescriptionLabel
             // 
             this._draftDescriptionLabel.AutoSize = true;
-            this._draftDescriptionLabel.Location = new System.Drawing.Point(11, 68);
+            this._draftDescriptionLabel.Location = new System.Drawing.Point(11, 97);
             this._draftDescriptionLabel.Name = "_draftDescriptionLabel";
             this._draftDescriptionLabel.Size = new System.Drawing.Size(67, 13);
             this._draftDescriptionLabel.TabIndex = 4;
@@ -109,7 +124,7 @@
             // _startDateLabel
             // 
             this._startDateLabel.AutoSize = true;
-            this._startDateLabel.Location = new System.Drawing.Point(11, 94);
+            this._startDateLabel.Location = new System.Drawing.Point(11, 123);
             this._startDateLabel.Name = "_startDateLabel";
             this._startDateLabel.Size = new System.Drawing.Size(59, 13);
             this._startDateLabel.TabIndex = 6;
@@ -117,14 +132,14 @@
             // 
             // _startDateDateTimePicker
             // 
-            this._startDateDateTimePicker.Location = new System.Drawing.Point(83, 91);
+            this._startDateDateTimePicker.Location = new System.Drawing.Point(110, 120);
             this._startDateDateTimePicker.Name = "_startDateDateTimePicker";
             this._startDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this._startDateDateTimePicker.TabIndex = 7;
             // 
             // _endDateDateTimePicker
             // 
-            this._endDateDateTimePicker.Location = new System.Drawing.Point(83, 117);
+            this._endDateDateTimePicker.Location = new System.Drawing.Point(110, 146);
             this._endDateDateTimePicker.Name = "_endDateDateTimePicker";
             this._endDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this._endDateDateTimePicker.TabIndex = 9;
@@ -132,7 +147,7 @@
             // _endDateLabel
             // 
             this._endDateLabel.AutoSize = true;
-            this._endDateLabel.Location = new System.Drawing.Point(11, 120);
+            this._endDateLabel.Location = new System.Drawing.Point(11, 149);
             this._endDateLabel.Name = "_endDateLabel";
             this._endDateLabel.Size = new System.Drawing.Size(55, 13);
             this._endDateLabel.TabIndex = 8;
@@ -141,7 +156,7 @@
             // _discountInPercentLabel
             // 
             this._discountInPercentLabel.AutoSize = true;
-            this._discountInPercentLabel.Location = new System.Drawing.Point(11, 146);
+            this._discountInPercentLabel.Location = new System.Drawing.Point(11, 175);
             this._discountInPercentLabel.Name = "_discountInPercentLabel";
             this._discountInPercentLabel.Size = new System.Drawing.Size(50, 13);
             this._discountInPercentLabel.TabIndex = 10;
@@ -158,7 +173,7 @@
             this._productOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._productOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._productOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
-            this._productOLV.Location = new System.Drawing.Point(565, 12);
+            this._productOLV.Location = new System.Drawing.Point(592, 12);
             this._productOLV.Name = "_productOLV";
             this._productOLV.Size = new System.Drawing.Size(256, 180);
             this._productOLV.TabIndex = 12;
@@ -182,16 +197,17 @@
             // 
             // _addToDraftOrderLineOLV
             // 
-            this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(494, 71);
+            this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(521, 71);
             this._addToDraftOrderLineOLV.Name = "_addToDraftOrderLineOLV";
             this._addToDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
             this._addToDraftOrderLineOLV.TabIndex = 13;
             this._addToDraftOrderLineOLV.Text = "<-- Tilføj";
             this._addToDraftOrderLineOLV.UseVisualStyleBackColor = true;
+            this._addToDraftOrderLineOLV.Click += new System.EventHandler(this._addToDraftOrderLineOLV_Click);
             // 
             // _removeFromDraftOrderLineOLV
             // 
-            this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(494, 100);
+            this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(521, 100);
             this._removeFromDraftOrderLineOLV.Name = "_removeFromDraftOrderLineOLV";
             this._removeFromDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
             this._removeFromDraftOrderLineOLV.TabIndex = 14;
@@ -209,7 +225,7 @@
             // 
             // _saveDraftButton
             // 
-            this._saveDraftButton.Location = new System.Drawing.Point(153, 169);
+            this._saveDraftButton.Location = new System.Drawing.Point(180, 198);
             this._saveDraftButton.Name = "_saveDraftButton";
             this._saveDraftButton.Size = new System.Drawing.Size(64, 23);
             this._saveDraftButton.TabIndex = 16;
@@ -219,17 +235,60 @@
             // 
             // _discountInPercentNumericUpDown
             // 
-            this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(83, 143);
+            this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(110, 172);
             this._discountInPercentNumericUpDown.Name = "_discountInPercentNumericUpDown";
             this._discountInPercentNumericUpDown.Size = new System.Drawing.Size(134, 20);
             this._discountInPercentNumericUpDown.TabIndex = 17;
             this._discountInPercentNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 42);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Ansvarshavende: ";
+            // 
+            // _employeeComboBox
+            // 
+            this._employeeComboBox.FormattingEnabled = true;
+            this._employeeComboBox.Location = new System.Drawing.Point(110, 39);
+            this._employeeComboBox.Name = "_employeeComboBox";
+            this._employeeComboBox.Size = new System.Drawing.Size(134, 21);
+            this._employeeComboBox.TabIndex = 18;
+            // 
+            // OrderLineProduct
+            // 
+            this.OrderLineProduct.AspectName = "Product";
+            this.OrderLineProduct.Groupable = false;
+            this.OrderLineProduct.Text = "Vare";
+            // 
+            // UnitPrice
+            // 
+            this.UnitPrice.AspectName = "UnitPrice";
+            this.UnitPrice.Groupable = false;
+            this.UnitPrice.Text = "Stik. pris";
+            // 
+            // Quantity
+            // 
+            this.Quantity.AspectName = "Quantity";
+            this.Quantity.Groupable = false;
+            this.Quantity.Text = "Antal";
+            // 
+            // TotalPrice
+            // 
+            this.TotalPrice.AspectName = "TotalPrice";
+            this.TotalPrice.Groupable = false;
+            this.TotalPrice.Text = "Samlet pris";
+            // 
             // DraftCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 203);
+            this.ClientSize = new System.Drawing.Size(859, 229);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this._employeeComboBox);
             this.Controls.Add(this._discountInPercentNumericUpDown);
             this.Controls.Add(this._saveDraftButton);
             this.Controls.Add(this._customerLabel);
@@ -279,5 +338,11 @@
         private BrightIdeasSoftware.OLVColumn ProductPrice;
         private System.Windows.Forms.Button _saveDraftButton;
         private System.Windows.Forms.NumericUpDown _discountInPercentNumericUpDown;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox _employeeComboBox;
+        private BrightIdeasSoftware.OLVColumn OrderLineProduct;
+        private BrightIdeasSoftware.OLVColumn UnitPrice;
+        private BrightIdeasSoftware.OLVColumn Quantity;
+        private BrightIdeasSoftware.OLVColumn TotalPrice;
     }
 }

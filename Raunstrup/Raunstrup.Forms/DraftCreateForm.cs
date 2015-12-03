@@ -25,6 +25,8 @@ namespace Raunstrup.Forms
 
             _customerComboBox.DataSource = _draftController.GetAllCustomers();
             _customerComboBox.DisplayMember = "Name";
+            _employeeComboBox.DataSource = _draftController.GetAllEmployees();
+            _employeeComboBox.DisplayMember = "Name";
             _productOLV.SetObjects(_draftController.GetAllProducts());
             
         }
@@ -33,6 +35,7 @@ namespace Raunstrup.Forms
         {
 
             var readOnlyCustomer = _customerComboBox.SelectedItem as ReadOnlyCustomer;
+            var readOnlyEmployee = _employeeComboBox.SelectedItem as ReadOnlyEmployee;
             if (readOnlyCustomer != null)
             {
                 _draftController.CreateNewDraft(readOnlyCustomer.Id);
@@ -41,6 +44,25 @@ namespace Raunstrup.Forms
             {
                 MessageBox.Show(@"Vælg venligst en kunde.");
             }
+            if (readOnlyEmployee != null)
+            {
+                _draftController.SetResponsibleEmployee(readOnlyEmployee.Id);
+            }
+            else
+            {
+                MessageBox.Show(@"Vælg venligst en ansvarshavende.");
+            }
+            _draftController.SetDescription(_draftDescriptionTextBox.Text);
+            _draftController.SetStartDate(_startDateDateTimePicker.Value);
+            _draftController.SetEndDate(_endDateDateTimePicker.Value);
+            _draftController.SetTitle(_draftTitleTextBox.Text);
+            
+        }
+
+        private void _addToDraftOrderLineOLV_Click(object sender, EventArgs e)
+        {
+            //_draftController.AddOrderLine();
+            //_draftOrderLineOLV.AddObject(new ReadOnlyOrderLine());
         }
     }
 }
