@@ -24,7 +24,7 @@ namespace Raunstrup.Forms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _company = new Company();
-            Application.Run(new ProjectComparisonForm(_company.GetReportController(),1));
+            Application.Run(new DraftCreateForm());
         }
                
     }

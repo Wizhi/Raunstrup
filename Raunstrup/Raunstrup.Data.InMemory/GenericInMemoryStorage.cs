@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Raunstrup.Data.InMemory.Repositories
+namespace Raunstrup.Data.InMemory
 {
     public abstract class GenericInMemoryStorage<T>
     {
@@ -18,6 +18,11 @@ namespace Raunstrup.Data.InMemory.Repositories
 
             throw new KeyNotFoundException();
         }
+
+        public IList<T> GetAll()
+        {
+            return new List<T>(Storage.Values);
+        } 
 
         public void Save(T entity)
         {
