@@ -94,6 +94,11 @@ namespace Raunstrup.Domain
             OrderLines.Add(new OrderLine(item,quantity));
         }
 
+        public void AddOrderLine(Product item, int quantity, decimal price)
+        {
+            OrderLines.Add(new OrderLine(item, quantity, price));
+        }
+
         //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
         {
