@@ -31,7 +31,6 @@
             this._draftTitleLabel = new System.Windows.Forms.Label();
             this._customerComboBox = new System.Windows.Forms.ComboBox();
             this._draftTitleTextBox = new System.Windows.Forms.TextBox();
-            this._draftOrderLineOLV = new BrightIdeasSoftware.ObjectListView();
             this._draftDescriptionTextBox = new System.Windows.Forms.TextBox();
             this._draftDescriptionLabel = new System.Windows.Forms.Label();
             this._startDateLabel = new System.Windows.Forms.Label();
@@ -49,13 +48,20 @@
             this._discountInPercentNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this._employeeComboBox = new System.Windows.Forms.ComboBox();
-            this.OrderLineProduct = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.UnitPrice = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.Quantity = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.TotalPrice = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            ((System.ComponentModel.ISupportInitialize)(this._draftOrderLineOLV)).BeginInit();
+            this._draftProductsLV = new System.Windows.Forms.ListView();
+            this.Varer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UnitPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Quantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TotalPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._priceNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this._quantityNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this._editOrderLineButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._quantityNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // _draftTitleLabel
@@ -81,28 +87,6 @@
             this._draftTitleTextBox.Name = "_draftTitleTextBox";
             this._draftTitleTextBox.Size = new System.Drawing.Size(134, 20);
             this._draftTitleTextBox.TabIndex = 2;
-            // 
-            // _draftOrderLineOLV
-            // 
-            this._draftOrderLineOLV.AllColumns.Add(this.OrderLineProduct);
-            this._draftOrderLineOLV.AllColumns.Add(this.UnitPrice);
-            this._draftOrderLineOLV.AllColumns.Add(this.Quantity);
-            this._draftOrderLineOLV.AllColumns.Add(this.TotalPrice);
-            this._draftOrderLineOLV.CellEditUseWholeCell = false;
-            this._draftOrderLineOLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.OrderLineProduct,
-            this.UnitPrice,
-            this.Quantity,
-            this.TotalPrice});
-            this._draftOrderLineOLV.Cursor = System.Windows.Forms.Cursors.Default;
-            this._draftOrderLineOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
-            this._draftOrderLineOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
-            this._draftOrderLineOLV.Location = new System.Drawing.Point(259, 12);
-            this._draftOrderLineOLV.Name = "_draftOrderLineOLV";
-            this._draftOrderLineOLV.Size = new System.Drawing.Size(256, 180);
-            this._draftOrderLineOLV.TabIndex = 3;
-            this._draftOrderLineOLV.UseCompatibleStateImageBehavior = false;
-            this._draftOrderLineOLV.View = System.Windows.Forms.View.Details;
             // 
             // _draftDescriptionTextBox
             // 
@@ -173,7 +157,7 @@
             this._productOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._productOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._productOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
-            this._productOLV.Location = new System.Drawing.Point(592, 12);
+            this._productOLV.Location = new System.Drawing.Point(591, 12);
             this._productOLV.Name = "_productOLV";
             this._productOLV.Size = new System.Drawing.Size(256, 180);
             this._productOLV.TabIndex = 12;
@@ -185,7 +169,7 @@
             this.ProductName.AspectName = "Name";
             this.ProductName.Groupable = false;
             this.ProductName.Text = "Vare";
-            this.ProductName.Width = 176;
+            this.ProductName.Width = 174;
             // 
             // ProductPrice
             // 
@@ -213,6 +197,7 @@
             this._removeFromDraftOrderLineOLV.TabIndex = 14;
             this._removeFromDraftOrderLineOLV.Text = "Fjern";
             this._removeFromDraftOrderLineOLV.UseVisualStyleBackColor = true;
+            this._removeFromDraftOrderLineOLV.Click += new System.EventHandler(this._removeFromDraftOrderLineOLV_Click);
             // 
             // _customerLabel
             // 
@@ -235,6 +220,7 @@
             // 
             // _discountInPercentNumericUpDown
             // 
+            this._discountInPercentNumericUpDown.DecimalPlaces = 2;
             this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(110, 172);
             this._discountInPercentNumericUpDown.Name = "_discountInPercentNumericUpDown";
             this._discountInPercentNumericUpDown.Size = new System.Drawing.Size(134, 20);
@@ -258,35 +244,100 @@
             this._employeeComboBox.Size = new System.Drawing.Size(134, 21);
             this._employeeComboBox.TabIndex = 18;
             // 
-            // OrderLineProduct
+            // _draftProductsLV
             // 
-            this.OrderLineProduct.AspectName = "Product";
-            this.OrderLineProduct.Groupable = false;
-            this.OrderLineProduct.Text = "Vare";
+            this._draftProductsLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Varer,
+            this.UnitPrice,
+            this.Quantity,
+            this.TotalPrice});
+            this._draftProductsLV.FullRowSelect = true;
+            this._draftProductsLV.Location = new System.Drawing.Point(250, 12);
+            this._draftProductsLV.MultiSelect = false;
+            this._draftProductsLV.Name = "_draftProductsLV";
+            this._draftProductsLV.Size = new System.Drawing.Size(265, 180);
+            this._draftProductsLV.TabIndex = 20;
+            this._draftProductsLV.UseCompatibleStateImageBehavior = false;
+            this._draftProductsLV.View = System.Windows.Forms.View.Details;
+            this._draftProductsLV.MouseClick += new System.Windows.Forms.MouseEventHandler(this._draftProductsLV_MouseClick);
+            // 
+            // Varer
+            // 
+            this.Varer.Tag = "";
+            this.Varer.Text = "Vare";
+            this.Varer.Width = 80;
             // 
             // UnitPrice
             // 
-            this.UnitPrice.AspectName = "UnitPrice";
-            this.UnitPrice.Groupable = false;
-            this.UnitPrice.Text = "Stik. pris";
+            this.UnitPrice.Text = "Stk. pris";
             // 
             // Quantity
             // 
-            this.Quantity.AspectName = "Quantity";
-            this.Quantity.Groupable = false;
             this.Quantity.Text = "Antal";
+            this.Quantity.Width = 41;
             // 
             // TotalPrice
             // 
-            this.TotalPrice.AspectName = "TotalPrice";
-            this.TotalPrice.Groupable = false;
             this.TotalPrice.Text = "Samlet pris";
+            this.TotalPrice.Width = 71;
+            // 
+            // _priceNumericUpDown
+            // 
+            this._priceNumericUpDown.DecimalPlaces = 2;
+            this._priceNumericUpDown.Location = new System.Drawing.Point(283, 200);
+            this._priceNumericUpDown.Name = "_priceNumericUpDown";
+            this._priceNumericUpDown.Size = new System.Drawing.Size(61, 20);
+            this._priceNumericUpDown.TabIndex = 23;
+            this._priceNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this._priceNumericUpDown.ThousandsSeparator = true;
+            // 
+            // _quantityNumericUpDown
+            // 
+            this._quantityNumericUpDown.Location = new System.Drawing.Point(390, 200);
+            this._quantityNumericUpDown.Name = "_quantityNumericUpDown";
+            this._quantityNumericUpDown.Size = new System.Drawing.Size(67, 20);
+            this._quantityNumericUpDown.TabIndex = 24;
+            this._quantityNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // _editOrderLineButton
+            // 
+            this._editOrderLineButton.Location = new System.Drawing.Point(463, 198);
+            this._editOrderLineButton.Name = "_editOrderLineButton";
+            this._editOrderLineButton.Size = new System.Drawing.Size(52, 23);
+            this._editOrderLineButton.TabIndex = 25;
+            this._editOrderLineButton.Text = "Gem";
+            this._editOrderLineButton.UseVisualStyleBackColor = true;
+            this._editOrderLineButton.Click += new System.EventHandler(this._editOrderLineButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(250, 203);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(27, 13);
+            this.label2.TabIndex = 26;
+            this.label2.Text = "Pris:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(350, 203);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.TabIndex = 27;
+            this.label3.Text = "Antal:";
             // 
             // DraftCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(859, 229);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this._editOrderLineButton);
+            this.Controls.Add(this._draftProductsLV);
+            this.Controls.Add(this._quantityNumericUpDown);
+            this.Controls.Add(this._priceNumericUpDown);
             this.Controls.Add(this.label1);
             this.Controls.Add(this._employeeComboBox);
             this.Controls.Add(this._discountInPercentNumericUpDown);
@@ -302,16 +353,16 @@
             this.Controls.Add(this._startDateLabel);
             this.Controls.Add(this._draftDescriptionTextBox);
             this.Controls.Add(this._draftDescriptionLabel);
-            this.Controls.Add(this._draftOrderLineOLV);
             this.Controls.Add(this._draftTitleTextBox);
             this.Controls.Add(this._customerComboBox);
             this.Controls.Add(this._draftTitleLabel);
             this.Name = "DraftCreateForm";
             this.Text = "DraftCreateForm";
             this.Load += new System.EventHandler(this.DraftCreateForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this._draftOrderLineOLV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._quantityNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,7 +373,6 @@
         private System.Windows.Forms.Label _draftTitleLabel;
         private System.Windows.Forms.ComboBox _customerComboBox;
         private System.Windows.Forms.TextBox _draftTitleTextBox;
-        private BrightIdeasSoftware.ObjectListView _draftOrderLineOLV;
         private System.Windows.Forms.TextBox _draftDescriptionTextBox;
         private System.Windows.Forms.Label _draftDescriptionLabel;
         private System.Windows.Forms.Label _startDateLabel;
@@ -340,9 +390,15 @@
         private System.Windows.Forms.NumericUpDown _discountInPercentNumericUpDown;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox _employeeComboBox;
-        private BrightIdeasSoftware.OLVColumn OrderLineProduct;
-        private BrightIdeasSoftware.OLVColumn UnitPrice;
-        private BrightIdeasSoftware.OLVColumn Quantity;
-        private BrightIdeasSoftware.OLVColumn TotalPrice;
+        private System.Windows.Forms.ListView _draftProductsLV;
+        private System.Windows.Forms.ColumnHeader UnitPrice;
+        private System.Windows.Forms.ColumnHeader Quantity;
+        private System.Windows.Forms.ColumnHeader TotalPrice;
+        private System.Windows.Forms.ColumnHeader Varer;
+        private System.Windows.Forms.NumericUpDown _priceNumericUpDown;
+        private System.Windows.Forms.NumericUpDown _quantityNumericUpDown;
+        private System.Windows.Forms.Button _editOrderLineButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
