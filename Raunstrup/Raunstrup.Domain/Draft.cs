@@ -8,7 +8,9 @@ namespace Raunstrup.Domain
         private int _id;
         private DateTime _startDate;
         private DateTime _endDate;
-        private readonly IList<OrderLine> _orderLines;
+        // TODO: Investigate whether we use C# 6. How the hell am I not sure about that?
+        private double _discount = 0;
+        private readonly IList<OrderLine> _orderLines = new List<OrderLine>();
 
         public virtual int Id
         {
@@ -69,7 +71,11 @@ namespace Raunstrup.Domain
 
         public virtual string Description { get; set; }
 
-        public virtual double Discount { get; set; }
+        public virtual double Discount
+        {
+            get { return _discount; }
+            set { _discount = value; }
+        }
 
         public virtual Employee ResponsiblEmployee { get; set; }
 
@@ -97,13 +103,13 @@ namespace Raunstrup.Domain
 
         public void AddOrderLine(Product item, int quantity)
         {
-            OrderLines.Add(new OrderLine(item,quantity));
+            _orderLines.Add(new OrderLine(item,quantity));
         }
 
         //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
         {
-            return OrderLines;
+            return _orderLines;
         }
     }
 }
