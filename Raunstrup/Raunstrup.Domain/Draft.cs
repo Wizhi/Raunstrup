@@ -5,10 +5,12 @@ namespace Raunstrup.Domain
 {
     public class Draft
     {
-
         private int _id;
+        private DateTime _startDate;
+        private DateTime _endDate;
+        private readonly IList<OrderLine> _orderLines;
 
-        public int Id
+        public virtual int Id
         {
             get { return _id; }
             set
@@ -22,10 +24,8 @@ namespace Raunstrup.Domain
                 _id = value;
             }
         }
-
-        private DateTime _startDate;
-
-        public DateTime StartDate
+        
+        public virtual DateTime StartDate
         {
             get
             {
@@ -45,9 +45,7 @@ namespace Raunstrup.Domain
             }
         }
 
-        private DateTime _endDate;
-
-        public DateTime EndDate
+        public virtual DateTime EndDate
         {
             get
             {
@@ -67,26 +65,34 @@ namespace Raunstrup.Domain
             }
         }
 
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public Employee ResponsiblEmployee { get; set; }
+        public virtual double Discount { get; set; }
 
-        public readonly DateTime CreationDate;
+        public virtual Employee ResponsiblEmployee { get; set; }
 
-        public readonly Customer Customer;
+        public virtual DateTime CreationDate { get; }
 
-        public readonly IList<OrderLine> OrderLines = new List<OrderLine>();
+        public virtual Customer Customer { get; }
 
-
-        public Draft(Customer customer)
+        public virtual IList<OrderLine> OrderLines
         {
-            Customer = customer;
+            get { return _orderLines; }
+        }
 
+        public Draft()
+        {
             CreationDate = DateTime.Now;
             StartDate = DateTime.Now;
             EndDate = DateTime.Now.AddDays(7);
+        }
+
+        public Draft(Customer customer)
+            : this()
+        {
+            Customer = customer;
         }
 
         public void AddOrderLine(Product item, int quantity)

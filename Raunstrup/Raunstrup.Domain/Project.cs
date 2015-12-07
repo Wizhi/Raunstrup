@@ -4,13 +4,9 @@ namespace Raunstrup.Domain
 {
     public class Project
     {
-        public readonly Draft Draft;
-        // TODO: Consider renaming this to something more related to "beginning a project".
-        public readonly DateTime OrderDate;
-
         private int _id;
 
-        public int Id
+        public virtual int Id
         {
             get { return _id; }
             set
@@ -23,6 +19,11 @@ namespace Raunstrup.Domain
                 _id = value;
             }
         }
+
+        public virtual Draft Draft { get; private set; }
+        public virtual Employee ResponsiblEmployee { get; set; }
+        // TODO: Consider renaming this to something more related to "beginning a project".
+        public virtual DateTime OrderDate { get; set; }
 
         public Project(Draft draft/*, DateTime orderDate*/)
         {

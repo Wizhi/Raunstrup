@@ -2,9 +2,9 @@
 {
     public abstract class Product
     {
-        protected int _id;
+        private int _id;
         
-        public int Id
+        public virtual int Id
         {
             get { return _id; }
             set
@@ -18,8 +18,8 @@
             }
         }
 
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public decimal SalesPrice { get; set; }
+        public virtual decimal SalesPrice { get; set; }
     }
 }
