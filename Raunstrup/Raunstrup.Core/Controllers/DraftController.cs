@@ -70,6 +70,11 @@ namespace Raunstrup.Core.Controllers
             _currentDraft.Description = description;
         }
 
+        public void SetDiscountPercentage(decimal percentage)
+        {
+            _currentDraft.DiscountPercentage = percentage;
+        }
+
         public void SaveDraft()
         {
             _draftRepository.Save(_currentDraft);
