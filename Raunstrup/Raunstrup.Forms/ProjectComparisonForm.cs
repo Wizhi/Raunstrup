@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Raunstrup.Core.Controllers;
-using Raunstrup.Core.statistics;
+using Raunstrup.Core.Statistics;
 
 namespace Raunstrup.Forms
 {

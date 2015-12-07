@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Raunstrup.Core.statistics
+namespace Raunstrup.Core.Statistics
 {
     public class Week : IEquatable<Week>,IComparable<Week>
     {
@@ -19,6 +19,12 @@ namespace Raunstrup.Core.statistics
             }
             StartDayDate = tempStartDay.Date;
         }
+
+        public int GetWorkingHoursInWeek()
+        {
+            return 7*5;
+        }
+
         public bool Equals(Week other)
         {
             return StartDayDate.Equals(other.StartDayDate);
