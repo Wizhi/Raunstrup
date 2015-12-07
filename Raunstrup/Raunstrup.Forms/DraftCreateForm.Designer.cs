@@ -219,7 +219,7 @@
             this._saveDraftButton.Name = "_saveDraftButton";
             this._saveDraftButton.Size = new System.Drawing.Size(64, 23);
             this._saveDraftButton.TabIndex = 16;
-            this._saveDraftButton.Text = "Opret";
+            this._saveDraftButton.Text = "Gem ordre";
             this._saveDraftButton.UseVisualStyleBackColor = true;
             this._saveDraftButton.Click += new System.EventHandler(this._saveDraftButton_Click);
             // 
