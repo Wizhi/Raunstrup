@@ -88,7 +88,7 @@ namespace Raunstrup.Core.Controllers
 
         public void RemoveOrderLine(int index)
         {
-            _currentDraft.OrderLines.RemoveAt(index);
+            _currentDraft.RemoveOrderLine(_currentDraft.OrderLines[index]);
         }
 
         public ReadOnlyDraft GetDraft()
