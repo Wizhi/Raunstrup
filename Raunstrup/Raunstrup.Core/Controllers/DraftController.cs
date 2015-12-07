@@ -80,6 +80,17 @@ namespace Raunstrup.Core.Controllers
             _draftRepository.Save(_currentDraft);
         }
 
+        public void EditOrderline(int index, int quantity, decimal unitPrice)
+        {
+            _currentDraft.OrderLines[index].Quantity = quantity;
+            _currentDraft.OrderLines[index].UnitPrice = unitPrice;
+        }
+
+        public void RemoveOrderLine(int index)
+        {
+            _currentDraft.OrderLines.RemoveAt(index);
+        }
+
         public ReadOnlyDraft GetDraft()
         {
             return new ReadOnlyDraft(_currentDraft);
