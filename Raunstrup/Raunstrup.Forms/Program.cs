@@ -27,7 +27,7 @@ namespace Raunstrup.Forms
             _company = new Company();
             _draftController = _company.GetDraftController();
             _draftController.EditDraft(2);
-            Application.Run(new DraftCreateForm(_draftController.GetDraft()));
+            Application.Run(new DraftCreateForm(/*_draftController.GetDraft()*/));
         }
                
     }

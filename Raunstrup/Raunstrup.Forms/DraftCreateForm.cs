@@ -13,6 +13,7 @@ namespace Raunstrup.Forms
     {
         private readonly Company _company = new Company();
         private readonly DraftController _draftController;
+        private bool _editMode;
 
         
         
@@ -28,6 +29,10 @@ namespace Raunstrup.Forms
             _employeeComboBox.DisplayMember = "Name";
             _customerComboBox.SelectedItem = null;
             _employeeComboBox.SelectedItem = null;
+            _addToDraftOrderLineOLV.Enabled = false;
+            _editMode = false;
+
+            Console.WriteLine(_draftController.GetDraft());
         }
         public DraftCreateForm(ReadOnlyDraft draft)
         {
@@ -39,6 +44,7 @@ namespace Raunstrup.Forms
             _customerComboBox.DisplayMember = "Name";
             _employeeComboBox.DataSource = employees;
             _employeeComboBox.DisplayMember = "Name";
+            _editMode = true;
 
             _draftController.EditDraft(draft.Id);
             foreach (var orderLine in draft.OrderLines)
@@ -76,48 +82,38 @@ namespace Raunstrup.Forms
 
         private void _saveDraftButton_Click(object sender, EventArgs e)
         {
-            
-            var readOnlyCustomer = _customerComboBox.SelectedItem as ReadOnlyCustomer;
-            var readOnlyEmployee = _employeeComboBox.SelectedItem as ReadOnlyEmployee;
-            if (readOnlyCustomer != null)
+            if (_editMode)
             {
-                if (_draftController.GetDraft() == null)
+                var readOnlyEmployee = _employeeComboBox.SelectedItem as ReadOnlyEmployee;
+                if (readOnlyEmployee != null)
                 {
-                    _draftController.CreateNewDraft(readOnlyCustomer.Id);
+                    _draftController.SetResponsibleEmployee(readOnlyEmployee.Id);
                 }
-            }
-            else
-            {
-                MessageBox.Show(@"Vælg venligst en kunde.");
-            }
-            if (readOnlyEmployee != null)
-            {
-                _draftController.SetResponsibleEmployee(readOnlyEmployee.Id);
-            }
-            else
-            {
-                MessageBox.Show(@"Vælg venligst en ansvarshavende.");
-            }
-            _draftController.SetDescription(_draftDescriptionTextBox.Text);
-            _draftController.SetStartDate(_startDateDateTimePicker.Value);
-            _draftController.SetEndDate(_endDateDateTimePicker.Value);
-            _draftController.SetTitle(_draftTitleTextBox.Text);
-            _draftController.SetDiscountPercentage(_discountInPercentNumericUpDown.Value);
-
-            for (int i = 0; i < _draftProductsLV.Items.Count; i++)
-            {
-                _draftController.AddOrderLine(
-                    _productIds[i], 
-                    Convert.ToInt32(_draftProductsLV.Items[i].SubItems[2].Text),
-                    Convert.ToDecimal(_draftProductsLV.Items[i].SubItems[1].Text)
-                );
+                else
+                {
+                    MessageBox.Show(@"Vælg venligst en ansvarshavende.");
+                }
+                _draftController.SetDescription(_draftDescriptionTextBox.Text);
+                _draftController.SetStartDate(_startDateDateTimePicker.Value);
+                _draftController.SetEndDate(_endDateDateTimePicker.Value);
+                _draftController.SetTitle(_draftTitleTextBox.Text);
+                _draftController.SetDiscountPercentage(_discountInPercentNumericUpDown.Value);
             }
 
-            
         }
         private readonly List<int> _productIds = new List<int>();
         private void _addToDraftOrderLineOLV_Click(object sender, EventArgs e)
         {
+            var readOnlyCustomer = _customerComboBox.SelectedItem as ReadOnlyCustomer;
+            if (readOnlyCustomer != null)
+            {
+                if (!_editMode)
+                {
+                    _draftController.CreateNewDraft(((ReadOnlyCustomer) _customerComboBox.SelectedItem).Id);
+                    _customerComboBox.Enabled = false;
+                    _editMode = true;
+                }
+            }
             var readOnlyProduct = _productOLV.SelectedObject as ReadOnlyProduct;
             if (readOnlyProduct != null)
             {
@@ -130,6 +126,11 @@ namespace Raunstrup.Forms
                         readOnlyProduct.SalesPrice.ToString(CultureInfo.CurrentCulture),
                     }));
                 _productIds.Add(readOnlyProduct.ID);
+                _draftController.AddOrderLine(
+                    _productIds[_productIds.Count-1],
+                    Convert.ToInt32(_draftProductsLV.Items[_draftProductsLV.Items.Count - 1].SubItems[2].Text),
+                    Convert.ToDecimal(_draftProductsLV.Items[_draftProductsLV.Items.Count - 1].SubItems[1].Text)
+                );
             }
         }
 
@@ -186,6 +187,11 @@ namespace Raunstrup.Forms
                 _endDateDateTimePicker.Value = _startDateDateTimePicker.Value.AddDays(1);
                 MessageBox.Show(@"Slutdatoen skal være efter startdatoen.");
             }
+        }
+
+        private void _customerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _addToDraftOrderLineOLV.Enabled = true;
         }
 
     }

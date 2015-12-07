@@ -83,6 +83,7 @@
             this._customerComboBox.Name = "_customerComboBox";
             this._customerComboBox.Size = new System.Drawing.Size(134, 21);
             this._customerComboBox.TabIndex = 1;
+            this._customerComboBox.SelectedIndexChanged += new System.EventHandler(this._customerComboBox_SelectedIndexChanged);
             // 
             // _draftTitleTextBox
             // 
