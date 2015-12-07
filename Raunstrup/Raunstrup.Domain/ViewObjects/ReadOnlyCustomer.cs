@@ -11,7 +11,7 @@
 
         public string Name { get { return _customer.Name; } }
 
-        public string SteetName { get { return _customer.SteetName; } }
+        public string StreetName { get { return _customer.StreetName; } }
 
         public string StreetNumber { get { return _customer.StreetNumber; } }
 
