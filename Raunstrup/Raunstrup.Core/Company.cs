@@ -1,4 +1,5 @@
-﻿using Raunstrup.Core.Controllers;
+﻿using System;
+using Raunstrup.Core.Controllers;
 using Raunstrup.Data.InMemory.Repositories;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
@@ -99,22 +100,30 @@ namespace Raunstrup.Core
                 new Draft(CustomerRepository.Get(1))
                 {
                     Title = "Draft #1", 
-                    ResponsiblEmployee = EmployeeRepository.Get(1)
+                    ResponsiblEmployee = EmployeeRepository.Get(1),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
                 new Draft(CustomerRepository.Get(1))
                 {
                     Title = "Draft #2", 
-                    ResponsiblEmployee = EmployeeRepository.Get(2)
+                    ResponsiblEmployee = EmployeeRepository.Get(2),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
                 new Draft(CustomerRepository.Get(2))
                 {
                     Title = "Draft #3", 
-                    ResponsiblEmployee = EmployeeRepository.Get(3)
+                    ResponsiblEmployee = EmployeeRepository.Get(3),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
                 new Draft(CustomerRepository.Get(2))
                 {
                     Title = "Draft #4", 
-                    ResponsiblEmployee = EmployeeRepository.Get(1)
+                    ResponsiblEmployee = EmployeeRepository.Get(1),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
             };
 
