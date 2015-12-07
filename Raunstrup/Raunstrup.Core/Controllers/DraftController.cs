@@ -70,9 +70,25 @@ namespace Raunstrup.Core.Controllers
             _currentDraft.Description = description;
         }
 
+        public void SetDiscountPercentage(decimal percentage)
+        {
+            _currentDraft.DiscountPercentage = percentage;
+        }
+
         public void SaveDraft()
         {
             _draftRepository.Save(_currentDraft);
+        }
+
+        public void EditOrderline(int index, int quantity, decimal unitPrice)
+        {
+            _currentDraft.OrderLines[index].Quantity = quantity;
+            _currentDraft.OrderLines[index].UnitPrice = unitPrice;
+        }
+
+        public void RemoveOrderLine(int index)
+        {
+            _currentDraft.RemoveOrderLine(_currentDraft.OrderLines[index]);
         }
 
         public ReadOnlyDraft GetDraft()

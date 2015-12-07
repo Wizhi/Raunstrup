@@ -75,11 +75,15 @@
             // 
             // _customerComboBox
             // 
+            this._customerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this._customerComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this._customerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._customerComboBox.FormattingEnabled = true;
             this._customerComboBox.Location = new System.Drawing.Point(110, 12);
             this._customerComboBox.Name = "_customerComboBox";
             this._customerComboBox.Size = new System.Drawing.Size(134, 21);
             this._customerComboBox.TabIndex = 1;
+            this._customerComboBox.SelectedIndexChanged += new System.EventHandler(this._customerComboBox_SelectedIndexChanged);
             // 
             // _draftTitleTextBox
             // 
@@ -120,6 +124,7 @@
             this._startDateDateTimePicker.Name = "_startDateDateTimePicker";
             this._startDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this._startDateDateTimePicker.TabIndex = 7;
+            this._startDateDateTimePicker.ValueChanged += new System.EventHandler(this._startDateDateTimePicker_ValueChanged);
             // 
             // _endDateDateTimePicker
             // 
@@ -127,6 +132,7 @@
             this._endDateDateTimePicker.Name = "_endDateDateTimePicker";
             this._endDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this._endDateDateTimePicker.TabIndex = 9;
+            this._endDateDateTimePicker.ValueChanged += new System.EventHandler(this._endDateDateTimePicker_ValueChanged);
             // 
             // _endDateLabel
             // 
@@ -214,7 +220,7 @@
             this._saveDraftButton.Name = "_saveDraftButton";
             this._saveDraftButton.Size = new System.Drawing.Size(64, 23);
             this._saveDraftButton.TabIndex = 16;
-            this._saveDraftButton.Text = "Opret";
+            this._saveDraftButton.Text = "Gem ordre";
             this._saveDraftButton.UseVisualStyleBackColor = true;
             this._saveDraftButton.Click += new System.EventHandler(this._saveDraftButton_Click);
             // 
@@ -238,6 +244,9 @@
             // 
             // _employeeComboBox
             // 
+            this._employeeComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this._employeeComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this._employeeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._employeeComboBox.FormattingEnabled = true;
             this._employeeComboBox.Location = new System.Drawing.Point(110, 39);
             this._employeeComboBox.Name = "_employeeComboBox";

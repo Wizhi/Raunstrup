@@ -71,6 +71,8 @@ namespace Raunstrup.Domain
 
         public string Description { get; set; }
 
+        public decimal DiscountPercentage { get; set; }
+
         public Employee ResponsiblEmployee { get; set; }
 
         public readonly DateTime CreationDate;
@@ -97,6 +99,11 @@ namespace Raunstrup.Domain
         public void AddOrderLine(Product item, int quantity, decimal price)
         {
             OrderLines.Add(new OrderLine(item, quantity, price));
+        }
+
+        public void RemoveOrderLine(OrderLine line)
+        {
+            OrderLines.Remove(line);
         }
 
         //TODO: This need to be removed, is still there for compability
