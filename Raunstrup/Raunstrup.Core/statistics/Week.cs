@@ -12,12 +12,12 @@ namespace Raunstrup.Core.Statistics
 
         public Week(DateTime day)
         {
-            DateTime tempStartDay = day;
+            DateTime tempStartDay = day.Date;
             while (tempStartDay.DayOfWeek != DayOfWeek.Monday)
             {
                 tempStartDay = tempStartDay.AddDays(-1);
             }
-            StartDayDate = tempStartDay.Date;
+            StartDayDate = tempStartDay;
         }
 
         public int GetWorkingHoursInWeek()
