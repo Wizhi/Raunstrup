@@ -71,6 +71,8 @@ namespace Raunstrup.Domain
 
         public string Description { get; set; }
 
+        public decimal DiscountPercentage { get; set; }
+
         public Employee ResponsiblEmployee { get; set; }
 
         public readonly DateTime CreationDate;
