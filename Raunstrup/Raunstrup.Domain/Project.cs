@@ -28,7 +28,7 @@ namespace Raunstrup.Domain
         {
             Draft = draft;
             // TODO: Consider whether OrderDate is a dependency?
-            //OrderDate = orderDate;
+            OrderDate = DateTime.Today;
         }
     }
 }

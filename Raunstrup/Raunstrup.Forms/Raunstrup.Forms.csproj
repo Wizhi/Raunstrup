@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +59,12 @@
     <Compile Include="DraftCreateForm.Designer.cs">
       <DependentUpon>DraftCreateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeStatisticsForm.Designer.cs">
+      <DependentUpon>EmployeeStatisticsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectComparisonForm.cs">
       <SubType>Form</SubType>
@@ -68,6 +75,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DraftCreateForm.resx">
       <DependentUpon>DraftCreateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeStatisticsForm.resx">
+      <DependentUpon>EmployeeStatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectComparisonForm.resx">
       <DependentUpon>ProjectComparisonForm.cs</DependentUpon>

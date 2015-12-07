@@ -21,7 +21,7 @@ namespace Raunstrup.Core.Statistics
             End = end.Date;
             _reportRepository = reportRepository;
             _employee = employee;
-            if (Start.CompareTo(End) < 0)
+            if (Start.CompareTo(End) > 0)
             {
                 throw new Exception("Start date must be earlier than end date");
             }
@@ -75,8 +75,8 @@ namespace Raunstrup.Core.Statistics
         //a lot more work)
         public double GetHoursInvoicedDegree()
         {
-            int workingdays = 0;
-            int hoursinvoiced = 0;
+            double workingdays = 0;
+            double hoursinvoiced = 0;
             foreach (var valuepair in HoursWorked)
             {
                 if (valuepair.Key.DayOfWeek != DayOfWeek.Saturday && valuepair.Key.DayOfWeek != DayOfWeek.Sunday)
@@ -85,7 +85,7 @@ namespace Raunstrup.Core.Statistics
                     hoursinvoiced += valuepair.Value;
                 }
             }
-            return hoursinvoiced/(workingdays*7);
+            return (hoursinvoiced / (workingdays * 7));
         }
 
         private void ProcessReports()

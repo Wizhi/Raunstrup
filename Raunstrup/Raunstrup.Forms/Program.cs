@@ -24,7 +24,7 @@ namespace Raunstrup.Forms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _company = new Company();
-            Application.Run(new DraftCreateForm());
+            Application.Run(new EmployeeStatisticsForm(_company));
         }
                
     }
