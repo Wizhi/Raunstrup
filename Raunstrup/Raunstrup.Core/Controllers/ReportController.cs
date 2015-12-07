@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Raunstrup.Core.statistics;
+using Raunstrup.Core.Statistics;
 using Raunstrup.Core.Xml;
 using Raunstrup.Data.Repositories;
 
