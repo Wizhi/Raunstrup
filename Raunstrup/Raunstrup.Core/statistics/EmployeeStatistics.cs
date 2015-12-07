@@ -10,7 +10,7 @@ namespace Raunstrup.Core.statistics
 {
     public class EmployeeStatistics
     {
-        public readonly IDictionary<DateTime, int> HoursWorked = new Dictionary<DateTime, int>();
+        private readonly IDictionary<DateTime, int> HoursWorked = new Dictionary<DateTime, int>();
         public readonly DateTime Start;
         public readonly DateTime End;
         private readonly IReportRepository _reportRepository;
@@ -23,11 +23,41 @@ namespace Raunstrup.Core.statistics
             _employee = employee;
             if (Start.CompareTo(End) < 0)
             {
-                //Needs to check that start date is earlier than end enddate;
+                throw new Exception("Start date must be earlier than end date");
             }
             SetupDictionary();
             ProcessReports();
         }
+
+        public int GetLengthInDays()
+        {
+            var span = End.Subtract(Start);
+            return span.Days;
+        }
+
+        public IDictionary<DateTime, int> GetHoursWorkedByDay()
+        {
+            return HoursWorked;
+        }
+
+        public IDictionary<Week, int> GetHoursWorkedByWeek()
+        {
+            Dictionary<Week, int> returnDictionary = new Dictionary<Week, int>();
+            Week tempWeek;
+            foreach (var date in HoursWorked.Keys)
+            {
+                tempWeek = new Week(date);
+                if (returnDictionary.ContainsKey(tempWeek))
+                {
+                    returnDictionary[tempWeek] += HoursWorked[date];
+                }
+                else
+                {
+                    returnDictionary.Add(tempWeek, HoursWorked[date]);
+                }
+            }
+            return returnDictionary;
+        } 
 
         private void SetupDictionary()
         {
