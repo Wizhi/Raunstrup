@@ -48,7 +48,7 @@ namespace Raunstrup.Core
                 sb.AppendLine(string.Format(" {0:C}", orderLine.GetTotal()));
             }
 
-            var total = draft.GetDiscountedPrice;
+            var total = draft.GetTotal;
             sb.AppendLine();
             sb.AppendLine(string.Format("I ALT: {0:C}", total));
             sb.AppendLine(string.Format("MOMS  UDGØR: {0:C}", total * 0.20M));

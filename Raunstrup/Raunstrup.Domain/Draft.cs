@@ -81,7 +81,7 @@ namespace Raunstrup.Domain
 
         public readonly Customer Customer;
 
-        public decimal GetDiscountedPrice
+        public decimal GetTotal
         {
             get { return OrderLines.Sum(x => x.GetTotal()*(1 - DiscountPercentage)); } 
         }
