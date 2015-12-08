@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace Raunstrup.Domain
 {
@@ -79,6 +81,11 @@ namespace Raunstrup.Domain
 
         public readonly Customer Customer;
 
+        public decimal GetDiscountedPrice
+        {
+            get { return OrderLines.Sum(x => x.GetTotal()*(1 - DiscountPercentage)); } 
+        }
+
         public readonly IList<OrderLine> OrderLines = new List<OrderLine>();
 
 
@@ -105,6 +112,8 @@ namespace Raunstrup.Domain
         {
             OrderLines.Remove(line);
         }
+
+        
 
         //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
