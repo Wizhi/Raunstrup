@@ -45,13 +45,13 @@ namespace Raunstrup.Core
             foreach (var orderLine in draft.OrderLines)
             {
                 sb.AppendLine(string.Format("{0} x{1}", orderLine.GetProduct().Name, orderLine.GetQuantity()));
-                sb.AppendLine(string.Format(" dkk {0}", orderLine.GetTotal()));
+                sb.AppendLine(string.Format(" {0:C}", orderLine.GetTotal()));
             }
 
             var total = draft.GetDiscountedPrice;
             sb.AppendLine();
-            sb.AppendLine(string.Format("I ALT: {0}", total));
-            sb.AppendLine(string.Format("MOMS  UDGØR: {0}", total * 0.20M));
+            sb.AppendLine(string.Format("I ALT: {0:C}", total));
+            sb.AppendLine(string.Format("MOMS  UDGØR: {0:C}", total * 0.20M));
             sb.AppendLine(spacing);
             sb.AppendLine("RAUNSTRUP A/S");
             sb.AppendLine(companyName);
