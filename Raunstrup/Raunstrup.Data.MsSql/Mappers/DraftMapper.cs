@@ -155,7 +155,17 @@ namespace Raunstrup.Data.MsSql.Mappers
             {
                 update.CommandText = @"UPDATE Draft SET 
                                          WorkTitle=@title, [Description]=@description, StartDate=@startDate,
-                                         EndDate=@endDate, Discount=@discount, CustomerId=@customerId";
+                                         EndDate=@endDate, Discount=@discount, CustomerId=@customerId
+                                       WHERE DraftId=@draftId";
+
+                // TODO: Make this re-usable
+                var idParam = update.CreateParameter();
+
+                idParam.ParameterName = "@draftId";
+                idParam.Value = draft.Id;
+                idParam.DbType = DbType.Int32;
+
+                update.Parameters.Add(idParam);
 
                 SetParameters(update, draft);
 
@@ -164,15 +174,15 @@ namespace Raunstrup.Data.MsSql.Mappers
                 
                 tempInsert.CommandText = @"INSERT INTO #TempOrderLine (OrderLineId, Quantity, PricePerUnit, ProductId, DraftId)
                                            VALUES ";
-                
-                // TODO: Make this re-usable
-                var idParam = tempInsert.CreateParameter();
 
-                idParam.ParameterName = "@draftId";
-                idParam.Value = draft.Id;
-                idParam.DbType = DbType.Int32;
+                // Apparently you can't reuse IDbDataParameter instances. That kind of sucks.
+                var tempIdParam = tempInsert.CreateParameter();
 
-                tempInsert.Parameters.Add(idParam);
+                tempIdParam.ParameterName = "@tempPraftId";
+                tempIdParam.Value = draft.Id;
+                tempIdParam.DbType = DbType.Int32;
+
+                tempInsert.Parameters.Add(tempIdParam);
 
                 var names = new List<string>();
 
@@ -207,7 +217,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                     tempInsert.Parameters.Add(productIdParameter);
 
                     names.Add(
-                        string.Format("({0}, {1}, {2}, {3}, @draftId)",
+                        string.Format("({0}, {1}, {2}, {3}, @tempPraftId)",
                             orderLineIdParam.ParameterName,
                             quantityParam.ParameterName,
                             unitPriceParam.ParameterName,
@@ -304,7 +314,6 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         private void SetParameters(IDbCommand command, Draft draft)
         {
-            var idParam = command.CreateParameter();
             var workTitleParam = command.CreateParameter();
             var descriptionParam = command.CreateParameter();
             var startDateParam = command.CreateParameter();
@@ -312,10 +321,6 @@ namespace Raunstrup.Data.MsSql.Mappers
             var discountParam = command.CreateParameter();
             var customerIdParam = command.CreateParameter();
             var responsibleEmployeeIdParam = command.CreateParameter();
-
-            idParam.ParameterName = "@draftId";
-            idParam.Value = draft.Id;
-            idParam.DbType = DbType.Int32;
 
             workTitleParam.ParameterName = "@title";
             workTitleParam.Value = draft.Title;
@@ -346,8 +351,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             responsibleEmployeeIdParam.ParameterName = "@employeeId";
             responsibleEmployeeIdParam.Value = draft.ResponsiblEmployee.Id;
             responsibleEmployeeIdParam.DbType = DbType.Int32;
-
-            command.Parameters.Add(idParam);
+            
             command.Parameters.Add(workTitleParam);
             command.Parameters.Add(descriptionParam);
             command.Parameters.Add(startDateParam);
