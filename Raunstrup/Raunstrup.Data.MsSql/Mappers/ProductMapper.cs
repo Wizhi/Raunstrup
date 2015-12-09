@@ -187,7 +187,15 @@ namespace Raunstrup.Data.MsSql.Mappers
                         {
                             materialCommand.Transaction = transaction;
                             materialCommand.CommandText =
-                                "UPDATE Material SET CostPrice=@costPrice WHERE MaterialId=@id";
+                                "UPDATE Material SET CostPrice=@costPrice WHERE MaterialId=@meterialId";
+
+                            var materialIdParam = command.CreateParameter();
+
+                            materialIdParam.ParameterName = "@meterialId";
+                            materialIdParam.Value = product.Id;
+                            materialIdParam.DbType = DbType.Int32;
+
+                            command.Parameters.Add(materialIdParam);
 
                             var costPriceParam = materialCommand.CreateParameter();
 
@@ -198,7 +206,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                             costPriceParam.Scale = 2;
 
                             materialCommand.Parameters.Add(costPriceParam);
-                            // TODO: Is it even safe to add a parameter created by another command?
+
                             materialCommand.Parameters.Add(idParam);
 
                             materialCommand.ExecuteNonQuery();
