@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,9 +59,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Raunstrup.Data.InMemory\Raunstrup.Data.InMemory.csproj">
-      <Project>{661b3ed6-6205-4b5c-945e-776123f69ca2}</Project>
-      <Name>Raunstrup.Data.InMemory</Name>
+    <ProjectReference Include="..\Raunstrup.Data.MsSql\Raunstrup.Data.MsSql.csproj">
+      <Project>{8a6901d0-7b09-40cf-a678-f439f7dbcdbe}</Project>
+      <Name>Raunstrup.Data.MsSql</Name>
     </ProjectReference>
     <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
       <Project>{70066693-b510-4f8d-bfd8-e1296e14f83a}</Project>
