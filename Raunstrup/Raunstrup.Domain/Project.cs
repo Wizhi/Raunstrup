@@ -21,7 +21,6 @@ namespace Raunstrup.Domain
         }
 
         public virtual Draft Draft { get; private set; }
-        public virtual Employee ResponsiblEmployee { get; set; }
         // TODO: Consider renaming this to something more related to "beginning a project".
         public virtual DateTime OrderDate { get; set; }
 

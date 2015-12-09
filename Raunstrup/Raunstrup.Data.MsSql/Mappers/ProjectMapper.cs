@@ -20,7 +20,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT p.ProjectId, p.OrderDate, p.DraftId, p.ResponsibleEmployeeId 
+                command.CommandText = @"SELECT p.ProjectId, p.OrderDate, p.DraftId 
                                         FROM Project p 
                                         WHERE ProjectId = @id";
 
@@ -68,8 +68,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"INSERT INTO Project (OrderDate, DraftId, ResponsibleEmployeeId) 
-                                        VALUES (@date, @draftId, @employeeId);
+                command.CommandText = @"INSERT INTO Project (OrderDate, DraftId) 
+                                        VALUES (@date, @draftId);
                                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 
                 SetParameters(command, project);
@@ -87,7 +87,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"UPDATE Project SET
-                                        OrderDate=@date, DraftId=@draftId, ResponsibleEmployeeId=@employeeId)
+                                        OrderDate=@date, DraftId=@draftId)
                                         WHERE ProjectId=@id;";
 
                 var idParam = command.CreateParameter();
@@ -116,8 +116,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 project = new Project(new DraftProxy(_context, (int) reader["DraftId"]))
                 {
                     Id = (int) reader["ProjectId"],
-                    OrderDate = (DateTime) reader["OrderDate"],
-                    ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
+                    OrderDate = (DateTime) reader["OrderDate"]
                 };
             }
 
@@ -141,7 +140,6 @@ namespace Raunstrup.Data.MsSql.Mappers
         {
             var dateParam = command.CreateParameter();
             var draftParam = command.CreateParameter();
-            var employeeParam = command.CreateParameter();
 
             dateParam.ParameterName = "@date";
             dateParam.Value = project.OrderDate;
@@ -151,13 +149,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             draftParam.Value = project.Draft.Id;
             draftParam.DbType = DbType.Int32;
 
-            employeeParam.ParameterName = "@employeeId";
-            employeeParam.Value = project.ResponsiblEmployee.Id;
-            employeeParam.DbType = DbType.Int32;
-
             command.Parameters.Add(dateParam);
             command.Parameters.Add(draftParam);
-            command.Parameters.Add(employeeParam);
         }
     }
 }
