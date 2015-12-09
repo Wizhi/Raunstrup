@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Raunstrup.Core;
@@ -20,11 +22,12 @@ namespace Raunstrup.Forms
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
+
+            var company = new Company();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var company = new Company();
-            var controller = company.GetDraftController();
-            controller.EditDraft(2);
             Application.Run(new DraftCreateForm(company/*,_draftController.GetDraft()*/));
             //Application.Run(new EmployeeStatisticsForm(_company));
         }
