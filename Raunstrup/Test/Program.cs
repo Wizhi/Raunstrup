@@ -2,7 +2,7 @@
 using System.IO;
 using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
-using Raunstrup.Core.statistics;
+using Raunstrup.Core.Statistics;
 using Raunstrup.Core.Xml;
 using Raunstrup.Domain;
 

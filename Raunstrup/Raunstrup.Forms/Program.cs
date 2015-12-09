@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
-using Raunstrup.Core.statistics;
+using Raunstrup.Core.Statistics;
 using Raunstrup.Core.Xml;
 using Raunstrup.Domain;
 
@@ -15,6 +15,7 @@ namespace Raunstrup.Forms
     static class Program
     {
         private static Company _company;
+        private static DraftController _draftController;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -24,7 +25,10 @@ namespace Raunstrup.Forms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _company = new Company();
-            Application.Run(new ProjectComparisonForm(_company.GetReportController(),1));
+            _draftController = _company.GetDraftController();
+            _draftController.EditDraft(2);
+            Application.Run(new DraftCreateForm(/*_draftController.GetDraft()*/));
+            //Application.Run(new EmployeeStatisticsForm(_company));
         }
                
     }

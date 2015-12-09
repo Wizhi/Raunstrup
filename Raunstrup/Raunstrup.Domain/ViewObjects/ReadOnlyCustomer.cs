@@ -18,5 +18,7 @@
         public string City { get { return _customer.City; }}
 
         public string PostalCode { get { return _customer.PostalCode; } }
+
+        public int Id { get { return _customer.Id; } }
     }
 }

@@ -64,6 +64,11 @@ namespace Raunstrup.Domain.ViewObjects
                 }
                 return returnLines;
             }
-        } 
+        }
+
+        public decimal DiscountPercentage
+        {
+            get { return _draft.DiscountPercentage; }
+        }
     }
 }

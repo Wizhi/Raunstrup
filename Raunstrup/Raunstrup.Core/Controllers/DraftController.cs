@@ -38,10 +38,10 @@ namespace Raunstrup.Core.Controllers
             _currentDraft = _draftRepository.Get(id);
         }
 
-        public void AddOrderLine(int id, int quantity)
+        public void AddOrderLine(int id, int quantity, decimal price)
         {
             Product product = _productRepository.Get(id);
-            _currentDraft.AddOrderLine(product,quantity);
+            _currentDraft.AddOrderLine(product,quantity,price);
         }
 
         public void SetStartDate(DateTime startDate)
@@ -70,14 +70,62 @@ namespace Raunstrup.Core.Controllers
             _currentDraft.Description = description;
         }
 
+        public void SetDiscountPercentage(decimal percentage)
+        {
+            _currentDraft.DiscountPercentage = percentage;
+        }
+
         public void SaveDraft()
         {
             _draftRepository.Save(_currentDraft);
+        }
+
+        public void EditOrderline(int index, int quantity, decimal unitPrice)
+        {
+            _currentDraft.OrderLines[index].Quantity = quantity;
+            _currentDraft.OrderLines[index].UnitPrice = unitPrice;
+        }
+
+        public void RemoveOrderLine(int index)
+        {
+            _currentDraft.RemoveOrderLine(_currentDraft.OrderLines[index]);
         }
 
         public ReadOnlyDraft GetDraft()
         {
             return new ReadOnlyDraft(_currentDraft);
         }
+
+        public List<ReadOnlyProduct> GetAllProducts()
+        {
+            IList<Product> products = _productRepository.GetAll();
+            List<ReadOnlyProduct> returnList = new List<ReadOnlyProduct>();
+            foreach (var product in products)
+            {
+                returnList.Add(new ReadOnlyProduct(product));
+            }
+            return returnList;
+        }
+        public List<ReadOnlyCustomer> GetAllCustomers()
+        {
+            IList<Customer> customers = _customerRepository.GetAll();
+            List<ReadOnlyCustomer> returnList = new List<ReadOnlyCustomer>();
+            foreach (var customer in customers)
+            {
+                returnList.Add(new ReadOnlyCustomer(customer));
+            }
+            return returnList;
+        }
+
+        public List<ReadOnlyEmployee> GetAllEmployees()
+        {
+            IList<Employee> employees = _employeeRepository.GetAll();
+            List<ReadOnlyEmployee> returnList = new List<ReadOnlyEmployee>();
+            foreach (var employee in employees)
+            {
+                returnList.Add(new ReadOnlyEmployee(employee));
+            }
+            return returnList;
+        } 
     }
 }

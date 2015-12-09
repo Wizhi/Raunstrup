@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace Raunstrup.Domain
 {
@@ -25,7 +27,7 @@ namespace Raunstrup.Domain
                 _id = value;
             }
         }
-        
+
         public virtual DateTime StartDate
         {
             get
@@ -68,7 +70,7 @@ namespace Raunstrup.Domain
 
         public virtual string Description { get; set; }
 
-        public virtual double Discount { get; set; }
+        public virtual decimal DiscountPercentage { get; set; }
 
         public virtual Employee ResponsiblEmployee { get; set; }
 
@@ -76,10 +78,12 @@ namespace Raunstrup.Domain
 
         public virtual Customer Customer { get; }
 
-        public virtual IList<OrderLine> OrderLines
+        public decimal GetTotal
         {
-            get { return _orderLines; }
+            get { return OrderLines.Sum(x => x.GetTotal()*(1 - DiscountPercentage)); } 
         }
+
+        public IList<OrderLine> OrderLines { get { return _orderLines; } };
 
         public Draft()
         {
@@ -104,6 +108,10 @@ namespace Raunstrup.Domain
             _orderLines.Add(new OrderLine(item, quantity) { UnitPrice = pricePerUnit });
         }
 
+        public void RemoveOrderLine(OrderLine line)
+        {
+            OrderLines.Remove(line);
+        }
         //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
         {

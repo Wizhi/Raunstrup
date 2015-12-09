@@ -1,4 +1,5 @@
-﻿using Raunstrup.Core.Controllers;
+﻿using System;
+using Raunstrup.Core.Controllers;
 using Raunstrup.Data.InMemory.Repositories;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
@@ -99,22 +100,30 @@ namespace Raunstrup.Core
                 new Draft(CustomerRepository.Get(1))
                 {
                     Title = "Draft #1", 
-                    ResponsiblEmployee = EmployeeRepository.Get(1)
+                    ResponsiblEmployee = EmployeeRepository.Get(1),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
                 new Draft(CustomerRepository.Get(1))
                 {
                     Title = "Draft #2", 
-                    ResponsiblEmployee = EmployeeRepository.Get(2)
+                    ResponsiblEmployee = EmployeeRepository.Get(2),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
                 new Draft(CustomerRepository.Get(2))
                 {
                     Title = "Draft #3", 
-                    ResponsiblEmployee = EmployeeRepository.Get(3)
+                    ResponsiblEmployee = EmployeeRepository.Get(3),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
                 new Draft(CustomerRepository.Get(2))
                 {
                     Title = "Draft #4", 
-                    ResponsiblEmployee = EmployeeRepository.Get(1)
+                    ResponsiblEmployee = EmployeeRepository.Get(1),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddDays(1)
                 },
             };
 
@@ -172,6 +181,18 @@ namespace Raunstrup.Core
                 {
                     Date = ProjectRepository.Get(2).OrderDate.AddDays(4)
                 },
+                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                {
+                    Date = ProjectRepository.Get(2).OrderDate.AddDays(3)
+                },
+                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                {
+                    Date = ProjectRepository.Get(2).OrderDate.AddDays(4)
+                },
+                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                {
+                    Date = ProjectRepository.Get(2).OrderDate.AddDays(5)
+                },
             };
 
             reports[0].AddReportLine(ProductRepository.Get(1), 4);
@@ -186,6 +207,10 @@ namespace Raunstrup.Core
             reports[3].AddReportLine(ProductRepository.Get(2), 2);
             reports[3].AddReportLine(ProductRepository.Get(3), 4);
             reports[3].AddReportLine(ProductRepository.Get(1), 7);
+
+            reports[4].AddReportLine(ProductRepository.Get(3), 1);
+            reports[5].AddReportLine(ProductRepository.Get(3), 7);
+            reports[6].AddReportLine(ProductRepository.Get(3), 7);
 
             foreach (var report in reports)
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Core.statistics
+namespace Raunstrup.Core.Statistics
 {
     public class ProjectComparison
     {

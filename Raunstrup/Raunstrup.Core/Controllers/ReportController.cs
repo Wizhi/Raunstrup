@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using Raunstrup.Core.statistics;
+using Raunstrup.Core.Statistics;
 using Raunstrup.Core.Xml;
 using Raunstrup.Data.Repositories;
+using Raunstrup.Domain;
+using Raunstrup.Domain.ViewObjects;
 
 namespace Raunstrup.Core.Controllers
 {
@@ -36,6 +39,17 @@ namespace Raunstrup.Core.Controllers
         {
             return new EmployeeStatistics(_reportRepository,_employeeRepository.Get(employeeID),start,end);
         }
+
+        public List<ReadOnlyEmployee> GetAllEmployees()
+        {
+            IList<Employee> employees = _employeeRepository.GetAll();
+            List<ReadOnlyEmployee> returnList = new List<ReadOnlyEmployee>();
+            foreach (var employee in employees)
+            {
+                returnList.Add(new ReadOnlyEmployee(employee));
+            }
+            return returnList;
+        } 
 
         public void UploadReport(string path)
         {

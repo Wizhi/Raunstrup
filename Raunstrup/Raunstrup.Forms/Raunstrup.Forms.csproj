@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3826A233-50F7-4AF7-B2FB-A761C106F1D6}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Raunstrup.Forms</RootNamespace>
     <AssemblyName>Raunstrup.Forms</AssemblyName>
@@ -31,9 +31,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ObjectListView, Version=2.9.0.25611, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.Official.2.9.0\lib\net20\ObjectListView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DraftCreateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DraftCreateForm.Designer.cs">
+      <DependentUpon>DraftCreateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeStatisticsForm.Designer.cs">
+      <DependentUpon>EmployeeStatisticsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectComparisonForm.cs">
       <SubType>Form</SubType>
@@ -52,6 +73,12 @@
       <DependentUpon>ProjectComparisonForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DraftCreateForm.resx">
+      <DependentUpon>DraftCreateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeStatisticsForm.resx">
+      <DependentUpon>EmployeeStatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProjectComparisonForm.resx">
       <DependentUpon>ProjectComparisonForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -64,6 +91,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,10 +110,21 @@
       <Project>{c983682a-3706-438d-b66f-29dad7dd70b5}</Project>
       <Name>Raunstrup.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Raunstrup.Data.InMemory\Raunstrup.Data.InMemory.csproj">
+      <Project>{661B3ED6-6205-4B5C-945E-776123F69CA2}</Project>
+      <Name>Raunstrup.Data.InMemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
+      <Project>{70066693-B510-4F8D-BFD8-E1296E14F83A}</Project>
+      <Name>Raunstrup.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Raunstrup.Domain\Raunstrup.Domain.csproj">
       <Project>{dd7cdfa2-1b67-4b8d-97a2-9a51eb0e95cc}</Project>
       <Name>Raunstrup.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
