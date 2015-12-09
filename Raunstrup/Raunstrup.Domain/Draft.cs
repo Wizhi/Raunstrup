@@ -70,26 +70,23 @@ namespace Raunstrup.Domain
 
         public virtual string Description { get; set; }
 
-        public virtual decimal DiscountPercentage { get; set; }
-
         public virtual Employee ResponsiblEmployee { get; set; }
 
         public virtual DateTime CreationDate { get; }
 
         public virtual Customer Customer { get; }
 
-        public decimal GetTotal
-        {
-            get { return OrderLines.Sum(x => x.GetTotal()*(1 - DiscountPercentage)); } 
-        }
+        public double DiscountPercentage { get; set; }
 
-        public IList<OrderLine> OrderLines { get { return _orderLines; } };
+        public decimal Total { get { return _orderLines.Sum(x => x.SubTotal); } }
+
+        public virtual IList<OrderLine> OrderLines { get { return _orderLines; } }
 
         public Draft()
         {
             CreationDate = DateTime.Now;
             EndDate = _startDate.AddDays(7);
-            Discount = 0;
+            DiscountPercentage = 0;
         }
 
         public Draft(Customer customer)
@@ -112,6 +109,7 @@ namespace Raunstrup.Domain
         {
             OrderLines.Remove(line);
         }
+        
         //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
         {

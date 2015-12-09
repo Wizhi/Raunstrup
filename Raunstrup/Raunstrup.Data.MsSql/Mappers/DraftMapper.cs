@@ -269,7 +269,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                     Title = (string) reader["WorkTitle"],
                     Description = (string) reader["Description"],
                     // TODO: Consider making Discount a float
-                    Discount = (double) reader["Discount"],
+                    DiscountPercentage = (double) reader["Discount"],
                     StartDate = (DateTime) reader["StartDate"],
                     EndDate = (DateTime) reader["EndDate"],
                     ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
@@ -336,7 +336,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             endDateParam.DbType = DbType.Date;
 
             discountParam.ParameterName = "@discount";
-            discountParam.Value = draft.Discount;
+            discountParam.Value = draft.DiscountPercentage;
             discountParam.DbType = DbType.Double;
 
             customerIdParam.ParameterName = "@customerId";

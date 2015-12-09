@@ -66,7 +66,7 @@ namespace Raunstrup.Forms
             _employeeComboBox.SelectedItem = selectedEmployee;
             _startDateDateTimePicker.Value = draft.StartDate;
             _endDateDateTimePicker.Value = draft.EndDate;
-            _discountInPercentNumericUpDown.Value = draft.DiscountPercentage;
+            _discountInPercentNumericUpDown.Value = (decimal) draft.DiscountPercentage;
             _customerComboBox.Enabled = false;
 
 
@@ -97,7 +97,7 @@ namespace Raunstrup.Forms
                 _draftController.SetStartDate(_startDateDateTimePicker.Value);
                 _draftController.SetEndDate(_endDateDateTimePicker.Value);
                 _draftController.SetTitle(_draftTitleTextBox.Text);
-                _draftController.SetDiscountPercentage(_discountInPercentNumericUpDown.Value);
+                _draftController.SetDiscountPercentage((double) _discountInPercentNumericUpDown.Value);
             }
 
         }

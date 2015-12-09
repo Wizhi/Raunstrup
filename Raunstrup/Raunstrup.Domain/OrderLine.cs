@@ -19,8 +19,9 @@
         }
 
         public Product Product { get; private set; }
-        public virtual int Quantity { get; set; }
+        public int Quantity { get; set; }
         public decimal UnitPrice { get;  set; }
+        public decimal SubTotal { get { return UnitPrice * Quantity; } }
 
         public OrderLine(Product item, int quantity, decimal unitPrice)
         {
@@ -39,11 +40,6 @@
         public int GetQuantity()
         {
             return Quantity;
-        }
-
-        public decimal GetTotal()
-        {
-            return UnitPrice * Quantity;
         }
     }
 }
