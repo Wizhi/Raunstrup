@@ -93,6 +93,7 @@ namespace Raunstrup.Forms
                 _draftController.SetEndDate(_endDateDateTimePicker.Value);
                 _draftController.SetTitle(_draftTitleTextBox.Text);
                 _draftController.SetDiscountPercentage((double) _discountInPercentNumericUpDown.Value);
+                _draftController.SaveDraft();
             }
 
         }
