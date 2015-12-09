@@ -50,6 +50,11 @@ namespace Raunstrup.Core
             return new DraftController(CustomerRepository,EmployeeRepository,ProductRepository,DraftRepository);
         }
 
+        public ProductCRUDController GetProductController()
+        {
+            return new ProductCRUDController(ProductRepository);
+        }
+
         //All this test data should be deleted at some point, but for now it will have to be here
         private void SetupTestData()
         {
