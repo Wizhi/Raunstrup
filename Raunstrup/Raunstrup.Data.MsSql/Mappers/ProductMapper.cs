@@ -48,8 +48,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             {
                 var command = connection.CreateCommand();
                 
-                command.CommandText = @"SELECT ap.ProductId, ap.Name, ap.SalesPrice 
-                                               ap.MaterialId, ap.CostProce, ap.WorkHourId, ap.TransportId 
+                command.CommandText = @"SELECT ap.ProductId, ap.Name, ap.SalesPrice,
+                                               ap.MaterialId, ap.CostPrice, ap.WorkHourId, ap.TransportId 
                                         FROM AllProducts ap";
 
                 connection.Open();
