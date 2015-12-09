@@ -20,7 +20,7 @@ namespace Raunstrup.Data.MsSql.Query
             using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT * FROM Project WHERE ProductId = @projectId";
+                command.CommandText = @"SELECT * FROM ReportFull WHERE ProductId = @projectId";
 
                 var projectIdParam = command.CreateParameter();
 
