@@ -6,10 +6,9 @@ namespace Raunstrup.Domain
     public class Draft
     {
         private int _id;
-        private DateTime _startDate;
+        private DateTime _startDate = DateTime.Now;
         private DateTime _endDate;
         // TODO: Investigate whether we use C# 6. How the hell am I not sure about that?
-        private double _discount = 0;
         private readonly IList<OrderLine> _orderLines = new List<OrderLine>();
 
         public virtual int Id
@@ -35,14 +34,13 @@ namespace Raunstrup.Domain
             }
             set
             {
-                //TODO: Test to see if compareTo behaves correctly 1
-                if (value.CompareTo(EndDate) <= 0)
+                if (value < _endDate)
                 {
                     _startDate = value;
                 }
                 else
                 {
-                    //throw new Exception("Start date have to be earlier than end date");
+                    throw new Exception("Start date have to be earlier than end date");
                 }
             }
         }
@@ -55,13 +53,12 @@ namespace Raunstrup.Domain
             }
             set
             {
-                if (value.CompareTo(StartDate) >= 0)
+                if (value > _startDate)
                 {
                     _endDate = value;
                 }
                 else
                 {
-                    //TODO: Test to see if compareTo behaves correctly 2
                     throw new Exception("End date have to be later than start date");
                 }
             }
@@ -71,11 +68,7 @@ namespace Raunstrup.Domain
 
         public virtual string Description { get; set; }
 
-        public virtual double Discount
-        {
-            get { return _discount; }
-            set { _discount = value; }
-        }
+        public virtual double Discount { get; set; }
 
         public virtual Employee ResponsiblEmployee { get; set; }
 
@@ -91,8 +84,8 @@ namespace Raunstrup.Domain
         public Draft()
         {
             CreationDate = DateTime.Now;
-            StartDate = DateTime.Now;
-            EndDate = DateTime.Now.AddDays(7);
+            EndDate = _startDate.AddDays(7);
+            Discount = 0;
         }
 
         public Draft(Customer customer)
@@ -103,7 +96,12 @@ namespace Raunstrup.Domain
 
         public void AddOrderLine(Product item, int quantity)
         {
-            _orderLines.Add(new OrderLine(item,quantity));
+            AddOrderLine(item, quantity, item.SalesPrice);
+        }
+
+        public void AddOrderLine(Product item, int quantity, decimal pricePerUnit)
+        {
+            _orderLines.Add(new OrderLine(item, quantity) { UnitPrice = pricePerUnit });
         }
 
         //TODO: This need to be removed, is still there for compability

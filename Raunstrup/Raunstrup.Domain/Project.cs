@@ -25,11 +25,10 @@ namespace Raunstrup.Domain
         // TODO: Consider renaming this to something more related to "beginning a project".
         public virtual DateTime OrderDate { get; set; }
 
-        public Project(Draft draft/*, DateTime orderDate*/)
+        public Project(Draft draft)
         {
             Draft = draft;
-            // TODO: Consider whether OrderDate is a dependency?
-            //OrderDate = orderDate;
+            OrderDate = DateTime.Now;
         }
     }
 }

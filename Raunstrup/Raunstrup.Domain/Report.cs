@@ -5,7 +5,6 @@ namespace Raunstrup.Domain
 {
     public class Report
     {
-
         private int _id;
         public readonly IList<ReportLine> Lines = new List<ReportLine>();
 
@@ -31,6 +30,7 @@ namespace Raunstrup.Domain
         {
             Employee = employee;
             Project = project;
+            Date = DateTime.Now;
         }
         
         public IList<ReportLine> GetLines()

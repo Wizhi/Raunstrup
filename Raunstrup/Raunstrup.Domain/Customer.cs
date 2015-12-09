@@ -4,7 +4,7 @@
     {
         private int _id;
 
-        public int Id
+        public virtual int Id
         {
             get { return _id; }
             set
@@ -18,14 +18,14 @@
             }
         }
 
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public string StreetName { get; set; }
+        public virtual string StreetName { get; set; }
 
-        public string StreetNumber { get; set; }
+        public virtual string StreetNumber { get; set; }
 
-        public string City { get; set; }
+        public virtual string City { get; set; }
 
-        public string PostalCode { get; set; }
+        public virtual string PostalCode { get; set; }
     }
 }
