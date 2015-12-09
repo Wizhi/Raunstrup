@@ -72,9 +72,9 @@ namespace Raunstrup.Domain
 
         public virtual Employee ResponsiblEmployee { get; set; }
 
-        public virtual DateTime CreationDate { get; }
+        public virtual DateTime CreationDate { get; private set; }
 
-        public virtual Customer Customer { get; }
+        public virtual Customer Customer { get; private set; }
 
         public double DiscountPercentage { get; set; }
 
