@@ -52,6 +52,7 @@ namespace Raunstrup.Forms
                         orderLine.Quantity.ToString(),
                         (orderLine.UnitPrice*orderLine.Quantity).ToString(CultureInfo.CurrentCulture)
                     }));
+                _productIds.Add(orderLine.Product.ID);
             }
             _draftDescriptionTextBox.Text = draft.Description;
             _draftTitleTextBox.Text = draft.Title;
