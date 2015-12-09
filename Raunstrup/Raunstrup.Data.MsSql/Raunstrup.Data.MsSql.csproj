@@ -68,6 +68,9 @@
     <Compile Include="Proxies\ListProxy.cs" />
     <Compile Include="Proxies\ProductProxy.cs" />
     <Compile Include="Proxies\ProjectProxy.cs" />
+    <Compile Include="Query\IQuery.cs" />
+    <Compile Include="Query\ReportByDurationAndEmployeeQuery.cs" />
+    <Compile Include="Query\ReportByProjectQuery.cs" />
     <Compile Include="Repositories\MsSqlCustomerRepository.cs" />
     <Compile Include="Repositories\MsSqlDraftRepository.cs" />
     <Compile Include="Repositories\MsSqlEmployeeRepository.cs" />
@@ -85,6 +88,7 @@
       <Name>Raunstrup.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
