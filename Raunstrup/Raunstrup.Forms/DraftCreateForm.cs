@@ -52,6 +52,7 @@ namespace Raunstrup.Forms
                         orderLine.Quantity.ToString(),
                         (orderLine.UnitPrice*orderLine.Quantity).ToString(CultureInfo.CurrentCulture)
                     }));
+                _productIds.Add(orderLine.Product.ID);
             }
             _draftDescriptionTextBox.Text = draft.Description;
             _draftTitleTextBox.Text = draft.Title;
@@ -93,6 +94,7 @@ namespace Raunstrup.Forms
                 _draftController.SetEndDate(_endDateDateTimePicker.Value);
                 _draftController.SetTitle(_draftTitleTextBox.Text);
                 _draftController.SetDiscountPercentage((double) _discountInPercentNumericUpDown.Value);
+                _draftController.SaveDraft();
             }
 
         }
