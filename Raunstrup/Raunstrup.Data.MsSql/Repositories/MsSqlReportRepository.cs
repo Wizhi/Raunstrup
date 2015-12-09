@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Raunstrup.Data.MsSql.Mappers;
+using Raunstrup.Data.MsSql.Query;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
@@ -35,7 +36,7 @@ namespace Raunstrup.Data.MsSql.Repositories
             }
             else
             {
-                // TODO: Update
+                _reportMapper.Update(entity);
             }
         }
 
@@ -46,12 +47,12 @@ namespace Raunstrup.Data.MsSql.Repositories
 
         public IList<Report> FindByProject(Project project)
         {
-            throw new NotImplementedException();
+            return new ReportByProjectQuery(project).Execute(_context);
         }
 
         public IList<Report> FindByDurationAndEmployee(DateTime start, DateTime end, Employee employee)
         {
-            throw new NotImplementedException();
+            return new ReportByDurationAndEmployeeQuery(start, end, employee).Execute(_context);
         }
     }
 }
