@@ -205,14 +205,22 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var tempInsert = connection.CreateCommand())
             using (var merge = connection.CreateCommand())
             {
-                tempCreate.CommandText = @"CREATE TABLE #TempReportLine 
-                                           (ReportLineId int, Quantity int, ProductId int);";
-
                 update.CommandText = @"UPDATE Report SET
                                          [Date]=@date, ProjectId=@projectId, EmployeeId=@employeeId)
                                        WHERE ReportId=@id";
                 
+                var idParam = update.CreateParameter();
+
+                idParam.ParameterName = "@id";
+                idParam.Value = report.Id;
+                idParam.DbType = DbType.Int32;
+
+                update.Parameters.Add(idParam);
+
                 SetParameters(update, report);
+
+                tempCreate.CommandText = @"CREATE TABLE #TempReportLine 
+                                           (ReportLineId int, Quantity int, ProductId int);";
 
                 tempInsert.CommandText = @"INSERT INTO #TempReportLine (ReportLineId, Quantity, ProductId)
                                            VALUES ";
