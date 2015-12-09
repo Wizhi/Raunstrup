@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.Common;
 using Raunstrup.Core.Controllers;
-using Raunstrup.Data.InMemory.Repositories;
+using Raunstrup.Data.MsSql;
+using Raunstrup.Data.MsSql.Repositories;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
@@ -19,12 +22,21 @@ namespace Raunstrup.Core
 
         public Company()
         {
-            DraftRepository = new DraftRepository();
-            ProjectRepository = new ProjectRepository();
-            CustomerRepository = new CustomerRepository();
-            ReportRepository = new ReportRepository();
-            EmployeeRepository = new EmployeeRepository();
-            ProductRepository = new ProductRepository();
+            // Bootstrapping the DataContext
+            var con = ConfigurationManager.ConnectionStrings["Raunstrup"];
+            var provider = DbProviderFactories.GetFactory(con.ProviderName);
+
+            var connection = provider.CreateConnection();
+            connection.ConnectionString = con.ConnectionString;
+
+            var context = new DataContext(provider, con.ConnectionString);
+
+            DraftRepository = new MsSqlDraftRepository(context);
+            ProjectRepository = new MsSqlProjectRepository(context);
+            CustomerRepository = new MsSqlCustomerRepository(context);
+            ReportRepository = new MsSqlReportRepository(context);
+            EmployeeRepository = new MsSqlEmployeeRepository(context);
+            ProductRepository = new MsSqlProductRepository(context);
             SetupTestData();
         }
 
@@ -54,8 +66,9 @@ namespace Raunstrup.Core
             var products = new Product[]
             {
                 new Material { Name = "Metal", SalesPrice = 123.4M, CostPrice = 50M }, 
-                new Material { Name = "Wood", SalesPrice = 200M, CostPrice = 100M }, 
-                new WorkHour { Name = "HandWorker Hour", SalesPrice = 321.2M }, 
+                new Material { Name = "Wood", SalesPrice = 200M, CostPrice = 100M },
+                new WorkHour { Name = "HandWorker Hour", SalesPrice = 321.2M },
+                new Transport { Name = "Fucking volvo", SalesPrice = 4.2M },
             };
 
             foreach (var product in products)
@@ -68,8 +81,8 @@ namespace Raunstrup.Core
         {
             var customers = new[]
             {
-                new Customer { Name = "Kunde #1" },
-                new Customer { Name = "Kunde #2" },
+                new Customer { Name = "Kunde #1", City = "Fuck", PostalCode = "4124", StreetNumber = "4f", StreetName = "Pis lorte test data" },
+                new Customer { Name = "Kunde #2", City = "Sur røv", PostalCode = "3125", StreetNumber = "51", StreetName = "Stinker lidt af Emils navle" },
             };
 
             foreach (var customer in customers)
@@ -102,28 +115,32 @@ namespace Raunstrup.Core
                     Title = "Draft #1", 
                     ResponsiblEmployee = EmployeeRepository.Get(1),
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.Today.AddDays(1)
+                    EndDate = DateTime.Today.AddDays(1),
+                    Description = "Fyldning af Tobias ører."
                 },
                 new Draft(CustomerRepository.Get(1))
                 {
                     Title = "Draft #2", 
                     ResponsiblEmployee = EmployeeRepository.Get(2),
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.Today.AddDays(1)
+                    EndDate = DateTime.Today.AddDays(1),
+                    Description = "Lapning af Simons mund."
                 },
                 new Draft(CustomerRepository.Get(2))
                 {
                     Title = "Draft #3", 
                     ResponsiblEmployee = EmployeeRepository.Get(3),
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.Today.AddDays(1)
+                    EndDate = DateTime.Today.AddDays(1),
+                    Description = "Udsugning af Emils bussemænd."
                 },
                 new Draft(CustomerRepository.Get(2))
                 {
                     Title = "Draft #4", 
                     ResponsiblEmployee = EmployeeRepository.Get(1),
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.Today.AddDays(1)
+                    EndDate = DateTime.Today.AddDays(1),
+                    Description = "Seppoku."
                 },
             };
 
@@ -152,7 +169,7 @@ namespace Raunstrup.Core
             {
                 new Project(DraftRepository.Get(1)), 
                 new Project(DraftRepository.Get(2)), 
-                new Project(DraftRepository.Get(3)), 
+                new Project(DraftRepository.Get(3))
             };
 
             foreach (var project in projects)
