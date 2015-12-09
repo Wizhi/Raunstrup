@@ -37,7 +37,7 @@ namespace Raunstrup.Core
             sb.AppendLine(spacing);
             sb.AppendLine(draft.Customer.Id.ToString());
             sb.AppendLine(draft.Customer.Name);
-            sb.AppendLine(string.Format("{0} {1}", draft.Customer.SteetName, draft.Customer.StreetNumber));
+            sb.AppendLine(string.Format("{0} {1}", draft.Customer.StreetName, draft.Customer.StreetNumber));
             sb.AppendLine(string.Format("{0} {1}", draft.Customer.PostalCode, draft.Customer.City));
             sb.AppendLine(spacing);
             sb.AppendLine(string.Format(draft.StartDate.ToShortDateString() + new string(' ', temp-10) + draft.EndDate.ToShortDateString()));
