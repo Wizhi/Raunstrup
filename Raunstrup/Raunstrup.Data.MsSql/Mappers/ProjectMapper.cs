@@ -87,7 +87,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"UPDATE Project SET
-                                        OrderDate=@date, DraftId=@draftId)
+                                        OrderDate=@date, DraftId=@draftId
                                         WHERE ProjectId=@id;";
 
                 var idParam = command.CreateParameter();
