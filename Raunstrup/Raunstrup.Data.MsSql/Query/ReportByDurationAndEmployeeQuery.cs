@@ -6,7 +6,7 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Query
 {
-    public class ReportByDurationAndEmployeeQuery : IQuery<IList<Report>>
+    class ReportByDurationAndEmployeeQuery : IQuery<IList<Report>>
     {
         private readonly DateTime _start;
         private readonly DateTime _end;
