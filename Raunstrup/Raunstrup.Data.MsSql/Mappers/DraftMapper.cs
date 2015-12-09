@@ -178,7 +178,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 // Apparently you can't reuse IDbDataParameter instances. That kind of sucks.
                 var tempIdParam = tempInsert.CreateParameter();
 
-                tempIdParam.ParameterName = "@tempPraftId";
+                tempIdParam.ParameterName = "@tempDraftId";
                 tempIdParam.Value = draft.Id;
                 tempIdParam.DbType = DbType.Int32;
 
@@ -217,7 +217,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                     tempInsert.Parameters.Add(productIdParameter);
 
                     names.Add(
-                        string.Format("({0}, {1}, {2}, {3}, @tempPraftId)",
+                        string.Format("({0}, {1}, {2}, {3}, @tempDraftId)",
                             orderLineIdParam.ParameterName,
                             quantityParam.ParameterName,
                             unitPriceParam.ParameterName,
