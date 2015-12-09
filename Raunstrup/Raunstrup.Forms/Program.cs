@@ -14,8 +14,6 @@ namespace Raunstrup.Forms
 {
     static class Program
     {
-        private static Company _company;
-        private static DraftController _draftController;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -24,10 +22,10 @@ namespace Raunstrup.Forms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            _company = new Company();
-            _draftController = _company.GetDraftController();
-            _draftController.EditDraft(2);
-            Application.Run(new DraftCreateForm(/*_draftController.GetDraft()*/));
+            var company = new Company();
+            var controller = company.GetDraftController();
+            controller.EditDraft(2);
+            Application.Run(new DraftCreateForm(company/*,_draftController.GetDraft()*/));
             //Application.Run(new EmployeeStatisticsForm(_company));
         }
                

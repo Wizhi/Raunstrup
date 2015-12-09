@@ -11,16 +11,13 @@ namespace Raunstrup.Forms
 {
     public partial class DraftCreateForm : Form
     {
-        private readonly Company _company = new Company();
         private readonly DraftController _draftController;
         private bool _editMode;
-
         
-        
-        public DraftCreateForm()
+        public DraftCreateForm(Company company)
         {
             InitializeComponent();
-            _draftController = _company.GetDraftController();
+            _draftController = company.GetDraftController();
             var customers = _draftController.GetAllCustomers();
             var employees = _draftController.GetAllEmployees();
             _customerComboBox.DataSource = customers;
@@ -31,13 +28,11 @@ namespace Raunstrup.Forms
             _employeeComboBox.SelectedItem = null;
             _addToDraftOrderLineOLV.Enabled = false;
             _editMode = false;
-
-            Console.WriteLine(_draftController.GetDraft());
         }
-        public DraftCreateForm(ReadOnlyDraft draft)
+        public DraftCreateForm(Company company, ReadOnlyDraft draft)
         {
             InitializeComponent();
-            _draftController = _company.GetDraftController();
+            _draftController = company.GetDraftController();
             var customers = _draftController.GetAllCustomers();
             var employees = _draftController.GetAllEmployees();
             _customerComboBox.DataSource = customers;
