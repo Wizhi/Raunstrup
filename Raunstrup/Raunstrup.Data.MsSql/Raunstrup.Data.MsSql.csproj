@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A6901D0-7B09-40CF-A678-F439F7DBCDBE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Raunstrup.Data.MsSql</RootNamespace>
+    <AssemblyName>Raunstrup.Data.MsSql</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Command\CommandBuilder.cs" />
+    <Compile Include="Command\InsertCommandBuilder.cs" />
+    <Compile Include="Command\SelectCommandBuilder.cs" />
+    <Compile Include="Command\UpdateCommandBuilder.cs" />
+    <Compile Include="Criterion\Criteria.cs" />
+    <Compile Include="Criterion\EqualsCriterion.cs" />
+    <Compile Include="Criterion\Expression.cs" />
+    <Compile Include="Criterion\ICriterion.cs" />
+    <Compile Include="Criterion\LikeCriterion.cs" />
+    <Compile Include="Criterion\OrCriterion.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="Formatter.cs" />
+    <Compile Include="Mappers\CustomerMapper.cs" />
+    <Compile Include="Mappers\DraftMapper.cs" />
+    <Compile Include="Mappers\EmployeeMapper.cs" />
+    <Compile Include="Mappers\IDataMapper.cs" />
+    <Compile Include="Mappers\ProductMapper.cs" />
+    <Compile Include="Mappers\ProjectMapper.cs" />
+    <Compile Include="Mappers\ReportMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxies\CustomerProxy.cs" />
+    <Compile Include="Proxies\DraftProxy.cs" />
+    <Compile Include="Proxies\EmployeeProxy.cs" />
+    <Compile Include="Proxies\ListProxy.cs" />
+    <Compile Include="Proxies\ProductProxy.cs" />
+    <Compile Include="Proxies\ProjectProxy.cs" />
+    <Compile Include="Repositories\MsSqlCustomerRepository.cs" />
+    <Compile Include="Repositories\MsSqlDraftRepository.cs" />
+    <Compile Include="Repositories\MsSqlEmployeeRepository.cs" />
+    <Compile Include="Repositories\MsSqlProductRepository.cs" />
+    <Compile Include="Repositories\MsSqlProjectRepository.cs" />
+    <Compile Include="Repositories\MsSqlReportRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
+      <Project>{70066693-b510-4f8d-bfd8-e1296e14f83a}</Project>
+      <Name>Raunstrup.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Raunstrup.Domain\Raunstrup.Domain.csproj">
+      <Project>{dd7cdfa2-1b67-4b8d-97a2-9a51eb0e95cc}</Project>
+      <Name>Raunstrup.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

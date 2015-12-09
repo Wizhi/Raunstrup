@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B8991511-60F4-4053-98B4-11A24C0DD8B8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,6 +23,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data", "Raunstrup.Data\Raunstrup.Data.csproj", "{70066693-B510-4F8D-BFD8-E1296E14F83A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data.InMemory", "Raunstrup.Data.InMemory\Raunstrup.Data.InMemory.csproj", "{661B3ED6-6205-4B5C-945E-776123F69CA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raunstrup.Data.MsSql", "Raunstrup.Data.MsSql\Raunstrup.Data.MsSql.csproj", "{8A6901D0-7B09-40CF-A678-F439F7DBCDBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{661B3ED6-6205-4B5C-945E-776123F69CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A6901D0-7B09-40CF-A678-F439F7DBCDBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6901D0-7B09-40CF-A678-F439F7DBCDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6901D0-7B09-40CF-A678-F439F7DBCDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6901D0-7B09-40CF-A678-F439F7DBCDBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
