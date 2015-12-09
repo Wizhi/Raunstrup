@@ -14,8 +14,7 @@ namespace Raunstrup.Data.MsSql.Proxies
 
         public EmployeeProxy(DataContext connection, int id)
         {
-            _mapper = new EmployeeMapper(connection);
-            _real = new Lazy<Employee>(() => _mapper.Get(id));
+            _real = new Lazy<Employee>(() => new EmployeeMapper(connection).Get(id));
         }
     }
 }
