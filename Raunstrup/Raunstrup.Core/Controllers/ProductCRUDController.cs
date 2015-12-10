@@ -21,7 +21,7 @@ namespace Raunstrup.Core.Controllers
 
         public ReadOnlyProduct GetProduct()
         {
-            return new ReadOnlyProduct(_currentProduct);
+            return ReadOnlyProduct.Create(_currentProduct);
         }
 
         public enum ProductType
@@ -65,6 +65,15 @@ namespace Raunstrup.Core.Controllers
         public void SetPrice(decimal price)
         {
             _currentProduct.SalesPrice = price;
+        }
+
+        public void SetCostPrice(decimal price)
+        {
+            var product = _currentProduct as Material;
+            if (product != null)
+            {
+                product.CostPrice = price;
+            }
         }
 
         public void SaveProduct()
