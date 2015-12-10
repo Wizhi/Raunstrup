@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Domain.ViewObjects
 {
-    abstract public class ReadOnlyProduct
+    public class ReadOnlyProduct
     {
         public static ReadOnlyProduct Create(Product product)
         {
