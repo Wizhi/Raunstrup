@@ -23,7 +23,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
                                         FROM Employee e
                                         LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId
-                                        WHERE EmployeeId = @id";
+                                        WHERE e.EmployeeId = @id";
 
                 var idParam = command.CreateParameter();
 
