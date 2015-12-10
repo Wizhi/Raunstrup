@@ -18,7 +18,6 @@ namespace Raunstrup.Forms
     {
         private Company _company;
         private readonly ProductCRUDController _productController;
-        private IList<int> _productIds = new List<int>(); 
         public ProductSelectForm(Company company)
         {
             InitializeComponent();
@@ -33,7 +32,6 @@ namespace Raunstrup.Forms
                     
                 });
                 temp.Tag = readOnlyProduct.ID;
-                _productIds.Add(readOnlyProduct.ID);
                 _productListView.Items.Add(temp);
                 if (readOnlyProduct is ReadOnlyMaterial)
                 {
@@ -47,7 +45,6 @@ namespace Raunstrup.Forms
                 {
                     _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[2];
                 }
-                Console.WriteLine(readOnlyProduct.GetType());
             }
         }
 
@@ -56,12 +53,60 @@ namespace Raunstrup.Forms
             _productController.EditProduct((int)_productListView.FocusedItem.Tag);
             var editForm = new ProductCRUDForm(_company, _productController.GetProduct());
             editForm.ShowDialog();
+            _productListView.Items.Clear();
+            foreach (var readOnlyProduct in _productController.GetAllProducts())
+            {
+                var temp = new ListViewItem(new[]
+                {
+                    readOnlyProduct.Name,
+                    readOnlyProduct.SalesPrice.ToString("C")
+                    
+                });
+                temp.Tag = readOnlyProduct.ID;
+                _productListView.Items.Add(temp);
+                if (readOnlyProduct is ReadOnlyMaterial)
+                {
+                    _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[0];
+                }
+                else if (readOnlyProduct is ReadOnlyWorkHour)
+                {
+                    _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[1];
+                }
+                else if (readOnlyProduct is ReadOnlyTransport)
+                {
+                    _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[2];
+                }
+            }
         }
 
         private void _createNewProductButton_Click(object sender, EventArgs e)
         {
             var createForm = new ProductCRUDForm(_company);
             createForm.ShowDialog();
+            _productListView.Items.Clear();
+            foreach (var readOnlyProduct in _productController.GetAllProducts())
+            {
+                var temp = new ListViewItem(new[]
+                {
+                    readOnlyProduct.Name,
+                    readOnlyProduct.SalesPrice.ToString("C")
+                    
+                });
+                temp.Tag = readOnlyProduct.ID;
+                _productListView.Items.Add(temp);
+                if (readOnlyProduct is ReadOnlyMaterial)
+                {
+                    _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[0];
+                }
+                else if (readOnlyProduct is ReadOnlyWorkHour)
+                {
+                    _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[1];
+                }
+                else if (readOnlyProduct is ReadOnlyTransport)
+                {
+                    _productListView.Items[_productListView.Items.IndexOf(temp)].Group = _productListView.Groups[2];
+                }
+            }
         }
 
         private void _deleteProductButton_Click(object sender, EventArgs e)

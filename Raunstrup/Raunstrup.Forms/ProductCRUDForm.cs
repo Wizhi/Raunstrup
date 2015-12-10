@@ -23,6 +23,7 @@ namespace Raunstrup.Forms
             _productPriceNumericUpDown.Maximum = Decimal.MaxValue;
             _editMode = false;
             _productController = company.GetProductController();
+            _materialRadioButton.Checked = true;
         }
 
         public ProductCRUDForm(Company company, ReadOnlyProduct product)
@@ -63,21 +64,22 @@ namespace Raunstrup.Forms
             {
                 if (_materialRadioButton.Checked)
                 {
-                    _productController.CreateNewProduct("Material");
+                    _productController.CreateNewProduct(ProductCRUDController.ProductType.Material);
                 }
                 else if (_workHourRadioButton.Checked)
                 {
-                    _productController.CreateNewProduct("WorkHour");
+                    _productController.CreateNewProduct(ProductCRUDController.ProductType.WorkHour);
                 }
                 else if (_transportRadioButton.Checked)
                 {
-                    _productController.CreateNewProduct("Transport");
+                    _productController.CreateNewProduct(ProductCRUDController.ProductType.Transport);
                 }
                 _productController.SetName(_productNameTextBox.Text);
                 _productController.SetPrice(_productPriceNumericUpDown.Value);
                 _productController.SaveProduct();
             
             }
+            
         }
     }
 }
