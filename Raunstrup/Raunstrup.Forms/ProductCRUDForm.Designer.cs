@@ -36,7 +36,10 @@
             this._workHourRadioButton = new System.Windows.Forms.RadioButton();
             this._transportRadioButton = new System.Windows.Forms.RadioButton();
             this._saveProductButton = new System.Windows.Forms.Button();
+            this._costPriceNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this._costPriceLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._productPriceNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._costPriceNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -50,7 +53,7 @@
             // 
             // _productNameTextBox
             // 
-            this._productNameTextBox.Location = new System.Drawing.Point(58, 12);
+            this._productNameTextBox.Location = new System.Drawing.Point(83, 12);
             this._productNameTextBox.Name = "_productNameTextBox";
             this._productNameTextBox.Size = new System.Drawing.Size(100, 20);
             this._productNameTextBox.TabIndex = 1;
@@ -67,7 +70,7 @@
             // _productPriceNumericUpDown
             // 
             this._productPriceNumericUpDown.DecimalPlaces = 2;
-            this._productPriceNumericUpDown.Location = new System.Drawing.Point(58, 37);
+            this._productPriceNumericUpDown.Location = new System.Drawing.Point(83, 37);
             this._productPriceNumericUpDown.Name = "_productPriceNumericUpDown";
             this._productPriceNumericUpDown.Size = new System.Drawing.Size(100, 20);
             this._productPriceNumericUpDown.TabIndex = 3;
@@ -83,6 +86,7 @@
             this._materialRadioButton.TabStop = true;
             this._materialRadioButton.Text = "Materiale";
             this._materialRadioButton.UseVisualStyleBackColor = true;
+            this._materialRadioButton.CheckedChanged += new System.EventHandler(this._materialRadioButton_CheckedChanged);
             // 
             // _workHourRadioButton
             // 
@@ -108,7 +112,7 @@
             // 
             // _saveProductButton
             // 
-            this._saveProductButton.Location = new System.Drawing.Point(83, 134);
+            this._saveProductButton.Location = new System.Drawing.Point(108, 136);
             this._saveProductButton.Name = "_saveProductButton";
             this._saveProductButton.Size = new System.Drawing.Size(75, 23);
             this._saveProductButton.TabIndex = 7;
@@ -116,11 +120,31 @@
             this._saveProductButton.UseVisualStyleBackColor = true;
             this._saveProductButton.Click += new System.EventHandler(this._saveProductButton_Click);
             // 
+            // _costPriceNumericUpDown
+            // 
+            this._costPriceNumericUpDown.DecimalPlaces = 2;
+            this._costPriceNumericUpDown.Location = new System.Drawing.Point(83, 62);
+            this._costPriceNumericUpDown.Name = "_costPriceNumericUpDown";
+            this._costPriceNumericUpDown.Size = new System.Drawing.Size(100, 20);
+            this._costPriceNumericUpDown.TabIndex = 9;
+            this._costPriceNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // _costPriceLabel
+            // 
+            this._costPriceLabel.AutoSize = true;
+            this._costPriceLabel.Location = new System.Drawing.Point(13, 64);
+            this._costPriceLabel.Name = "_costPriceLabel";
+            this._costPriceLabel.Size = new System.Drawing.Size(67, 13);
+            this._costPriceLabel.TabIndex = 8;
+            this._costPriceLabel.Text = "Indkøbspris: ";
+            // 
             // ProductCRUDForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(168, 166);
+            this.ClientSize = new System.Drawing.Size(193, 166);
+            this.Controls.Add(this._costPriceNumericUpDown);
+            this.Controls.Add(this._costPriceLabel);
             this.Controls.Add(this._saveProductButton);
             this.Controls.Add(this._transportRadioButton);
             this.Controls.Add(this._workHourRadioButton);
@@ -132,6 +156,7 @@
             this.Name = "ProductCRUDForm";
             this.Text = "ProductEditForm";
             ((System.ComponentModel.ISupportInitialize)(this._productPriceNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._costPriceNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,5 +172,7 @@
         private System.Windows.Forms.RadioButton _workHourRadioButton;
         private System.Windows.Forms.RadioButton _transportRadioButton;
         private System.Windows.Forms.Button _saveProductButton;
+        private System.Windows.Forms.NumericUpDown _costPriceNumericUpDown;
+        private System.Windows.Forms.Label _costPriceLabel;
     }
 }

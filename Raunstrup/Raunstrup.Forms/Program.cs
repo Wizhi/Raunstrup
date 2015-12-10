@@ -30,7 +30,7 @@ namespace Raunstrup.Forms
             Application.SetCompatibleTextRenderingDefault(false);
             var controller = company.GetDraftController();
             controller.EditDraft(2);
-            //Application.Run(new DraftCreateForm(company,controller.GetDraft()));
+            //Application.Run(new DraftCreateForm(company/*,controller.GetDraft()*/));
             //Application.Run(new EmployeeStatisticsForm(company));
             Application.Run(new ProductSelectForm(company));
         }
