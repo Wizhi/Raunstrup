@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Proxies;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
@@ -18,6 +20,11 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
+                command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
+                                        FROM Employee e
+                                        LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId
+                                        WHERE EmployeeId = @id";
+
                 var idParam = command.CreateParameter();
 
                 idParam.ParameterName = "@id";
@@ -25,9 +32,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 idParam.Value = id;
 
                 command.Parameters.Add(idParam);
-
-                command.CommandText = "SELECT * FROM Employee WHERE EmployeeId = @id";
-
+                
                 connection.Open();
                 command.Prepare();
 
@@ -43,7 +48,10 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT e.EmployeeId, e.Name FROM Employee e";
+                command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
+                                        FROM Employee e
+                                        LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId
+                                        ORDER BY e.EmployeeId";
 
                 connection.Open();
 
@@ -63,19 +71,104 @@ namespace Raunstrup.Data.MsSql.Mappers
                                         VALUES (@name);
                                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                var nameParam = command.CreateParameter();
-
-                nameParam.ParameterName = "@name";
-                nameParam.Value = employee.Name;
-                nameParam.DbType = DbType.AnsiString;
-                nameParam.Size = 100;
-
-                command.Parameters.Add(nameParam);
+                SetParameters(command, employee);
 
                 connection.Open();
                 command.Prepare();
                 
                 employee.Id = (int) command.ExecuteScalar();
+            }
+        }
+
+        public void Update(Employee employee)
+        {
+            using (var connection = _context.CreateConnection())
+            using (var update = connection.CreateCommand())
+            using (var tempCreate = connection.CreateCommand())
+            using (var tempInsert = connection.CreateCommand())
+            using (var merge = connection.CreateCommand())
+            {
+                update.CommandText = @"UPDATE Employee SET Name=@name
+                                       WHERE DraftId=@id";
+
+                // TODO: Make this re-usable
+                var idParam = update.CreateParameter();
+
+                idParam.ParameterName = "@id";
+                idParam.Value = employee.Id;
+                idParam.DbType = DbType.Int32;
+
+                update.Parameters.Add(idParam);
+
+                SetParameters(update, employee);
+
+                tempCreate.CommandText = @"CREATE TABLE #TempEmployeeSkill (EmployeeId int, SkillId int);";
+
+                tempInsert.CommandText = @"INSERT INTO #TempEmployeeSkill (EmployeeId, SkillId)
+                                           VALUES ";
+
+                // Apparently you can't reuse IDbDataParameter instances. That kind of sucks.
+                var tempIdParam = tempInsert.CreateParameter();
+
+                tempIdParam.ParameterName = "@tempEmployeeId";
+                tempIdParam.Value = employee.Id;
+                tempIdParam.DbType = DbType.Int32;
+
+                tempInsert.Parameters.Add(tempIdParam);
+
+                var names = new List<string>();
+
+                for (var i = 0; i < employee.Skills.Count; i++)
+                {
+                    var tempSkillIdParam = tempInsert.CreateParameter();
+
+                    tempSkillIdParam.ParameterName = "@tempSkillId_" + i;
+                    tempSkillIdParam.Value = employee.Skills[i].Id;
+                    tempSkillIdParam.DbType = DbType.Int32;
+
+                    tempInsert.Parameters.Add(tempSkillIdParam);
+
+                    names.Add(
+                        string.Format("(@tempEmployeeId, {0})",
+                            tempSkillIdParam.ParameterName
+                        )
+                    );
+                }
+
+                tempInsert.CommandText += string.Join(", ", names);
+
+                merge.CommandText = @"MERGE INTO EmployeeSkill AS t
+                                      USING #TempEmployeeSkill AS s
+                                      ON t.SkillId = s.SkillId AND t.EmployeeId = s.EmployeeId
+                                      WHEN NOT MATCHED BY TARGET THEN 
+                                        INSERT (EmployeeId, SkillId) 
+                                        VALUES (s.EmployeeId, s.SkillId)
+                                      WHEN NOT MATCHED BY SOURCE THEN DELETE;";
+
+                connection.Open();
+                update.Prepare();
+                tempInsert.Prepare();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    update.Transaction = transaction;
+                    tempCreate.Transaction = transaction;
+                    tempInsert.Transaction = transaction;
+                    merge.Transaction = transaction;
+
+                    update.ExecuteNonQuery();
+                    tempCreate.ExecuteNonQuery();
+
+                    // TODO: Make only executing temporary insert if needed cleaner.
+                    // More smelly code!
+                    if (employee.Skills.Count > 0)
+                    {
+                        tempInsert.ExecuteNonQuery();
+                        merge.ExecuteNonQuery();
+                    }
+                    
+                    transaction.Commit();
+                }
             }
         }
 
@@ -90,6 +183,15 @@ namespace Raunstrup.Data.MsSql.Mappers
                     Id = (int)reader["EmployeeId"],
                     Name = (string)reader["Name"]
                 };
+
+                do
+                {
+                    if (!(reader["SkillId"] is DBNull))
+                    {
+                        employee.Skills.Add(new SkillProxy(_context, (int) reader["SkillId"]));
+                    }
+                }
+                while (reader.Read());
             }
 
             return employee;
@@ -106,6 +208,18 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
 
             return employees;
+        }
+
+        private void SetParameters(IDbCommand command, Employee employee)
+        {
+            var nameParam = command.CreateParameter();
+
+            nameParam.ParameterName = "@name";
+            nameParam.Value = employee.Name;
+            nameParam.DbType = DbType.AnsiString;
+            nameParam.Size = 100;
+
+            command.Parameters.Add(nameParam);
         }
     }
 }
