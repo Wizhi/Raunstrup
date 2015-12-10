@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Data.MsSql.Criterion
 {
-    public static class Expression
+    static class Expression
     {
         public static EqualsCriterion Equals(string field, object value)
         {
