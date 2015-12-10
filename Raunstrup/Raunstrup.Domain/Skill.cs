@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Raunstrup.Domain
+﻿namespace Raunstrup.Domain
 {
-    public class Employee
+    public class Skill
     {
         private int _id;
 
@@ -11,7 +9,7 @@ namespace Raunstrup.Domain
             get { return _id; }
             set
             {
-                if (_id == default(int))
+                if (_id != default(int))
                 {
                     // TODO: Handle object apparently already being persisted.
                 }
@@ -21,12 +19,5 @@ namespace Raunstrup.Domain
         }
 
         public virtual string Name { get; set; }
-
-        public IList<Skill> Skills { get; private set; }
-
-        public Employee()
-        {
-            Skills = new List<Skill>();
-        }
     }
 }

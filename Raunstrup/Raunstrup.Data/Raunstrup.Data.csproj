@@ -47,6 +47,7 @@
     <Compile Include="Repositories\IProjectRepository.cs" />
     <Compile Include="Repositories\IReportRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ISkillRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raunstrup.Domain\Raunstrup.Domain.csproj">
