@@ -1,22 +1,15 @@
 ﻿namespace Raunstrup.Data.MsSql.Criterion
 {
-    class Expression
+    public static class Expression
     {
-        private readonly Formatter _formatter;
-
-        public Expression(Formatter formatter)
+        public static EqualsCriterion Equals(string field, object value)
         {
-            _formatter = formatter;
+            return new EqualsCriterion(field, value);
         }
 
-        public EqualsCriterion Equals(string field, object value)
+        public static LikeCriterion Like(string field, string expression)
         {
-            return new EqualsCriterion(_formatter, field, value);
-        }
-
-        public LikeCriterion Like(string field, string expression)
-        {
-            return new LikeCriterion(_formatter, field, expression);
+            return new LikeCriterion(field, expression);
         }
     }
 }
