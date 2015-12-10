@@ -61,6 +61,7 @@ namespace Raunstrup.Forms
         private void _createNewProductButton_Click(object sender, EventArgs e)
         {
             var createForm = new ProductCRUDForm(_company);
+            createForm.ShowDialog();
         }
 
         private void _deleteProductButton_Click(object sender, EventArgs e)
