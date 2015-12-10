@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Domain.ViewObjects
 {
-    class ReadOnlyMaterial : ReadOnlyProduct
+    public class ReadOnlyMaterial : ReadOnlyProduct
     {
         private readonly Material _material;
 
@@ -10,6 +10,6 @@
             _material = material;
         }
 
-        public decimal CostProce { get { return _material.CostPrice; } }
+        public decimal CostPrice { get { return _material.CostPrice; } }
     }
 }
