@@ -1,6 +1,6 @@
 ﻿namespace Raunstrup.Domain.ViewObjects
 {
-    class ReadOnlyTransport : ReadOnlyProduct
+    public class ReadOnlyTransport : ReadOnlyProduct
     {
         public ReadOnlyTransport(Transport transport) 
             : base(transport)
