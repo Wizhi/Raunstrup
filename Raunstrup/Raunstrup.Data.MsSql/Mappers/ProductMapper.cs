@@ -188,16 +188,13 @@ namespace Raunstrup.Data.MsSql.Mappers
                             materialCommand.Transaction = transaction;
                             materialCommand.CommandText =
                                 "UPDATE Material SET CostPrice=@costPrice WHERE MaterialId=@meterialId";
-
-                            var materialIdParam = command.CreateParameter();
+                            
+                            var costPriceParam = materialCommand.CreateParameter();
+                            var materialIdParam = materialCommand.CreateParameter();
 
                             materialIdParam.ParameterName = "@meterialId";
                             materialIdParam.Value = product.Id;
                             materialIdParam.DbType = DbType.Int32;
-
-                            command.Parameters.Add(materialIdParam);
-
-                            var costPriceParam = materialCommand.CreateParameter();
 
                             costPriceParam.ParameterName = "@costPrice";
                             costPriceParam.Value = ((Material) product).CostPrice;
@@ -206,8 +203,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                             costPriceParam.Scale = 2;
 
                             materialCommand.Parameters.Add(costPriceParam);
-
-                            materialCommand.Parameters.Add(idParam);
+                            materialCommand.Parameters.Add(materialIdParam);
 
                             materialCommand.ExecuteNonQuery();
                         }
