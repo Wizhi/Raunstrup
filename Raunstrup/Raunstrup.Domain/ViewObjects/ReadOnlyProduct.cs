@@ -2,6 +2,21 @@
 {
     public class ReadOnlyProduct
     {
+        public static ReadOnlyProduct Create(Material product)
+        {
+            return new ReadOnlyMaterial(product);
+        }
+
+        public static ReadOnlyProduct Create(WorkHour product)
+        {
+            return new ReadOnlyWorkHour(product);
+        }
+        
+        public static ReadOnlyProduct Create(Transport product)
+        {
+            return new ReadOnlyTransport(product);
+        }
+
         private readonly Product _product;
 
         public string Name
@@ -24,5 +39,5 @@
             _product = product;
         }
 
-        }
+    }
 }
