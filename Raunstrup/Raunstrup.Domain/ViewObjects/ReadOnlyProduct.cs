@@ -1,20 +1,31 @@
-﻿namespace Raunstrup.Domain.ViewObjects
-{
-    public class ReadOnlyProduct
-    {
-        public static ReadOnlyProduct Create(Material product)
-        {
-            return new ReadOnlyMaterial(product);
-        }
+﻿using System;
 
-        public static ReadOnlyProduct Create(WorkHour product)
+namespace Raunstrup.Domain.ViewObjects
+{
+    abstract public class ReadOnlyProduct
+    {
+        public static ReadOnlyProduct Create(Product product)
         {
-            return new ReadOnlyWorkHour(product);
-        }
-        
-        public static ReadOnlyProduct Create(Transport product)
-        {
-            return new ReadOnlyTransport(product);
+            ReadOnlyProduct read = null;
+
+            if (product is Material)
+            {
+                read = new ReadOnlyMaterial((Material) product);
+            }
+            else if (product is WorkHour)
+            {
+                read = new ReadOnlyWorkHour((WorkHour) product);
+            }
+            else if (product is Transport)
+            {
+                read = new ReadOnlyTransport((Transport) product);
+            }
+            else
+            {
+                throw new ArgumentException("What in the world did you even pass to me?");
+            }
+
+            return read;
         }
 
         private readonly Product _product;
