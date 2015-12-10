@@ -162,9 +162,9 @@ namespace Raunstrup.Data.MsSql.Mappers
                 
                 var idParam = command.CreateParameter();
 
-                idParam.ParameterName = "@costPrice";
-                idParam.Value = ((Material)product).CostPrice;
-                idParam.DbType = DbType.Decimal;
+                idParam.ParameterName = "@id";
+                idParam.Value = product.Id;
+                idParam.DbType = DbType.Int32;
 
                 command.Parameters.Add(idParam);
 
