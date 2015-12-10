@@ -61,7 +61,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"INSERT INTO Skill (Name) VALUES (@name);
-                                        SELECT SCOPE_IDENTITY();";
+                                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                 SetParameters(command, skill);
 
@@ -92,7 +92,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 connection.Open();
                 command.Prepare();
 
-                skill.Id = (int)command.ExecuteScalar();
+                command.ExecuteNonQuery();
             }
         }
 
