@@ -24,17 +24,24 @@ namespace Raunstrup.Core.Controllers
             return new ReadOnlyProduct(_currentProduct);
         }
 
-        public void CreateNewProduct(string product)
+        public enum ProductType
         {
-            if (product == "Material")
+            Material,
+            WorkHour,
+            Transport
+        }
+
+        public void CreateNewProduct(ProductType type)
+        {
+            if (type == ProductType.Material)
             {
                 _currentProduct = new Material();
             }
-            else if (product == "WorkHour")
+            else if (type == ProductType.WorkHour)
             {
                 _currentProduct = new WorkHour();
             }
-            else if (product == "Transport")
+            else if (type == ProductType.Transport)
             {
                 _currentProduct = new Transport();
             }

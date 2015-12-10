@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Materiale", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Arbejdstime", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Transport", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Materiale", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Arbejdstime", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Transport", System.Windows.Forms.HorizontalAlignment.Left);
             this._productListView = new System.Windows.Forms.ListView();
             this.ProductName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SalesPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,16 +45,16 @@
             this.ProductName,
             this.SalesPrice});
             this._productListView.FullRowSelect = true;
-            listViewGroup7.Header = "Materiale";
-            listViewGroup7.Name = "MaterialGroup";
-            listViewGroup8.Header = "Arbejdstime";
-            listViewGroup8.Name = "WorkHour";
-            listViewGroup9.Header = "Transport";
-            listViewGroup9.Name = "Transport";
+            listViewGroup1.Header = "Materiale";
+            listViewGroup1.Name = "MaterialGroup";
+            listViewGroup2.Header = "Arbejdstime";
+            listViewGroup2.Name = "WorkHour";
+            listViewGroup3.Header = "Transport";
+            listViewGroup3.Name = "Transport";
             this._productListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup7,
-            listViewGroup8,
-            listViewGroup9});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this._productListView.Location = new System.Drawing.Point(12, 12);
             this._productListView.Name = "_productListView";
             this._productListView.Size = new System.Drawing.Size(237, 243);
@@ -70,6 +70,7 @@
             // SalesPrice
             // 
             this.SalesPrice.Text = "Pris";
+            this.SalesPrice.Width = 100;
             // 
             // _createNewProductButton
             // 

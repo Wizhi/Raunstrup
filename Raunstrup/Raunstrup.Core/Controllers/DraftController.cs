@@ -102,7 +102,7 @@ namespace Raunstrup.Core.Controllers
             List<ReadOnlyProduct> returnList = new List<ReadOnlyProduct>();
             foreach (var product in products)
             {
-                returnList.Add(new ReadOnlyProduct(product));
+                returnList.Add(ReadOnlyProduct.Create(product));
             }
             return returnList;
         }
