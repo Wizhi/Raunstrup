@@ -61,6 +61,7 @@
     <Compile Include="Mappers\ProductMapper.cs" />
     <Compile Include="Mappers\ProjectMapper.cs" />
     <Compile Include="Mappers\ReportMapper.cs" />
+    <Compile Include="Mappers\SkillMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\CustomerProxy.cs" />
     <Compile Include="Proxies\DraftProxy.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Proxies\ListProxy.cs" />
     <Compile Include="Proxies\ProductProxy.cs" />
     <Compile Include="Proxies\ProjectProxy.cs" />
+    <Compile Include="Proxies\SkillProxy.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\ReportByDurationAndEmployeeQuery.cs" />
     <Compile Include="Query\ReportByProjectQuery.cs" />

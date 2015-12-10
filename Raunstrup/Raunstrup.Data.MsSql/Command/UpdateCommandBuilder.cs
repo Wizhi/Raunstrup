@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using Raunstrup.Data.MsSql.Criterion;
 
 namespace Raunstrup.Data.MsSql.Command
 {
