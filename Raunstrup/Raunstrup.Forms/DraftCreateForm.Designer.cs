@@ -58,6 +58,8 @@
             this._editOrderLineButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this._filterTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).BeginInit();
@@ -336,11 +338,30 @@
             this.label3.TabIndex = 27;
             this.label3.Text = "Antal:";
             // 
+            // _filterTextBox
+            // 
+            this._filterTextBox.Location = new System.Drawing.Point(626, 198);
+            this._filterTextBox.Name = "_filterTextBox";
+            this._filterTextBox.Size = new System.Drawing.Size(134, 20);
+            this._filterTextBox.TabIndex = 29;
+            this._filterTextBox.TextChanged += new System.EventHandler(this._filterTextBox_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(588, 200);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Søg: ";
+            // 
             // DraftCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(859, 229);
+            this.Controls.Add(this._filterTextBox);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this._editOrderLineButton);
@@ -409,5 +430,7 @@
         private System.Windows.Forms.Button _editOrderLineButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox _filterTextBox;
+        private System.Windows.Forms.Label label4;
     }
 }

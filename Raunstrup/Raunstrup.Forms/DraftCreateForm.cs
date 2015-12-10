@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using BrightIdeasSoftware;
 using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
 using Raunstrup.Domain.ViewObjects;
@@ -70,10 +71,51 @@ namespace Raunstrup.Forms
 
         private void DraftCreateForm_Load(object sender, EventArgs e)
         {
+            var productTypeColumn = new OLVColumn()
+            {
+                Name = "TypeSort",
+                Groupable = true,
+                IsVisible = false,
+                Searchable = false,
+                GroupKeyGetter = delegate(object value)
+                {
+                    return value.GetType();
+                },
+                GroupKeyToTitleConverter = delegate(object key)
+                {
+
+
+                    if (((Type)key).FullName == (typeof (ReadOnlyMaterial)).FullName)
+                    {
+                        return "Materiale";
+                    }
+                    else if (((Type)key).FullName == (typeof(ReadOnlyWorkHour)).FullName)
+                    {
+                        return "Arbejdstime";
+                    }
+                    else if (((Type)key).FullName == (typeof(ReadOnlyTransport)).FullName)
+                    {
+                        return "Transport";
+                    }
+                    else
+                    {
+                        return "Hvad fanden er der her";
+                    }
+                }
+
+            };
+
+            _productOLV.AllColumns.Add(productTypeColumn);
+            _productOLV.RebuildColumns();
             _productOLV.SetObjects(_draftController.GetAllProducts());
+            _productOLV.BuildGroups(productTypeColumn, SortOrder.None);
+            _productOLV.UseFiltering = true;
+
             _priceNumericUpDown.Maximum = decimal.MaxValue;
             _quantityNumericUpDown.Maximum = decimal.MaxValue;
             _endDateDateTimePicker.Value = _endDateDateTimePicker.Value.AddDays(1);
+
+
         }
 
         private void _saveDraftButton_Click(object sender, EventArgs e)
@@ -191,5 +233,10 @@ namespace Raunstrup.Forms
             _addToDraftOrderLineOLV.Enabled = true;
         }
 
+        private void _filterTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _productOLV.ModelFilter = TextMatchFilter.Contains(_productOLV, _filterTextBox.Text);
+            _productOLV.Refresh();
+        }
     }
 }
