@@ -65,6 +65,18 @@
     <Compile Include="EmployeeStatisticsForm.Designer.cs">
       <DependentUpon>EmployeeStatisticsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductCRUDForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductCRUDForm.Designer.cs">
+      <DependentUpon>ProductCRUDForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductSelectForm.Designer.cs">
+      <DependentUpon>ProductSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectComparisonForm.cs">
       <SubType>Form</SubType>
@@ -78,6 +90,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmployeeStatisticsForm.resx">
       <DependentUpon>EmployeeStatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductCRUDForm.resx">
+      <DependentUpon>ProductCRUDForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductSelectForm.resx">
+      <DependentUpon>ProductSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectComparisonForm.resx">
       <DependentUpon>ProjectComparisonForm.cs</DependentUpon>
