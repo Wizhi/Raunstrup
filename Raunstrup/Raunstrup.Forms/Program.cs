@@ -28,8 +28,11 @@ namespace Raunstrup.Forms
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DraftCreateForm(company/*,_draftController.GetDraft()*/));
-            //Application.Run(new EmployeeStatisticsForm(_company));
+            var controller = company.GetDraftController();
+            controller.EditDraft(2);
+            //Application.Run(new DraftCreateForm(company,controller.GetDraft()));
+            //Application.Run(new EmployeeStatisticsForm(company));
+            Application.Run(new ProductSelectForm(company));
         }
                
     }

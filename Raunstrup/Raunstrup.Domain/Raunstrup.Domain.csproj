@@ -58,6 +58,8 @@
     <Compile Include="ViewObjects\ReadOnlyProduct.cs" />
     <Compile Include="ViewObjects\ReadOnlyReport.cs" />
     <Compile Include="ViewObjects\ReadOnlyReportLine.cs" />
+    <Compile Include="ViewObjects\ReadOnlyTransport.cs" />
+    <Compile Include="ViewObjects\ReadOnlyWorkHour.cs" />
     <Compile Include="WorkHour.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
