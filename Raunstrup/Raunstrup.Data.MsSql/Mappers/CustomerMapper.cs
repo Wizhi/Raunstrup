@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Domain;
@@ -28,24 +27,23 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
+                command.CommandText = @"SELECT CustomerId, Name, StreetName, StreetNumber, City, PostalCode 
+                                        FROM Customer 
+                                        WHERE CustomerId = @id";
+
                 var idParam = command.CreateParameter();
 
                 idParam.ParameterName = "@id";
                 idParam.DbType = DbType.Int32;
-                idParam.Value = id;
 
                 command.Parameters.Add(idParam);
-
-                command.CommandText = @"SELECT CustomerId, Name, StreetName, StreetNumber, City, PostalCode 
-                                        FROM Customer 
-                                        WHERE CustomerId = @id";
 
                 connection.Open();
                 command.Prepare();
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
@@ -129,34 +127,26 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Customer Map(IDataReader reader)
+        public Customer Map(IDataRecord record)
         {
-            Customer customer = null;
-
-            if (reader.Read())
+            return new Customer()
             {
-                customer = new Customer()
-                {
-                    Id = (int) reader["CustomerId"],
-                    Name = (string) reader["Name"],
-                    City = (string) reader["City"],
-                    PostalCode = (string) reader["PostalCode"],
-                    StreetName = (string) reader["StreetName"],
-                    StreetNumber = (string) reader["StreetNumber"]
-                };
-            }
-
-            return customer;
+                Id = (int) record["CustomerId"],
+                Name = (string) record["Name"],
+                City = (string) record["City"],
+                PostalCode = (string) record["PostalCode"],
+                StreetName = (string) record["StreetName"],
+                StreetNumber = (string) record["StreetNumber"]
+            };
         }
 
         public IList<Customer> MapAll(IDataReader reader)
         {
             var customers = new List<Customer>();
-            Customer customer;
 
-            while ((customer = Map(reader)) != null)
+            while (reader.Read())
             {
-                customers.Add(customer);
+                customers.Add(Map(reader));
             }
 
             return customers;
