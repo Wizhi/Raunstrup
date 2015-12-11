@@ -180,8 +180,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             {
                 employee = new Employee
                 {
-                    Id = (int)reader["EmployeeId"],
-                    Name = (string)reader["Name"]
+                    Id = (int) reader["EmployeeId"],
+                    Name = (string) reader["Name"]
                 };
 
                 do
@@ -191,7 +191,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                         employee.Skills.Add(new SkillProxy(_context, (int) reader["SkillId"]));
                     }
                 }
-                while (reader.Read());
+                while (reader.Read() && (int) reader["EmployeeId"] == employee.Id);
             }
 
             return employee;
