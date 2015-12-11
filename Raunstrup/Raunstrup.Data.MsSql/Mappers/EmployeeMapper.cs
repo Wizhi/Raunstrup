@@ -49,9 +49,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
-                                        FROM Employee e
-                                        LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId
-                                        ORDER BY e.EmployeeId";
+                                        FROM Employee e";
 
                 connection.Open();
 
@@ -89,7 +87,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var merge = connection.CreateCommand())
             {
                 update.CommandText = @"UPDATE Employee SET Name=@name
-                                       WHERE DraftId=@id";
+                                       WHERE EmployeeId=@id";
 
                 // TODO: Make this re-usable
                 var idParam = update.CreateParameter();
@@ -175,7 +173,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         public Employee Map(IDataReader reader)
         {
             Employee employee = null;
-
+            
             if (reader.Read())
             {
                 employee = new Employee
@@ -183,15 +181,6 @@ namespace Raunstrup.Data.MsSql.Mappers
                     Id = (int) reader["EmployeeId"],
                     Name = (string) reader["Name"]
                 };
-
-                do
-                {
-                    if (!(reader["SkillId"] is DBNull))
-                    {
-                        employee.Skills.Add(new SkillProxy(_context, (int) reader["SkillId"]));
-                    }
-                }
-                while (reader.Read() && (int) reader["EmployeeId"] == employee.Id);
             }
 
             return employee;
