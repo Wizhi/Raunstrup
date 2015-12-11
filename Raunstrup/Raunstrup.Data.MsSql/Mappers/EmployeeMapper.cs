@@ -160,12 +160,13 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                     // TODO: Make only executing temporary insert if needed cleaner.
                     // More smelly code!
-                    if (employee.Skills.Count > 0)
+                    if (names.Count > 0)
                     {
                         tempInsert.ExecuteNonQuery();
-                        merge.ExecuteNonQuery();
                     }
-                    
+
+                    merge.ExecuteNonQuery();
+
                     transaction.Commit();
                 }
             }
