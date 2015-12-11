@@ -43,9 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommandBuilder.cs" />
-    <Compile Include="Command\InsertCommandBuilder.cs" />
-    <Compile Include="Command\SelectCommandBuilder.cs" />
-    <Compile Include="Command\UpdateCommandBuilder.cs" />
+    <Compile Include="Command\FieldInfo.cs" />
+    <Compile Include="Command\InsertCommandWrapper.cs" />
+    <Compile Include="Command\ParameterBag.cs" />
+    <Compile Include="Command\SelectCommandWrapper.cs" />
+    <Compile Include="Command\UpdateCommandWrapper.cs" />
     <Compile Include="Criterion\Criteria.cs" />
     <Compile Include="Criterion\EqualsCriterion.cs" />
     <Compile Include="Criterion\Expression.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Mappers\ProductMapper.cs" />
     <Compile Include="Mappers\ProjectMapper.cs" />
     <Compile Include="Mappers\ReportMapper.cs" />
+    <Compile Include="Mappers\SkillMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\CustomerProxy.cs" />
     <Compile Include="Proxies\DraftProxy.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Proxies\ListProxy.cs" />
     <Compile Include="Proxies\ProductProxy.cs" />
     <Compile Include="Proxies\ProjectProxy.cs" />
+    <Compile Include="Proxies\SkillProxy.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\ReportByDurationAndEmployeeQuery.cs" />
     <Compile Include="Query\ReportByProjectQuery.cs" />
@@ -77,6 +81,7 @@
     <Compile Include="Repositories\MsSqlProductRepository.cs" />
     <Compile Include="Repositories\MsSqlProjectRepository.cs" />
     <Compile Include="Repositories\MsSqlReportRepository.cs" />
+    <Compile Include="Repositories\MsSqlSkillRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
