@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class ReportMapper : IDataMapper<Report>
+    class ReportMapper
     {
         private readonly DataContext _context;
         
@@ -295,26 +296,17 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Report Map(IDataReader reader)
+        public Report Map(IDataRecord record)
         {
-            Report report = null;
-
-            if (reader.Read())
-            {
-                report = new Report(
-                    new EmployeeProxy(_context, (int) reader["EmployeeId"]), 
-                    new ProjectProxy(_context, (int) reader["ProjectId"])
-                ) {
-                    Id = (int)reader["ReportId"],
-                    Date = (DateTime)reader["Date"]
-                };
-
-                do
-                {
-                    report.AddReportLine(new ProductProxy(_context, (int) reader["ProductId"]), (int) reader["Quantity"]);
-                }
-                while (reader.Read() && (int) reader["ReportId"] == report.Id);
-            }
+            var id = (int) record["ReportId"];
+            var report = new ReportGhost(
+                new EmployeeProxy(_context, (int) record["EmployeeId"]), 
+                new ProjectProxy(_context, (int) record["ProjectId"]),
+                () => LoadReportLines(id)
+            ) {
+                Id = id,
+                Date = (DateTime) record["Date"]
+            };
 
             return report;
         }
@@ -322,13 +314,10 @@ namespace Raunstrup.Data.MsSql.Mappers
         public IList<Report> MapAll(IDataReader reader)
         {
             var reports = new List<Report>();
-            Report report;
 
-            // Holy hell this is fugly.
-            // TODO: Consider using DataSet or something.
-            while ((report = Map(reader)) != null)
+            while (reader.Read())
             {
-                reports.Add(report);
+                reports.Add(Map(reader));
             }
 
             return reports;
@@ -355,6 +344,48 @@ namespace Raunstrup.Data.MsSql.Mappers
             command.Parameters.Add(dateParam);
             command.Parameters.Add(projectIdParameter);
             command.Parameters.Add(employeeIdParameter);
+        }
+
+        private IList<ReportLine> LoadReportLines(int reportId)
+        {
+            using (var connection = _context.CreateConnection())
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"SELECT Quantity, ProductId 
+                                        FROM ReportLine 
+                                        WHERE ReportId = @id;";
+
+                var idParam = command.CreateParameter();
+
+                idParam.ParameterName = "@id";
+                idParam.Value = reportId;
+                idParam.DbType = DbType.Int32;
+
+                command.Parameters.Add(idParam);
+
+                connection.Open();
+                command.Prepare();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    return MapReportLines(reader);
+                }
+            }
+        }
+
+        private IList<ReportLine> MapReportLines(IDataReader reader)
+        {
+            var reportLines = new List<ReportLine>();
+
+            while (reader.Read())
+            {
+                reportLines.Add(new ReportLine(
+                    new ProductProxy(_context, (int)reader["ProductId"]), 
+                    (int) reader["Quantity"])
+                );
+            }
+
+            return reportLines;
         }
     }
 }

@@ -6,9 +6,16 @@ namespace Raunstrup.Domain
     public class Report
     {
         private int _id;
-        public readonly IList<ReportLine> Lines = new List<ReportLine>();
+        
+        public Report(Employee employee, Project project)
+        {
+            Employee = employee;
+            Project = project;
+            Date = DateTime.Now;
+            Lines = new List<ReportLine>();
+        }
 
-        public int Id
+        public virtual int Id
         {
             get { return _id; }
             set
@@ -22,16 +29,10 @@ namespace Raunstrup.Domain
             }
         }
 
-        public Employee Employee { get; private set; }
-        public Project Project { get; private set; }
-        public DateTime Date { get; set; }
-
-        public Report(Employee employee, Project project)
-        {
-            Employee = employee;
-            Project = project;
-            Date = DateTime.Now;
-        }
+        public virtual Employee Employee { get; private set; }
+        public virtual Project Project { get; private set; }
+        public virtual DateTime Date { get; set; }
+        public virtual IList<ReportLine> Lines { get; private set; } 
         
         public IList<ReportLine> GetLines()
         {

@@ -57,6 +57,7 @@
     <Compile Include="Formatter.cs" />
     <Compile Include="Ghost\DraftGhost.cs" />
     <Compile Include="Ghost\EmployeeGhost.cs" />
+    <Compile Include="Ghost\ReportGhost.cs" />
     <Compile Include="Mappers\CustomerMapper.cs" />
     <Compile Include="Mappers\DraftMapper.cs" />
     <Compile Include="Mappers\EmployeeMapper.cs" />
