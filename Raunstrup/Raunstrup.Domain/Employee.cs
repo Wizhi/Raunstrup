@@ -22,7 +22,7 @@ namespace Raunstrup.Domain
 
         public virtual string Name { get; set; }
 
-        public IList<Skill> Skills { get; private set; }
+        public virtual IList<Skill> Skills { get; private set; }
 
         public Employee()
         {
