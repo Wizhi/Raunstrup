@@ -49,7 +49,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
-                                        FROM Employee e";
+                                        FROM Employee e
+                                        LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId";
 
                 connection.Open();
 
@@ -181,6 +182,15 @@ namespace Raunstrup.Data.MsSql.Mappers
                     Id = (int) reader["EmployeeId"],
                     Name = (string) reader["Name"]
                 };
+
+                do
+                {
+                    if (!(reader["SkillId"] is DBNull))
+                    {
+                        employee.Skills.Add(new SkillProxy(_context, (int) reader["SkillId"]));
+                    }
+                }
+                while (reader.Read() && (int) reader["EmployeeId"] == employee.Id);
             }
 
             return employee;
