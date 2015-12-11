@@ -12,7 +12,6 @@ namespace Raunstrup.Core.Controllers
     public class DraftController
     {
         private Draft _currentDraft;
-        private readonly Company _company;
         private readonly ICustomerRepository _customerRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
