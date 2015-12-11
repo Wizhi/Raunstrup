@@ -81,18 +81,13 @@ namespace Raunstrup.Domain
         public decimal Total { get { return _orderLines.Sum(x => x.SubTotal); } }
 
         public virtual IList<OrderLine> OrderLines { get { return _orderLines; } }
-
-        public Draft()
+        
+        public Draft(Customer customer)
         {
+            Customer = customer;
             CreationDate = DateTime.Now;
             EndDate = _startDate.AddDays(7);
             DiscountPercentage = 0;
-        }
-
-        public Draft(Customer customer)
-            : this()
-        {
-            Customer = customer;
         }
 
         public void AddOrderLine(Product item, int quantity)
@@ -102,7 +97,7 @@ namespace Raunstrup.Domain
 
         public void AddOrderLine(Product item, int quantity, decimal pricePerUnit)
         {
-            _orderLines.Add(new OrderLine(item, quantity) { UnitPrice = pricePerUnit });
+            OrderLines.Add(new OrderLine(item, quantity) { UnitPrice = pricePerUnit });
         }
 
         public void RemoveOrderLine(OrderLine line)
