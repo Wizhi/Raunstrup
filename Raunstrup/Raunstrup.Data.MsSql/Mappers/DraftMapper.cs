@@ -51,29 +51,10 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                var fields = new[]
-                {
-                     "d.DraftId",
-                     "d.WorkTitle",
-                     "d.[Description]",
-                     "d.Discount",
-                     "d.StartDate",
-                     "d.EndDate",
-                     "d.CustomerId",
-                     "ol.Quantity",
-                     "ol.PricePerUnit",
-                     "ol.ProductId"
-                };
-
-                var query = new[]
-                {
-                    "SELECT " + string.Join(",", fields),
-                    "FROM Draft d",
-                    "JOIN OrderLine ol ON ol.DraftId = d.DraftId",
-                    "ORDER BY d.DraftId"
-                };
-
-                command.CommandText = string.Join(" ", query);
+                command.CommandText = @"SELECT 
+                                          DraftId, WorkTitle, [Description], Discount, 
+                                          StartDate, EndDate, CustomerId, ResponsibleEmployeeId
+                                        FROM Draft";
 
                 connection.Open();
 
