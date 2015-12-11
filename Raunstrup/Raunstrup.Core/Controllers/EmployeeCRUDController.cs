@@ -84,7 +84,11 @@ namespace Raunstrup.Core.Controllers
 
         public void RemoveSkill(int id)
         {
-            _currentEmployee.Skills.Remove(_skillRepository.Get(id));
+            var skill = _currentEmployee.Skills.FirstOrDefault(x => x.Id == id);
+            if (skill != null)
+            {
+                _currentEmployee.Skills.Remove(skill);
+            }
         }
 
         public List<ReadOnlySkill> GetAllSkills()
