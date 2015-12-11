@@ -35,7 +35,7 @@ namespace Raunstrup.Data.MsSql.Repositories
             }
             else
             {
-                // UPDATE
+                _mapper.Update(entity);
             }
         }
 
