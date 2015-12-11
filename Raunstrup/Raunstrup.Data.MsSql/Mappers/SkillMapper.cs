@@ -19,7 +19,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT Id, Name FROM Skill WHERE SkillId=@id";
+                command.CommandText = "SELECT SkillId, Name FROM Skill WHERE SkillId=@id";
 
                 var idParam = command.CreateParameter();
 
@@ -44,7 +44,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT Id, Name FROM Skill";
+                command.CommandText = "SELECT SkillId, Name FROM Skill";
                 
                 connection.Open();
 
