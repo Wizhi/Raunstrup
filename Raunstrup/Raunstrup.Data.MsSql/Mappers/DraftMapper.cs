@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Raunstrup.Data.MsSql.Command;
+using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
 using Raunstrup.Domain;
 
@@ -21,6 +22,12 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
+                command.CommandText = @"SELECT 
+                                          DraftId, WorkTitle, [Description], Discount, 
+                                          StartDate, EndDate, CustomerId, ResponsibleEmployeeId
+                                        FROM Draft
+                                        WHERE DraftId = @id";
+
                 var idParam = command.CreateParameter();
 
                 idParam.ParameterName = "@id";
@@ -29,38 +36,12 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 command.Parameters.Add(idParam);
 
-                var fields = new[]
-                {
-                     "d.DraftId",
-                     "d.WorkTitle",
-                     "d.[Description]",
-                     "d.Discount",
-                     "d.StartDate",
-                     "d.EndDate",
-                     "d.CustomerId",
-                     "d.ResponsibleEmployeeId",
-                     "ol.OrderLineId",
-                     "ol.Quantity",
-                     "ol.PricePerUnit",
-                     "ol.ProductId"
-                };
-
-                var query = new[]
-                {
-                    "SELECT " + string.Join(",", fields),
-                    "FROM Draft d",
-                    "JOIN OrderLine ol ON ol.DraftId = d.DraftId",
-                    "WHERE d.DraftId = @id"
-                };
-
-                command.CommandText = string.Join(" ", query);
-
                 connection.Open();
                 command.Prepare();
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
@@ -266,16 +247,19 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Draft Map(IDataReader reader)
+        public Draft Map(IDataRecord reader)
         {
-            Draft draft = null;
+            //Draft draft = null;
 
-            if (reader.Read())
-            {
-                Console.WriteLine(reader["CustomerId"]);
-                draft = new Draft(new CustomerProxy(_context, (int) reader["CustomerId"]))
+            //if (reader.Read())
+            //{
+                var id = (int) reader["DraftId"];
+                var draft = new DraftGhost(
+                    new CustomerProxy(_context, (int) reader["CustomerId"]), 
+                    () => LoadOrderLines(id)
+                )
                 {
-                    Id = (int) reader["DraftId"],
+                    Id = id,
                     Title = (string) reader["WorkTitle"],
                     Description = (string) reader["Description"],
                     // TODO: Consider making Discount a float
@@ -285,16 +269,16 @@ namespace Raunstrup.Data.MsSql.Mappers
                     ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
                 };
 
-                do
-                {
-                    draft.OrderLines.Add(new OrderLine(new ProductProxy(_context, (int) reader["ProductId"]), (int) reader["Quantity"])
-                    {
-                        Id = (int) reader["OrderLineId"],
-                        UnitPrice = (decimal) reader["PricePerUnit"]
-                    });
-                }
-                while (reader.Read() && (int) reader["DraftId"] == draft.Id);
-            }
+                //do
+                //{
+                //    draft.OrderLines.Add(new OrderLine(new ProductProxy(_context, (int) reader["ProductId"]), (int) reader["Quantity"])
+                //    {
+                //        Id = (int) reader["OrderLineId"],
+                //        UnitPrice = (decimal) reader["PricePerUnit"]
+                //    });
+                //}
+                //while (reader.Read() && (int) reader["DraftId"] == draft.Id);
+            //}
 
             return draft;
         }
@@ -302,11 +286,10 @@ namespace Raunstrup.Data.MsSql.Mappers
         public IList<Draft> MapAll(IDataReader reader)
         {
             var drafts = new List<Draft>();
-            Draft draft;
-
-            while ((draft = Map(reader)) != null)
+            
+            while (reader.Read())
             {
-                drafts.Add(draft);
+                drafts.Add(Map(reader));
             }
 
             return drafts;
@@ -407,6 +390,49 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
 
             return names;
+        }
+
+        private IList<OrderLine> LoadOrderLines(int draftId)
+        {
+            using (var connection = _context.CreateConnection())
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"SELECT Quantity, PricePerUnit, ProductId 
+                                        FROM OrderLine 
+                                        WHERE DraftId = @id";
+
+                var idParam = command.CreateParameter();
+
+                idParam.ParameterName = "@id";
+                idParam.Value = draftId;
+                idParam.DbType = DbType.Int32;
+
+                command.Parameters.Add(idParam);
+
+                connection.Open();
+                command.Prepare();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    return MapOrderLines(reader);
+                }
+            }
+        }
+
+        private IList<OrderLine> MapOrderLines(IDataReader reader)
+        {
+            var orderLines = new List<OrderLine>();
+
+            while (reader.Read())
+            {
+                orderLines.Add(new OrderLine(
+                    new ProductProxy(_context, (int) reader["ProductId"]), 
+                    (int) reader["Quantity"], 
+                    (decimal) reader["PricePerUnit"])
+                );
+            }
+
+            return orderLines;
         }
     }
 }
