@@ -84,8 +84,11 @@ namespace Raunstrup.Forms
 
         private void _removeFromEmployeeSkillLV_Click(object sender, EventArgs e)
         {
-            _employeeCRUDController.RemoveSkill((int)_employeeSkillsLV.FocusedItem.Tag);
-            _employeeSkillsLV.Items.Remove(_employeeSkillsLV.FocusedItem);
+            if (_employeeSkillsLV.FocusedItem != null)
+            {
+                _employeeCRUDController.RemoveSkill((int) _employeeSkillsLV.FocusedItem.Tag);
+                _employeeSkillsLV.Items.Remove(_employeeSkillsLV.FocusedItem);
+            }
         }
 
         private void _editSkillButton_Click(object sender, EventArgs e)
