@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Raunstrup.Domain.ViewObjects
 {
-    class ReadOnlySkill
+    public class ReadOnlySkill
     {
         private readonly Skill _real;
 
