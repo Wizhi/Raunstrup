@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\EmployeeCRUDController.cs" />
     <Compile Include="Controllers\ProductCRUDController.cs" />
     <Compile Include="InvoiceTextFormatter.cs" />
     <Compile Include="Company.cs" />
