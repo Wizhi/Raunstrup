@@ -13,16 +13,14 @@ namespace Raunstrup.Data.MsSql.Proxies
             _real = new Lazy<Skill>(() => new SkillMapper(context).Get(id));
         }
 
-        public int Id
+        public override int Id
         {
             get { return _real.Value.Id; }
-            set { _real.Value.Id = value; }
         }
 
-        public string Name
+        public override string Name
         {
             get { return _real.Value.Name; }
-            set { _real.Value.Name = value; }
         }
     }
 }
