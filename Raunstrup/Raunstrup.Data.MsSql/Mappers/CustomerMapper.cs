@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
@@ -7,12 +9,20 @@ namespace Raunstrup.Data.MsSql.Mappers
     class CustomerMapper
     {
         private readonly DataContext _context;
-
+        private readonly IDictionary<string, FieldInfo> _fields = new Dictionary<string, FieldInfo>
+        {
+            { "Name", new FieldInfo("Name") { DbType = DbType.AnsiString, Size = 100 } },
+            { "City", new FieldInfo("City") { DbType = DbType.AnsiString, Size = 50 } },
+            { "PostalCode", new FieldInfo("PostalCode") { DbType = DbType.AnsiString, Size = 4 } },
+            { "StreetName", new FieldInfo("StreetName") { DbType = DbType.AnsiString, Size = 50 } },
+            { "StreetNumber", new FieldInfo("StreetNumber") { DbType = DbType.AnsiString, Size = 5 } }
+        };
+        
         public CustomerMapper(DataContext context)
         {
             _context = context;
         }
-
+        
         public Customer Get(int id)
         {
             using (var connection = _context.CreateConnection())
@@ -62,12 +72,24 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"INSERT INTO Customer (Name, StreetNumber, StreetName, City, PostalCode) 
-                                        VALUES (@name, @streetNumber, @streetName, @city, @postalCode);
-                                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                var wrapped = new InsertCommandWrapper(command);
 
-                SetParameters(command, customer);
-
+                wrapped
+                    .Target("Customer")
+                    .Field(_fields["Name"])
+                    .Field(_fields["City"])
+                    .Field(_fields["PostalCode"])
+                    .Field(_fields["StreetName"])
+                    .Field(_fields["StreetNumber"])
+                    .Values(
+                        customer.Name, customer.City,
+                        customer.PostalCode, customer.StreetName,
+                        customer.StreetNumber
+                    )
+                    .Apply();
+                
+                command.CommandText += "SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                
                 connection.Open();
                 command.Prepare();
 
@@ -80,11 +102,17 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"UPDATE Customer SET
-                                        Name=@name, StreetNumber=@streetNumber, StreetName=@streetName, 
-                                        City=@city, PostalCode=@postalCode
-                                        WHERE CustomerId=@id;";
+                var wrapped = new UpdateCommandWrapper(command);
 
+                wrapped
+                    .Target("Customer")
+                    .Set(_fields["Name"], customer.Name)
+                    .Set(_fields["City"], customer.City)
+                    .Set(_fields["PostalCode"], customer.PostalCode)
+                    .Set(_fields["StreetName"], customer.StreetName)
+                    .Set(_fields["StreetNumber"], customer.StreetNumber)
+                    .Where("CustomerId = @id")
+                    .Apply();
 
                 var idParam = command.CreateParameter();
 
@@ -93,9 +121,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 idParam.Value = customer.Id;
 
                 command.Parameters.Add(idParam);
-
-                SetParameters(command, customer);
-
+                
                 connection.Open();
                 command.Prepare();
 
@@ -134,46 +160,6 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
 
             return customers;
-        }
-
-        private void SetParameters(IDbCommand command, Customer customer)
-        {
-            var nameParam = command.CreateParameter();
-            var streetNumberParam = command.CreateParameter();
-            var streetNameParam = command.CreateParameter();
-            var cityParam = command.CreateParameter();
-            var postalCodeParam = command.CreateParameter();
-
-            nameParam.ParameterName = "@name";
-            nameParam.Value = customer.Name;
-            nameParam.DbType = DbType.AnsiString;
-            nameParam.Size = 100;
-
-            streetNumberParam.ParameterName = "@streetNumber";
-            streetNumberParam.Value = customer.StreetNumber;
-            streetNumberParam.DbType = DbType.AnsiString;
-            streetNumberParam.Size = 5;
-
-            streetNameParam.ParameterName = "@streetName";
-            streetNameParam.Value = customer.StreetName;
-            streetNameParam.DbType = DbType.AnsiString;
-            streetNameParam.Size = 50;
-
-            cityParam.ParameterName = "@city";
-            cityParam.Value = customer.City;
-            cityParam.DbType = DbType.AnsiString;
-            cityParam.Size = 50;
-
-            postalCodeParam.ParameterName = "@postalCode";
-            postalCodeParam.Value = customer.PostalCode;
-            postalCodeParam.DbType = DbType.AnsiString;
-            postalCodeParam.Size = 4;
-
-            command.Parameters.Add(nameParam);
-            command.Parameters.Add(streetNumberParam);
-            command.Parameters.Add(streetNameParam);
-            command.Parameters.Add(cityParam);
-            command.Parameters.Add(postalCodeParam);
         }
     }
 }
