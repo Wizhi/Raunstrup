@@ -178,20 +178,13 @@ namespace Raunstrup.Data.MsSql.Mappers
             
             if (reader.Read())
             {
-                employee = new Employee
+                var real = new Employee
                 {
                     Id = (int) reader["EmployeeId"],
                     Name = (string) reader["Name"]
                 };
 
-                do
-                {
-                    if (!(reader["SkillId"] is DBNull))
-                    {
-                        employee.Skills.Add(new SkillProxy(_context, (int) reader["SkillId"]));
-                    }
-                }
-                while (reader.Read() && (int) reader["EmployeeId"] == employee.Id);
+                employee = new EmployeeProxy(_context, real);
             }
 
             return employee;
