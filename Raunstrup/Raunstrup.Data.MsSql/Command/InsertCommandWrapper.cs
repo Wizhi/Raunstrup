@@ -33,6 +33,29 @@ namespace Raunstrup.Data.MsSql.Command
             return this;
         }
 
+        public InsertCommandWrapper Field(string name, DbType type, byte precision, byte scale)
+        {
+            _fields.Add(new FieldInfo(name)
+            {
+                DbType = type,
+                Precision = precision,
+                Scale = scale
+            });
+
+            return this;
+        }
+
+        public InsertCommandWrapper Field(string name, DbType type, int size)
+        {
+            _fields.Add(new FieldInfo(name)
+            {
+                DbType = type,
+                Size = size 
+            });
+
+            return this;
+        }
+
         public InsertCommandWrapper Values(params object[] values)
         {
             if (values.Length != _fields.Count)
@@ -108,7 +131,7 @@ namespace Raunstrup.Data.MsSql.Command
             }
 
             // We need to trim whitespace, and then trailing comma.
-            Command.CommandText = sb.ToString().TrimEnd().TrimEnd(',');
+            Command.CommandText = sb.ToString().TrimEnd().TrimEnd(',') + ";";
 
             return this;
         }

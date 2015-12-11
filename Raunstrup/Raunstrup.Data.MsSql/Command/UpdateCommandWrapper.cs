@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace Raunstrup.Data.MsSql.Command
@@ -9,7 +10,8 @@ namespace Raunstrup.Data.MsSql.Command
     {
         private string _target;
         private readonly ParameterBag _parameters;
-        private readonly IDictionary<FieldInfo, IDbDataParameter> _sets = new Dictionary<FieldInfo, IDbDataParameter>(); 
+        private readonly IDictionary<FieldInfo, IDbDataParameter> _sets = new Dictionary<FieldInfo, IDbDataParameter>();
+        private string _constraint;
 
         public UpdateCommandWrapper(IDbCommand command)
         {
@@ -31,6 +33,14 @@ namespace Raunstrup.Data.MsSql.Command
             var param = _parameters.Add(field, value);
 
             _sets.Add(field, param);
+            Command.Parameters.Add(param);
+
+            return this;
+        }
+
+        public UpdateCommandWrapper Where(string constraint)
+        {
+            _constraint = constraint;
 
             return this;
         }
@@ -53,14 +63,18 @@ namespace Raunstrup.Data.MsSql.Command
             var sb = new StringBuilder("UPDATE ")
                 .AppendLine(_target)
                 .AppendLine("SET");
+            
+            sb.AppendLine(
+                string.Join(", ",
+                _sets.Select(pair => string.Format("{0}={1}", pair.Key.Name, pair.Value.ParameterName)))
+            );
 
-            foreach (var pair in _sets)
+            if (_constraint != string.Empty)
             {
-                // string.Format does add overhead, but whatever.
-                sb.AppendLine(string.Format("{0}={1},", pair.Key.Name, pair.Value.ParameterName));
+                sb.AppendLine(" WHERE " + _constraint);
             }
 
-            Command.CommandText = sb.ToString().TrimEnd().TrimEnd(',');
+            Command.CommandText = sb.ToString();
 
             return this;
         }
