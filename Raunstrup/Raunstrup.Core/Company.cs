@@ -17,11 +17,13 @@ namespace Raunstrup.Core
         private IReportRepository ReportRepository { get; set; }
         private IEmployeeRepository EmployeeRepository { get; set; }
         private IProductRepository ProductRepository { get; set; }
+        private ISkillRepository SkillRepository { get; set; }
         public string Name { get; private set; }
         public string Address { get; private set; }
 
         public Company()
         {
+            
             // Bootstrapping the DataContext
             var con = ConfigurationManager.ConnectionStrings["Raunstrup"];
             var provider = DbProviderFactories.GetFactory(con.ProviderName);
@@ -37,6 +39,7 @@ namespace Raunstrup.Core
             ReportRepository = new MsSqlReportRepository(context);
             EmployeeRepository = new MsSqlEmployeeRepository(context);
             ProductRepository = new MsSqlProductRepository(context);
+            SkillRepository = new MsSqlSkillRepository(context);
             SetupTestData();
         }
 
@@ -53,6 +56,11 @@ namespace Raunstrup.Core
         public ProductCRUDController GetProductController()
         {
             return new ProductCRUDController(ProductRepository);
+        }
+
+        public EmployeeCRUDController GetEmployeeCRUDController()
+        {
+            return new EmployeeCRUDController(EmployeeRepository, );
         }
 
         //All this test data should be deleted at some point, but for now it will have to be here
