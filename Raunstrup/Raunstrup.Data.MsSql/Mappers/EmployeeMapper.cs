@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
+using Raunstrup.Data.MsSql.Query;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
@@ -20,10 +22,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
+                command.CommandText = @"SELECT EmployeeId, Name
                                         FROM Employee e
-                                        LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId
-                                        WHERE e.EmployeeId = @id";
+                                        WHERE EmployeeId = @id";
 
                 var idParam = command.CreateParameter();
 
@@ -38,7 +39,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
@@ -48,9 +49,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT e.EmployeeId, e.Name, es.SkillId
-                                        FROM Employee e
-                                        LEFT JOIN EmployeeSkill es ON es.EmployeeId = e.EmployeeId";
+                command.CommandText = @"SELECT e.EmployeeId, e.Name
+                                        FROM Employee e";
 
                 connection.Open();
 
@@ -172,20 +172,20 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Employee Map(IDataReader reader)
+        public Employee Map(IDataRecord record)
         {
-            Employee employee = null;
+            //Employee employee = null;
             
-            if (reader.Read())
-            {
-                var real = new Employee
-                {
-                    Id = (int) reader["EmployeeId"],
-                    Name = (string) reader["Name"]
-                };
+            //if (record.Read())
+            //{
+                var id = (int) record["EmployeeId"];
 
-                employee = new EmployeeProxy(_context, real);
-            }
+                var employee = new EmployeeGhost(() => new SkillsByEmployeeQuery(id).Execute(_context))
+                {
+                    Id = id,
+                    Name = (string) record["Name"]
+                };
+            //}
 
             return employee;
         }
@@ -193,11 +193,10 @@ namespace Raunstrup.Data.MsSql.Mappers
         public IList<Employee> MapAll(IDataReader reader)
         {
             var employees = new List<Employee>();
-            Employee employee;
 
-            while ((employee = Map(reader)) != null)
+            while (reader.Read())
             {
-                employees.Add(employee);
+                employees.Add(Map(reader));
             }
 
             return employees;
