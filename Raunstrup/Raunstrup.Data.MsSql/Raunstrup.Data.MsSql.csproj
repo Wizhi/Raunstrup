@@ -79,6 +79,7 @@
     <Compile Include="Repositories\MsSqlProductRepository.cs" />
     <Compile Include="Repositories\MsSqlProjectRepository.cs" />
     <Compile Include="Repositories\MsSqlReportRepository.cs" />
+    <Compile Include="Repositories\MsSqlSkillRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raunstrup.Data\Raunstrup.Data.csproj">
