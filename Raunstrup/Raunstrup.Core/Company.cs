@@ -60,7 +60,7 @@ namespace Raunstrup.Core
 
         public EmployeeCRUDController GetEmployeeCRUDController()
         {
-            return new EmployeeCRUDController(EmployeeRepository, );
+            return new EmployeeCRUDController(EmployeeRepository, SkillRepository);
         }
 
         //All this test data should be deleted at some point, but for now it will have to be here
