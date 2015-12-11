@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Raunstrup.Data.MsSql.Mappers;
+using Raunstrup.Data.MsSql.Query;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
@@ -42,6 +43,11 @@ namespace Raunstrup.Data.MsSql.Repositories
         public void Delete(Draft entity)
         {
             throw new NotImplementedException();
+        }
+
+        public IList<Draft> GetUncommittedDrafts()
+        {
+            return new UncommittedDraftsQuery().Execute(_context);
         }
     }
 }
