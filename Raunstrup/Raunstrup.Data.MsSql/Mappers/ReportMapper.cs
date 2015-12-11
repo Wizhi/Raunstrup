@@ -283,7 +283,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                     // TODO: Make only executing temporary insert if needed cleaner.
                     // More smelly code!
-                    if (report.Lines.Count > 0)
+                    if (names.Count > 0)
                     {
                         tempInsert.ExecuteNonQuery();
                     }
