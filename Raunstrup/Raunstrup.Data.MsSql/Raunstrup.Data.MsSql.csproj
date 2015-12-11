@@ -43,9 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommandBuilder.cs" />
-    <Compile Include="Command\InsertCommandBuilder.cs" />
-    <Compile Include="Command\SelectCommandBuilder.cs" />
-    <Compile Include="Command\UpdateCommandBuilder.cs" />
+    <Compile Include="Command\FieldInfo.cs" />
+    <Compile Include="Command\InsertCommandWrapper.cs" />
+    <Compile Include="Command\ParameterBag.cs" />
+    <Compile Include="Command\SelectCommandWrapper.cs" />
+    <Compile Include="Command\UpdateCommandWrapper.cs" />
     <Compile Include="Criterion\Criteria.cs" />
     <Compile Include="Criterion\EqualsCriterion.cs" />
     <Compile Include="Criterion\Expression.cs" />
