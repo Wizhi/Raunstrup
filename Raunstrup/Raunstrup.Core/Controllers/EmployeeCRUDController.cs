@@ -22,6 +22,16 @@ namespace Raunstrup.Core.Controllers
             _skillRepository = skillRepository;
         }
 
+        public ReadOnlyEmployee GetEmployee()
+        {
+            return new ReadOnlyEmployee(_currentEmployee);
+        }
+
+        public List<ReadOnlySkill> GetEmployeeSkills()
+        {
+            return _currentEmployee.Skills.Select(skill => new ReadOnlySkill(skill)).ToList();
+        }
+
         public void EditEmployee(int id)
         {
             _currentEmployee = _employeeRepository.Get(id);
@@ -40,6 +50,11 @@ namespace Raunstrup.Core.Controllers
         public void DeleteEmployee()
         {
             _employeeRepository.Delete(_currentEmployee);
+        }
+
+        public ReadOnlySkill GetSkill()
+        {
+            return new ReadOnlySkill(_currentSkill);
         }
 
         public void EditSkill(int id)
@@ -62,6 +77,16 @@ namespace Raunstrup.Core.Controllers
             _skillRepository.Delete(_currentSkill);
         }
 
+        public void AddSkill(int id)
+        {
+            _currentEmployee.Skills.Add(_skillRepository.Get(id));
+        }
+
+        public void RemoveSkill(int id)
+        {
+            _currentEmployee.Skills.Remove(_skillRepository.Get(id));
+        }
+
         public List<ReadOnlySkill> GetAllSkills()
         {
             var skills = _skillRepository.GetAll();
@@ -70,9 +95,23 @@ namespace Raunstrup.Core.Controllers
 
         public List<ReadOnlyEmployee> GetAllEmployees()
         {
-            var employees = _employeeRepository.GetAll();
-            return employees.Select(employee => new ReadOnlyEmployee(employee)).ToList();
+            IList<Employee> employees = _employeeRepository.GetAll();
+            List<ReadOnlyEmployee> returnList = new List<ReadOnlyEmployee>();
+            foreach (var employee in employees)
+            {
+                returnList.Add(new ReadOnlyEmployee(employee));
+            }
+            return returnList;
         }
 
+        public void SetSkillName(string name)
+        {
+            _currentSkill.Name = name;
+        }
+
+        public void SetEmployeeName(string name)
+        {
+            _currentEmployee.Name = name;
+        }
     }
 }
