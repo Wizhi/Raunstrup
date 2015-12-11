@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\CommandBuilder.cs" />
     <Compile Include="Command\FieldInfo.cs" />
     <Compile Include="Command\InsertCommandWrapper.cs" />
     <Compile Include="Command\ParameterBag.cs" />
@@ -73,8 +72,11 @@
     <Compile Include="Proxies\ProjectProxy.cs" />
     <Compile Include="Proxies\SkillProxy.cs" />
     <Compile Include="Query\IQuery.cs" />
+    <Compile Include="Query\OrderLinesByDraftQuery.cs" />
     <Compile Include="Query\ReportByDurationAndEmployeeQuery.cs" />
     <Compile Include="Query\ReportByProjectQuery.cs" />
+    <Compile Include="Query\SkillsByEmployeeQuery.cs" />
+    <Compile Include="Query\UncommittedDraftsQuery.cs" />
     <Compile Include="Repositories\MsSqlCustomerRepository.cs" />
     <Compile Include="Repositories\MsSqlDraftRepository.cs" />
     <Compile Include="Repositories\MsSqlEmployeeRepository.cs" />
