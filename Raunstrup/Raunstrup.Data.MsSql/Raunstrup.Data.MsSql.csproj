@@ -46,16 +46,8 @@
     <Compile Include="Command\InsertCommandWrapper.cs" />
     <Compile Include="Command\ParameterBag.cs" />
     <Compile Include="Command\ParameterInfo.cs" />
-    <Compile Include="Command\SelectCommandWrapper.cs" />
     <Compile Include="Command\UpdateCommandWrapper.cs" />
-    <Compile Include="Criterion\Criteria.cs" />
-    <Compile Include="Criterion\EqualsCriterion.cs" />
-    <Compile Include="Criterion\Expression.cs" />
-    <Compile Include="Criterion\ICriterion.cs" />
-    <Compile Include="Criterion\LikeCriterion.cs" />
-    <Compile Include="Criterion\OrCriterion.cs" />
     <Compile Include="DataContext.cs" />
-    <Compile Include="Formatter.cs" />
     <Compile Include="Ghost\DraftGhost.cs" />
     <Compile Include="Ghost\EmployeeGhost.cs" />
     <Compile Include="Ghost\ReportGhost.cs" />
