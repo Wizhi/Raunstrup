@@ -8,12 +8,12 @@ namespace Raunstrup.Data.MsSql.Command
 {
     class ParameterBag : IEnumerable<IDbDataParameter>
     {
-        private readonly Func<IDbDataParameter> _provider;
+        private readonly Func<IDbDataParameter> _factory;
         private readonly IList<IDbDataParameter> _parameters = new List<IDbDataParameter>();
 
-        public ParameterBag(Func<IDbDataParameter> provider)
+        public ParameterBag(Func<IDbDataParameter> factory)
         {
-            _provider = provider;
+            _factory = factory;
         }
 
         public IReadOnlyCollection<IDbDataParameter> Parameters
@@ -23,13 +23,9 @@ namespace Raunstrup.Data.MsSql.Command
 
         public IDbDataParameter Add(FieldInfo info, object value)
         {
-            var parameter = _provider();
+            var parameter = info.ToParameter(_factory);
 
             parameter.ParameterName = "@_p" + _parameters.Count;
-            parameter.DbType = info.DbType;
-            parameter.Size = info.Size;
-            parameter.Scale = info.Scale;
-            parameter.Precision = info.Precision;
             parameter.Value = value;
 
             _parameters.Add(parameter);
