@@ -34,6 +34,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 var idParam = command.CreateParameter();
 
                 idParam.ParameterName = "@id";
+                idParam.Value = id;
                 idParam.DbType = DbType.Int32;
 
                 command.Parameters.Add(idParam);
@@ -109,16 +110,9 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Set(_fields["PostalCode"], customer.PostalCode)
                     .Set(_fields["StreetName"], customer.StreetName)
                     .Set(_fields["StreetNumber"], customer.StreetNumber)
+                    .Parameter(_fields["Id"], "@id", customer.Id)
                     .Where("CustomerId = @id")
                     .Apply();
-
-                var idParam = command.CreateParameter();
-
-                idParam.ParameterName = "@id";
-                idParam.DbType = DbType.Int32;
-                idParam.Value = customer.Id;
-
-                command.Parameters.Add(idParam);
                 
                 connection.Open();
                 command.Prepare();
