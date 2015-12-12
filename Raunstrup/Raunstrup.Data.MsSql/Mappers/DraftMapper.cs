@@ -10,6 +10,26 @@ namespace Raunstrup.Data.MsSql.Mappers
 {
     class DraftMapper
     {
+        private static readonly IDictionary<string, FieldInfo> DraftFields = new Dictionary<string, FieldInfo>
+        {
+            { "Id", new FieldInfo("DraftId") { DbType = DbType.Int32} },
+            { "Title", new FieldInfo("WorkTitle") { DbType = DbType.AnsiString, Size = 100 } },
+            { "Description", new FieldInfo("[Description]") { DbType = DbType.AnsiString, Size = -1 } },
+            { "StartDate", new FieldInfo("StartDate") { DbType = DbType.Date } },
+            { "EndDate", new FieldInfo("EndDate") { DbType = DbType.Date } },
+            { "DiscountPercentage", new FieldInfo("Discount") { DbType = DbType.Double } },
+            { "CustomerId", new FieldInfo("CustomerId") { DbType = DbType.Int32 } },
+            { "EmployeeId", new FieldInfo("ResponsibleEmployeeId") { DbType = DbType.Int32 } }
+        };
+        private static readonly IDictionary<string, FieldInfo> OrderLineFields = new Dictionary<string, FieldInfo>
+        {
+            { "Id", new FieldInfo("OrderLineId") { DbType = DbType.Int32 } },
+            { "Quantity", new FieldInfo("Quantity") { DbType = DbType.Int32 } },
+            { "UnitPrice", new FieldInfo("PricePerUnit") { DbType = DbType.Decimal, Precision = 9, Size = 2 } },
+            { "ProductId", new FieldInfo("ProductId") { DbType = DbType.Int32 } },
+            { "DraftId", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
+        };
+
         private readonly DataContext _context;
 
         public DraftMapper(DataContext context)
@@ -68,41 +88,62 @@ namespace Raunstrup.Data.MsSql.Mappers
         public void Insert(Draft draft)
         {
             using (var connection = _context.CreateConnection())
-            using (var draftInsert = connection.CreateCommand())
-            using (var orderLinesInsert = connection.CreateCommand())
+            using (var draftInsert = new InsertCommandWrapper(connection.CreateCommand()))
+            using (var orderLinesInsert = new InsertCommandWrapper(connection.CreateCommand()))
             {
-                draftInsert.CommandText = @"INSERT INTO Draft 
-                                              (WorkTitle, [Description], StartDate, EndDate, Discount, CustomerId, ResponsibleEmployeeId) 
-                                            VALUES 
-                                              (@title, @description, @startDate, @endDate, @discount, @customerId, @employeeId); 
-                                            SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                draftInsert
+                    .Target("Draft")
+                    .Field(DraftFields["Title"])
+                    .Field(DraftFields["Description"])
+                    .Field(DraftFields["StartDate"])
+                    .Field(DraftFields["EndDate"])
+                    .Field(DraftFields["DiscountPercentage"])
+                    .Field(DraftFields["CustomerId"])
+                    .Field(DraftFields["EmployeeId"])
+                    .Values(
+                        draft.Title, draft.Description,
+                        draft.StartDate, draft.EndDate,
+                        draft.DiscountPercentage, draft.Customer.Id,
+                        draft.ResponsiblEmployee.Id
+                    )
+                    .Apply();
 
-                SetParameters(draftInsert, draft);
+                draftInsert.Command.CommandText += "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                orderLinesInsert.CommandText = "INSERT INTO OrderLine (Quantity, PricePerUnit, ProductId, DraftId) VALUES" +
-                                               string.Join(", ", CreateOrderLineParameters(orderLinesInsert, draft));
+                IDbDataParameter draftIdParameter;
 
+                orderLinesInsert
+                    .Target("OrderLine")
+                    .Field(OrderLineFields["Quantity"])
+                    .Field(OrderLineFields["UnitPrice"])
+                    .Field(OrderLineFields["ProductId"])
+                    .Static(OrderLineFields["DraftId"], "@draftId", out draftIdParameter);
+                
+                foreach (var orderLine in draft.OrderLines)
+                {
+                    orderLinesInsert.Values(orderLine.Quantity, orderLine.UnitPrice, orderLine.Product.Id);
+                }
+                
                 connection.Open();
+                draftInsert.Command.Prepare();
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    draftInsert.Transaction = transaction;
-                    orderLinesInsert.Transaction = transaction;
+                    draftInsert.Command.Transaction = transaction;
+                    orderLinesInsert.Command.Transaction = transaction;
 
-                    var draftIdParam = orderLinesInsert.Parameters["@draftId"] as IDbDataParameter;
+                    var draftId = (int) draftInsert.Command.ExecuteScalar();
 
-                    draftIdParam.Value = draftInsert.ExecuteScalar();
-
-                    // Well, we can't insert orderlines that aren't there.
-                    // TODO: Find a better way to avoid issuing the INSERT INTO OrderLine query when no orderlines exist.
                     if (draft.OrderLines.Count > 0)
                     {
-                        orderLinesInsert.ExecuteNonQuery();
+                        draftIdParameter.Value = draftId;
+                        orderLinesInsert.Apply().Command.Prepare();
+                        orderLinesInsert.Command.ExecuteNonQuery();
                     }
 
                     transaction.Commit();
 
-                    draft.Id = (int) draftIdParam.Value;
+                    draft.Id = draftId;
                 }
             }
         }
@@ -110,85 +151,43 @@ namespace Raunstrup.Data.MsSql.Mappers
         public void Update(Draft draft)
         {
             using (var connection = _context.CreateConnection())
-            using (var update = connection.CreateCommand())
+            using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             using (var tempCreate = connection.CreateCommand())
-            using (var tempInsert = connection.CreateCommand())
+            using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var merge = connection.CreateCommand())
             {
-                update.CommandText = @"UPDATE Draft SET 
-                                         WorkTitle=@title, [Description]=@description, StartDate=@startDate,
-                                         EndDate=@endDate, Discount=@discount, CustomerId=@customerId
-                                       WHERE DraftId=@draftId";
-
-                // TODO: Make this re-usable
-                var idParam = update.CreateParameter();
-
-                idParam.ParameterName = "@draftId";
-                idParam.Value = draft.Id;
-                idParam.DbType = DbType.Int32;
-
-                update.Parameters.Add(idParam);
-
-                SetParameters(update, draft);
-
+                update
+                    .Target("Draft")
+                    .Set(DraftFields["Title"], draft.Title)
+                    .Set(DraftFields["Description"], draft.Description)
+                    .Set(DraftFields["StartDate"], draft.StartDate)
+                    .Set(DraftFields["EndDate"], draft.EndDate)
+                    .Set(DraftFields["DiscountPercentage"], draft.DiscountPercentage)
+                    .Set(DraftFields["CustomerId"], draft.Customer.Id)
+                    .Parameter(DraftFields["Id"], "@updateId", draft.Id)
+                    .Where("DraftId = @updateId")
+                    .Apply();
+                
                 tempCreate.CommandText = @"CREATE TABLE #TempOrderLine
                                            (OrderLineId int, Quantity int, PricePerUnit decimal(9, 2), DraftId int, ProductId int);";
                 
-                tempInsert.CommandText = @"INSERT INTO #TempOrderLine (OrderLineId, Quantity, PricePerUnit, ProductId, DraftId)
-                                           VALUES ";
+                tempInsert
+                    .Target("#TempOrderLine")
+                    .Field(OrderLineFields["Id"])
+                    .Field(OrderLineFields["Quantity"])
+                    .Field(OrderLineFields["UnitPrice"])
+                    .Field(OrderLineFields["ProductId"])
+                    .Static(OrderLineFields["DraftId"], "@insertId", draft.Id);
 
-                // Apparently you can't reuse IDbDataParameter instances. That kind of sucks.
-                var tempIdParam = tempInsert.CreateParameter();
-
-                tempIdParam.ParameterName = "@tempDraftId";
-                tempIdParam.Value = draft.Id;
-                tempIdParam.DbType = DbType.Int32;
-
-                tempInsert.Parameters.Add(tempIdParam);
-
-                var names = new List<string>();
-
-                for (var i = 0; i < draft.OrderLines.Count; i++)
+                foreach (var orderLine in draft.OrderLines)
                 {
-                    var orderLineIdParam = tempInsert.CreateParameter();
-                    var quantityParam = tempInsert.CreateParameter();
-                    var unitPriceParam = tempInsert.CreateParameter();
-                    var productIdParameter = tempInsert.CreateParameter();
-
-                    orderLineIdParam.ParameterName = "@orderLineId_" + i;
-                    orderLineIdParam.Value = draft.OrderLines[i].Id;
-                    orderLineIdParam.DbType = DbType.Int32;
-
-                    quantityParam.ParameterName = "@quantity_" + i;
-                    quantityParam.Value = draft.OrderLines[i].Quantity;
-                    quantityParam.DbType = DbType.Int32;
-
-                    unitPriceParam.ParameterName = "@unitPrice_" + i;
-                    unitPriceParam.Value = draft.OrderLines[i].UnitPrice;
-                    unitPriceParam.DbType = DbType.Decimal;
-                    unitPriceParam.Precision = 9;
-                    unitPriceParam.Scale = 2;
-
-                    productIdParameter.ParameterName = "@productId_" + i;
-                    productIdParameter.Value = draft.OrderLines[i].Product.Id;
-                    productIdParameter.DbType = DbType.Int32;
-
-                    tempInsert.Parameters.Add(orderLineIdParam);
-                    tempInsert.Parameters.Add(quantityParam);
-                    tempInsert.Parameters.Add(unitPriceParam);
-                    tempInsert.Parameters.Add(productIdParameter);
-
-                    names.Add(
-                        string.Format("({0}, {1}, {2}, {3}, @tempDraftId)",
-                            orderLineIdParam.ParameterName,
-                            quantityParam.ParameterName,
-                            unitPriceParam.ParameterName,
-                            productIdParameter.ParameterName
-                        )
+                    tempInsert.Values(
+                        orderLine.Id, orderLine.Quantity,
+                        orderLine.UnitPrice, orderLine.Product.Id
                     );
                 }
 
-                tempInsert.CommandText += string.Join(", ", names);
+                tempInsert.Apply();
 
                 merge.CommandText = @"MERGE INTO OrderLine AS t
                                       USING #TempOrderLine AS s
@@ -197,32 +196,30 @@ namespace Raunstrup.Data.MsSql.Mappers
                                         UPDATE SET t.Quantity=s.Quantity, t.PricePerUnit=s.PricePerUnit
                                       WHEN NOT MATCHED BY TARGET THEN 
                                         INSERT (Quantity, PricePerUnit, ProductId, DraftId) 
-                                        VALUES (s.Quantity, s.PricePerUnit, s.ProductId, s.DraftId)
-                                      WHEN NOT MATCHED BY SOURCE THEN DELETE;";
-
+                                        VALUES (s.Quantity, s.PricePerUnit, s.ProductId, s.DraftId);
+                                      --WHEN NOT MATCHED BY SOURCE AND t.DraftId = @mergeId THEN DELETE;";
+                
                 connection.Open();
-                update.Prepare();
-                tempInsert.Prepare();
+                update.Command.Prepare();
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    update.Transaction = transaction;
+                    update.Command.Transaction = transaction;
                     tempCreate.Transaction = transaction;
-                    tempInsert.Transaction = transaction;
+                    tempInsert.Command.Transaction = transaction;
                     merge.Transaction = transaction;
 
-                    update.ExecuteNonQuery();
+                    update.Command.ExecuteNonQuery();
                     tempCreate.ExecuteNonQuery();
 
-                    // TODO: Make only executing temporary insert if needed cleaner.
-                    // More smelly code!
-                    if (names.Count > 0)
+                    if (draft.OrderLines.Count > 0)
                     {
-                        tempInsert.ExecuteNonQuery();
+                        tempInsert.Command.Prepare();
+                        tempInsert.Command.ExecuteNonQuery();
                     }
 
                     merge.ExecuteNonQuery();
-                    
+
                     transaction.Commit();
                 }
             }
@@ -230,38 +227,21 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public Draft Map(IDataRecord reader)
         {
-            //Draft draft = null;
-
-            //if (reader.Read())
-            //{
-                var id = (int) reader["DraftId"];
-                var draft = new DraftGhost(
-                    new CustomerProxy(_context, (int) reader["CustomerId"]), 
-                    () => LoadOrderLines(id)
-                )
-                {
-                    Id = id,
-                    Title = (string) reader["WorkTitle"],
-                    Description = (string) reader["Description"],
-                    // TODO: Consider making Discount a float
-                    DiscountPercentage = (double) reader["Discount"],
-                    StartDate = (DateTime) reader["StartDate"],
-                    EndDate = (DateTime) reader["EndDate"],
-                    ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
-                };
-
-                //do
-                //{
-                //    draft.OrderLines.Add(new OrderLine(new ProductProxy(_context, (int) reader["ProductId"]), (int) reader["Quantity"])
-                //    {
-                //        Id = (int) reader["OrderLineId"],
-                //        UnitPrice = (decimal) reader["PricePerUnit"]
-                //    });
-                //}
-                //while (reader.Read() && (int) reader["DraftId"] == draft.Id);
-            //}
-
-            return draft;
+            var id = (int) reader["DraftId"];
+            return new DraftGhost(
+                new CustomerProxy(_context, (int) reader["CustomerId"]), 
+                () => LoadOrderLines(id)
+            )
+            {
+                Id = id,
+                Title = (string) reader["WorkTitle"],
+                Description = (string) reader["Description"],
+                // TODO: Consider making Discount a float
+                DiscountPercentage = (double) reader["Discount"],
+                StartDate = (DateTime) reader["StartDate"],
+                EndDate = (DateTime) reader["EndDate"],
+                ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
+            };
         }
 
         public IList<Draft> MapAll(IDataReader reader)
@@ -275,104 +255,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
             return drafts;
         }
-
-        private void SetParameters(IDbCommand command, Draft draft)
-        {
-            var workTitleParam = command.CreateParameter();
-            var descriptionParam = command.CreateParameter();
-            var startDateParam = command.CreateParameter();
-            var endDateParam = command.CreateParameter();
-            var discountParam = command.CreateParameter();
-            var customerIdParam = command.CreateParameter();
-            var responsibleEmployeeIdParam = command.CreateParameter();
-
-            workTitleParam.ParameterName = "@title";
-            workTitleParam.Value = draft.Title;
-            workTitleParam.DbType = DbType.AnsiString;
-            workTitleParam.Size = 100;
-
-            descriptionParam.ParameterName = "@description";
-            descriptionParam.Value = draft.Description;
-            descriptionParam.DbType = DbType.AnsiString;
-            descriptionParam.Size = -1;
-
-            startDateParam.ParameterName = "@startDate";
-            startDateParam.Value = draft.StartDate;
-            startDateParam.DbType = DbType.Date;
-
-            endDateParam.ParameterName = "@endDate";
-            endDateParam.Value = draft.EndDate;
-            endDateParam.DbType = DbType.Date;
-
-            discountParam.ParameterName = "@discount";
-            discountParam.Value = draft.DiscountPercentage;
-            discountParam.DbType = DbType.Double;
-
-            customerIdParam.ParameterName = "@customerId";
-            customerIdParam.Value = draft.Customer.Id;
-            customerIdParam.DbType = DbType.Int32;
-
-            responsibleEmployeeIdParam.ParameterName = "@employeeId";
-            responsibleEmployeeIdParam.Value = draft.ResponsiblEmployee.Id;
-            responsibleEmployeeIdParam.DbType = DbType.Int32;
-            
-            command.Parameters.Add(workTitleParam);
-            command.Parameters.Add(descriptionParam);
-            command.Parameters.Add(startDateParam);
-            command.Parameters.Add(endDateParam);
-            command.Parameters.Add(discountParam);
-            command.Parameters.Add(customerIdParam);
-            command.Parameters.Add(responsibleEmployeeIdParam);
-        }
-
-        private IEnumerable<string> CreateOrderLineParameters(IDbCommand command, Draft draft)
-        {
-            var idParam = command.CreateParameter();
-
-            idParam.ParameterName = "@draftId";
-            idParam.Value = draft.Id;
-            idParam.DbType = DbType.Int32;
-
-            command.Parameters.Add(idParam);
-
-            var names = new List<string>();
-
-            for (var i = 0; i < draft.OrderLines.Count; i++)
-            {
-                var quantityParam = command.CreateParameter();
-                var unitPriceParam = command.CreateParameter();
-                var productIdParameter = command.CreateParameter();
-
-                quantityParam.ParameterName = "@quantity_" + i;
-                quantityParam.Value = draft.OrderLines[i].Quantity;
-                quantityParam.DbType = DbType.Int32;
-
-                unitPriceParam.ParameterName = "@unitPrice_" + i;
-                unitPriceParam.Value = draft.OrderLines[i].UnitPrice;
-                unitPriceParam.DbType = DbType.Decimal;
-                unitPriceParam.Precision = 9;
-                unitPriceParam.Scale = 2;
-
-                productIdParameter.ParameterName = "@productId_" + i;
-                productIdParameter.Value = draft.OrderLines[i].Product.Id;
-                productIdParameter.DbType = DbType.Int32;
-
-                command.Parameters.Add(quantityParam);
-                command.Parameters.Add(unitPriceParam);
-                command.Parameters.Add(productIdParameter);
-
-                names.Add(
-                    string.Format("({0}, {1}, {2}, @draftId)",
-                        quantityParam.ParameterName,
-                        unitPriceParam.ParameterName,
-                        productIdParameter.ParameterName
-                    )
-                );
-            }
-
-            return names;
-        }
-
+        
         private IList<OrderLine> LoadOrderLines(int draftId)
         {
             using (var connection = _context.CreateConnection())
