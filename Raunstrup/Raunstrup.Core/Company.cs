@@ -11,15 +11,13 @@ namespace Raunstrup.Core
 {
     public class Company
     {
-        private IDraftRepository DraftRepository { get; set; }
-        private IProjectRepository ProjectRepository { get; set; }
-        private ICustomerRepository CustomerRepository { get; set; }
-        private IReportRepository ReportRepository { get; set; }
-        private IEmployeeRepository EmployeeRepository { get; set; }
-        private IProductRepository ProductRepository { get; set; }
-        private ISkillRepository SkillRepository { get; set; }
-        public string Name { get; private set; }
-        public string Address { get; private set; }
+        private readonly IDraftRepository DraftRepository;
+        private readonly IProjectRepository ProjectRepository;
+        private readonly ICustomerRepository CustomerRepository;
+        private readonly IReportRepository ReportRepository;
+        private readonly IEmployeeRepository EmployeeRepository;
+        private readonly IProductRepository ProductRepository;
+        private readonly ISkillRepository SkillRepository;
 
         public Company()
         {
@@ -40,28 +38,31 @@ namespace Raunstrup.Core
             EmployeeRepository = new MsSqlEmployeeRepository(context);
             ProductRepository = new MsSqlProductRepository(context);
             SkillRepository = new MsSqlSkillRepository(context);
-            SetupTestData();
+            //SetupTestData();
         }
 
-        public ReportController GetReportController()
+        public ReportController CreateReportController()
         {
             return new ReportController(ReportRepository,ProjectRepository,EmployeeRepository,ProductRepository);
         }
 
-        public DraftController GetDraftController()
+        public DraftController CreateDraftController()
         {
             return new DraftController(CustomerRepository,EmployeeRepository,ProductRepository,DraftRepository);
         }
 
-        public ProductCRUDController GetProductController()
+        public ProductCRUDController CreateProductController()
         {
             return new ProductCRUDController(ProductRepository);
         }
 
-        public EmployeeCRUDController GetEmployeeCRUDController()
+        public EmployeeCRUDController CreateEmployeeCRUDController()
         {
             return new EmployeeCRUDController(EmployeeRepository, SkillRepository);
         }
+
+        public string Name { get; set; }
+        public string Address { get; set; }
 
         //All this test data should be deleted at some point, but for now it will have to be here
         private void SetupTestData()
