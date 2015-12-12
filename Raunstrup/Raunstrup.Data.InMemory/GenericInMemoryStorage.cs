@@ -3,6 +3,11 @@ using System.Linq;
 
 namespace Raunstrup.Data.InMemory
 {
+    /// <summary>
+    /// A simplistic way of storing objects in memory.
+    /// </summary>
+    /// <remarks>Only intended for light test use.</remarks>
+    /// <typeparam name="T"></typeparam>
     public abstract class GenericInMemoryStorage<T>
     {
         protected readonly IDictionary<int, T> Storage = new Dictionary<int, T>();
