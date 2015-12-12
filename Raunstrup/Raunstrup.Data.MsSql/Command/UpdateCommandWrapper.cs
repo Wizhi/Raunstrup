@@ -33,7 +33,6 @@ namespace Raunstrup.Data.MsSql.Command
             var param = _parameters.Add(field, value);
 
             _sets.Add(field, param);
-            Command.Parameters.Add(param);
 
             return this;
         }
@@ -41,6 +40,18 @@ namespace Raunstrup.Data.MsSql.Command
         public UpdateCommandWrapper Where(string constraint)
         {
             _constraint = constraint;
+
+            return this;
+        }
+
+        public UpdateCommandWrapper Parameter(ParameterInfo info, string name, object value)
+        {
+            var parameter = info.ToParameter(Command.CreateParameter);
+
+            parameter.ParameterName = name;
+            parameter.Value = value;
+
+            _parameters.Add(parameter);
 
             return this;
         }
@@ -63,7 +74,12 @@ namespace Raunstrup.Data.MsSql.Command
             var sb = new StringBuilder("UPDATE ")
                 .AppendLine(_target)
                 .AppendLine("SET");
-            
+
+            foreach (var parameter in _parameters)
+            {
+                Command.Parameters.Add(parameter);
+            }
+
             sb.AppendLine(
                 string.Join(", ",
                 _sets.Select(pair => string.Format("{0}={1}", pair.Key.Name, pair.Value.ParameterName)))
