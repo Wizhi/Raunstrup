@@ -15,12 +15,7 @@ namespace Raunstrup.Data.MsSql.Command
         {
             _factory = factory;
         }
-
-        public IReadOnlyCollection<IDbDataParameter> Parameters
-        {
-            get { return new ReadOnlyCollection<IDbDataParameter>(_parameters); }
-        }
-
+        
         public IDbDataParameter Add(ParameterInfo info, object value)
         {
             var parameter = info.ToParameter(_factory);
