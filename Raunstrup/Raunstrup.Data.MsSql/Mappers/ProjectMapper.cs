@@ -96,16 +96,9 @@ namespace Raunstrup.Data.MsSql.Mappers
                 update.Target("Project")
                     .Set(ProjectFields["OrderDate"], project.OrderDate)
                     .Set(ProjectFields["Draft"], project.Draft.Id)
+                    .Parameter(ProjectFields["Id"], "@id", project.Id)
                     .Where("ProjectId = @id")
                     .Apply();
-
-                var idParam = update.Command.CreateParameter();
-
-                idParam.ParameterName = "@id";
-                idParam.Value = project.Id;
-                idParam.DbType = DbType.Int32;
-
-                update.Command.Parameters.Add(idParam);
                 
                 connection.Open();
                 update.Command.Prepare();
