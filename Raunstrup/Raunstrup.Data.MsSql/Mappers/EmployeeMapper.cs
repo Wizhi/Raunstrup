@@ -49,8 +49,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT e.EmployeeId, e.Name
-                                        FROM Employee e";
+                command.CommandText = @"SELECT EmployeeId, Name
+                                        FROM Employee";
 
                 connection.Open();
 
@@ -174,20 +174,13 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public Employee Map(IDataRecord record)
         {
-            //Employee employee = null;
-            
-            //if (record.Read())
-            //{
-                var id = (int) record["EmployeeId"];
+            var id = (int) record["EmployeeId"];
 
-                var employee = new EmployeeGhost(() => new SkillsByEmployeeQuery(id).Execute(_context))
-                {
-                    Id = id,
-                    Name = (string) record["Name"]
-                };
-            //}
-
-            return employee;
+            return new EmployeeGhost(() => new SkillsByEmployeeQuery(id).Execute(_context))
+            {
+                Id = id,
+                Name = (string) record["Name"]
+            };
         }
 
         public IList<Employee> MapAll(IDataReader reader)
