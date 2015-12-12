@@ -19,7 +19,7 @@ namespace Raunstrup.Forms
         {
             InitializeComponent();
             _company = company;
-            _employeeCRUDController = company.GetEmployeeCRUDController();
+            _employeeCRUDController = company.CreateEmployeeCRUDController();
         }
 
         private void EmployeeCRUDForm_Load(object sender, EventArgs e)

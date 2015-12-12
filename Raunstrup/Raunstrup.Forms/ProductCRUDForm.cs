@@ -24,7 +24,7 @@ namespace Raunstrup.Forms
             _productPriceNumericUpDown.Maximum = decimal.MaxValue;
             _costPriceNumericUpDown.Maximum = decimal.MaxValue;
             _editMode = false;
-            _productController = company.GetProductController();
+            _productController = company.CreateProductController();
             _materialRadioButton.Checked = true;
         }
 
@@ -55,7 +55,7 @@ namespace Raunstrup.Forms
             _workHourRadioButton.Enabled = false;
             _transportRadioButton.Enabled = false;
             _editMode = true;
-            _productController = company.GetProductController();
+            _productController = company.CreateProductController();
             _productController.EditProduct(product.ID);
         }
 

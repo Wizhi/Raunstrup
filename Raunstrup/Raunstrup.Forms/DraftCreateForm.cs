@@ -18,7 +18,7 @@ namespace Raunstrup.Forms
         public DraftCreateForm(Company company)
         {
             InitializeComponent();
-            _draftController = company.GetDraftController();
+            _draftController = company.CreateDraftController();
             var customers = _draftController.GetAllCustomers();
             var employees = _draftController.GetAllEmployees();
             _customerComboBox.DataSource = customers;
@@ -33,7 +33,7 @@ namespace Raunstrup.Forms
         public DraftCreateForm(Company company, ReadOnlyDraft draft)
         {
             InitializeComponent();
-            _draftController = company.GetDraftController();
+            _draftController = company.CreateDraftController();
             var customers = _draftController.GetAllCustomers();
             var employees = _draftController.GetAllEmployees();
             _customerComboBox.DataSource = customers;

@@ -26,7 +26,7 @@ namespace Raunstrup.Forms
 
         private void SetUpEmployeeListBox()
         {
-            EmployeeBox.DataSource = _company.GetReportController().GetAllEmployees();
+            EmployeeBox.DataSource = _company.CreateReportController().GetAllEmployees();
             EmployeeBox.DisplayMember = "Name";
         }
 
@@ -34,7 +34,7 @@ namespace Raunstrup.Forms
         {
             HoursWorkedChart.Series[0].Points.Clear();
             ReadOnlyEmployee employee = EmployeeBox.SelectedItem as ReadOnlyEmployee;
-            EmployeeStatistics employeeStatistics = _company.GetReportController().GetHoursWorkedStatistics(employee.Id,StartDatePicker.Value,EndDatePicker.Value);
+            EmployeeStatistics employeeStatistics = _company.CreateReportController().GetHoursWorkedStatistics(employee.Id,StartDatePicker.Value,EndDatePicker.Value);
             var dict = employeeStatistics.GetHoursWorkedByDay();
             foreach (var pair in dict)
             {

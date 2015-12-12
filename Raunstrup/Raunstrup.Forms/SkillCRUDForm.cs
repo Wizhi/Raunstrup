@@ -19,14 +19,14 @@ namespace Raunstrup.Forms
         public SkillCRUDForm(Company company)
         {
             InitializeComponent();
-            _employeeCRUDController = company.GetEmployeeCRUDController();
+            _employeeCRUDController = company.CreateEmployeeCRUDController();
             _employeeCRUDController.CreateNewSkill();
         }
 
         public SkillCRUDForm(Company company, ReadOnlySkill skill)
         {
             InitializeComponent();
-            _employeeCRUDController = company.GetEmployeeCRUDController();
+            _employeeCRUDController = company.CreateEmployeeCRUDController();
             _employeeCRUDController.EditSkill(skill.Id);
             _skillNameTextBox.Text = skill.Name;
         }

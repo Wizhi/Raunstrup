@@ -21,7 +21,7 @@ namespace Raunstrup.Forms
         public ProductSelectForm(Company company)
         {
             InitializeComponent();
-            _productController = company.GetProductController();
+            _productController = company.CreateProductController();
             _company = company;
             foreach (var readOnlyProduct in _productController.GetAllProducts())
             {
