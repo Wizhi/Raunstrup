@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
 using Raunstrup.Domain;
@@ -9,6 +10,21 @@ namespace Raunstrup.Data.MsSql.Mappers
 {
     class ReportMapper
     {
+        private static readonly IDictionary<string, FieldInfo> ReportFields = new Dictionary<string, FieldInfo>
+        {
+            { "Id", new FieldInfo("ReportId") { DbType = DbType.Int32 } },
+            { "Date", new FieldInfo("[Date]") { DbType = DbType.Date } },
+            { "Project", new FieldInfo("ProjectId") { DbType = DbType.Int32 } },
+            { "Employee", new FieldInfo("EmployeeId") { DbType = DbType.Int32 } }
+        };
+        private static readonly IDictionary<string, FieldInfo> ReportLineFields = new Dictionary<string, FieldInfo>
+        {
+            { "Id", new FieldInfo("ReportLineId") { DbType = DbType.Int32 } },
+            { "Quantity", new FieldInfo("Quantity") { DbType = DbType.Int32 } },
+            { "Report", new FieldInfo("ReportId") { DbType = DbType.Int32 } },
+            { "Product", new FieldInfo("ProductId") { DbType = DbType.Int32 } }
+        };
+
         private readonly DataContext _context;
         
         public ReportMapper(DataContext context)
@@ -31,19 +47,16 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 var fields = new[]
                 {
-                     "r.ReportId",
-                     "r.[Date]",
-                     "r.ProjectId",
-                     "r.EmployeeId",
-                     "rl.Quantity",
-                     "rl.ProductId"
+                     "ReportId",
+                     "[Date]",
+                     "ProjectId",
+                     "EmployeeId"
                 };
 
                 var query = new[]
                 {
                     "SELECT " + string.Join(",", fields),
-                    "FROM Report r",
-                    "JOIN ReportLine rl ON rl.ReportId = r.ReportId"
+                    "FROM Report"
                 };
 
                 command.CommandText = string.Join(" ", query);
@@ -53,7 +66,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
@@ -97,100 +110,52 @@ namespace Raunstrup.Data.MsSql.Mappers
         public void Insert(Report report)
         {
             using (var connection = _context.CreateConnection())
-            using (var reportInsert = connection.CreateCommand())
-            using (var reportLinesInsert = connection.CreateCommand())
+            using (var reportInsert = new InsertCommandWrapper(connection.CreateCommand()))
+            using (var reportLinesInsert = new InsertCommandWrapper(connection.CreateCommand()))
             {
-                reportInsert.CommandText = @"INSERT INTO Report ([Date], ProjectId, EmployeeId) 
-                                             VALUES (@date, @projectId, @employeeId); 
-                                             SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                //var reportInsertBuilder = new InsertCommandBuilder("Report");
+                reportInsert
+                    .Target("Report")
+                    .Field(ReportFields["Date"])
+                    .Field(ReportFields["Project"])
+                    .Field(ReportFields["Employee"])
+                    .Values(report.Date, report.Project.Id, report.Employee.Id)
+                    .Apply();
 
-                //reportInsertBuilder
-                //    .Field("Date", DbType.Int32)
-                //    .Field("ProjectId", DbType.Int32)
-                //    .Field("EmployeeId", DbType.Int32)
-                //    .Values(report.Date, report.Project.Id, report.Employee.Id);
+                reportInsert.Command.CommandText += "SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                
+                reportLinesInsert
+                    .Target("ReportLine")
+                    .Field(ReportLineFields["Quantity"])
+                    .Field(ReportLineFields["Product"])
+                    .Static(ReportLineFields["Report"], "@reportId");
 
-                var dateParam = reportInsert.CreateParameter();
-                var projectIdParameter = reportInsert.CreateParameter();
-                var employeeIdParameter = reportInsert.CreateParameter();
-
-                dateParam.ParameterName = "@date";
-                dateParam.Value = report.Date;
-                dateParam.DbType = DbType.Date;
-
-                projectIdParameter.ParameterName = "@projectId";
-                projectIdParameter.Value = report.Project.Id;
-                projectIdParameter.DbType = DbType.Int32;
-
-                employeeIdParameter.ParameterName = "@employeeId";
-                employeeIdParameter.Value = report.Employee.Id;
-                employeeIdParameter.DbType = DbType.Int32;
-
-                reportInsert.Parameters.Add(dateParam);
-                reportInsert.Parameters.Add(projectIdParameter);
-                reportInsert.Parameters.Add(employeeIdParameter);
-
-                reportLinesInsert.CommandText = "INSERT INTO ReportLine (Quantity, ProductId, ReportId) VALUES ";
-
-                //var reportLinesBuilder = new InsertCommandBuilder("ReportLine");
-
-                //reportLinesBuilder
-                //    .Field("Quantity", DbType.Int32)
-                //    .Field("ReportId", DbType.Int32)
-                //    .Field("ProductId", DbType.Int32);
-
-                //foreach (var reportLine in report.Lines)
-                //{
-                //    reportLinesBuilder.Values(reportLine.Quantity, 1, reportLine.Item.Id);
-                //}
-
-                // TODO: Make this re-usable
-                var names = new List<string>();
-
-                for (var i = 0; i < report.Lines.Count; i++)
-                {
-                    var quantityParam = reportLinesInsert.CreateParameter();
-
-                    quantityParam.ParameterName = "@quantity_" + i;
-                    quantityParam.Value = report.Lines[i].Quantity;
-                    quantityParam.DbType = DbType.Int32;
-
-                    var productIdParameter = reportLinesInsert.CreateParameter();
-
-                    productIdParameter.ParameterName = "@productId_" + i;
-                    productIdParameter.Value = report.Lines[i].Item.Id;
-                    productIdParameter.DbType = DbType.Int32;
-
-                    reportLinesInsert.Parameters.Add(quantityParam);
-                    reportLinesInsert.Parameters.Add(productIdParameter);
-
-                    names.Add(string.Format("({0}, {1}, @reportId)", quantityParam.ParameterName, productIdParameter.ParameterName));
-                }
-
-                var reportIdParameter = reportLinesInsert.CreateParameter();
+                var reportIdParameter = reportLinesInsert.Command.CreateParameter();
 
                 reportIdParameter.ParameterName = "@reportId";
                 reportIdParameter.DbType = DbType.Int32;
 
-                reportLinesInsert.Parameters.Add(reportIdParameter);
-                reportLinesInsert.CommandText += string.Join(", ", names);
+                reportLinesInsert.Command.Parameters.Add(reportIdParameter);
+
+                foreach (var reportLine in report.Lines)
+                {
+                    reportLinesInsert.Values(reportLine.Quantity, reportLine.Item.Id);
+                }
+
+                reportLinesInsert.Apply();
 
                 connection.Open();
-                reportInsert.Prepare();
-                reportLinesInsert.Prepare();
-                
+                reportInsert.Command.Prepare();
+                reportLinesInsert.Command.Prepare();
+
                 using (var transaction = connection.BeginTransaction())
-                //using (var reportInsert = reportInsertBuilder.Build(connection.CreateCommand))
-                //using (var reportLinesInsert = reportInsertBuilder.Build(connection.CreateCommand))
                 {
-                    reportInsert.Transaction = transaction;
-                    reportLinesInsert.Transaction = transaction;
+                    reportInsert.Command.Transaction = transaction;
+                    reportLinesInsert.Command.Transaction = transaction;
 
-                    reportIdParameter.Value = reportInsert.ExecuteScalar();
+                    reportIdParameter.Value = reportInsert.Command.ExecuteScalar();
 
-                    reportLinesInsert.ExecuteNonQuery();
+                    reportLinesInsert.Command.ExecuteNonQuery();
                     transaction.Commit();
 
                     report.Id = (int) reportIdParameter.Value;
@@ -201,92 +166,79 @@ namespace Raunstrup.Data.MsSql.Mappers
         public void Update(Report report)
         {
             using (var connection = _context.CreateConnection())
-            using (var update = connection.CreateCommand())
+            using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             using (var tempCreate = connection.CreateCommand())
-            using (var tempInsert = connection.CreateCommand())
+            using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var merge = connection.CreateCommand())
             {
-                update.CommandText = @"UPDATE Report SET
-                                         [Date]=@date, ProjectId=@projectId, EmployeeId=@employeeId)
-                                       WHERE ReportId=@id";
-                
-                var idParam = update.CreateParameter();
+                update
+                    .Target("Report")
+                    .Set(ReportFields["Date"], report.Date)
+                    .Set(ReportFields["Project"], report.Project.Id)
+                    .Set(ReportFields["Employee"], report.Employee.Id)
+                    .Where("ReportId = @updateId")
+                    .Apply();
 
-                idParam.ParameterName = "@id";
-                idParam.Value = report.Id;
-                idParam.DbType = DbType.Int32;
+                var updateIdParameter = update.Command.CreateParameter();
 
-                update.Parameters.Add(idParam);
+                updateIdParameter.ParameterName = "@updateId";
+                updateIdParameter.Value = report.Id;
+                updateIdParameter.DbType = DbType.Int32;
 
-                SetParameters(update, report);
+                update.Command.Parameters.Add(updateIdParameter);
 
                 tempCreate.CommandText = @"CREATE TABLE #TempReportLine 
                                            (ReportLineId int, Quantity int, ProductId int);";
-
-                tempInsert.CommandText = @"INSERT INTO #TempReportLine (ReportLineId, Quantity, ProductId)
-                                           VALUES ";
-
-                var reportIdParameter = tempInsert.CreateParameter();
-
-                reportIdParameter.ParameterName = "@reportId";
-                reportIdParameter.Value = report.Id;
-                reportIdParameter.DbType = DbType.Int32;
-
-                tempInsert.Parameters.Add(reportIdParameter);
-
-                var names = new List<string>();
-
-                for (var i = 0; i < report.Lines.Count; i++)
+                
+                tempInsert
+                    .Target("#TempReportLine")
+                    .Field(ReportLineFields["Id"])
+                    .Field(ReportLineFields["Quantity"])
+                    .Field(ReportLineFields["Product"]);
+                
+                foreach (var reportLine in report.Lines)
                 {
-                    var quantityParam = tempInsert.CreateParameter();
-
-                    quantityParam.ParameterName = "@quantity_" + i;
-                    quantityParam.Value = report.Lines[i].Quantity;
-                    quantityParam.DbType = DbType.Int32;
-
-                    var productIdParameter = tempInsert.CreateParameter();
-
-                    productIdParameter.ParameterName = "@productId_" + i;
-                    productIdParameter.Value = report.Lines[i].Item.Id;
-                    productIdParameter.DbType = DbType.Int32;
-
-                    tempInsert.Parameters.Add(quantityParam);
-                    tempInsert.Parameters.Add(productIdParameter);
-
-                    names.Add(string.Format("({0}, {1}, @reportId)", quantityParam.ParameterName, productIdParameter.ParameterName));
+                    tempInsert.Values(reportLine.Id, reportLine.Quantity, reportLine.Item.Id);
                 }
 
-                tempInsert.CommandText += string.Join(", ", names);
+                tempInsert.Apply();
                 
                 merge.CommandText = @"MERGE INTO ReportLine AS t
                                       USING #TempReportLine AS s
                                       ON t.ReportLineId = s.ReportLineId
-                                      WHEN MATCHED THEN 
-                                        UPDATE SET t.Quantity=s.Quantity
-                                      WHEN NOT MATCHED BY TARGET THEN 
-                                        INSERT (Quantity, ProductId, ReportId) 
-                                        VALUES (s.Quantity, s.ProductId, s.ReportId)
-                                      WHEN NOT MATCHED BY SOURCE THEN DELETE;";
+                                      WHEN MATCHED THEN
+	                                      UPDATE SET Quantity = s.Quantity
+                                      WHEN NOT MATCHED BY TARGET THEN
+	                                      INSERT (Quantity, ProductId, ReportId)
+	                                      VALUES (s.Quantity, s.ProductId, @mergeId)
+                                      WHEN NOT MATCHED BY SOURCE AND t.ReportId = @mergeId THEN DELETE;";
+
+                var mergeIdParameter = merge.CreateParameter();
+
+                mergeIdParameter.ParameterName = "@mergeId";
+                mergeIdParameter.Value = report.Id;
+                mergeIdParameter.DbType = DbType.Int32;
+
+                merge.Parameters.Add(mergeIdParameter);
 
                 connection.Open();
-                update.Prepare();
-                tempInsert.Prepare();
+                update.Command.Prepare();
+                merge.Prepare();
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    update.Transaction = transaction;
+                    update.Command.Transaction = transaction;
                     tempCreate.Transaction = transaction;
-                    tempInsert.Transaction = transaction;
+                    tempInsert.Command.Transaction = transaction;
                     merge.Transaction = transaction;
 
-                    update.ExecuteNonQuery();
+                    update.Command.ExecuteNonQuery();
                     tempCreate.ExecuteNonQuery();
-
-                    // TODO: Make only executing temporary insert if needed cleaner.
-                    // More smelly code!
-                    if (names.Count > 0)
+                    
+                    if (report.Lines.Count > 0)
                     {
-                        tempInsert.ExecuteNonQuery();
+                        tempInsert.Command.Prepare();
+                        tempInsert.Command.ExecuteNonQuery();
                     }
 
                     merge.ExecuteNonQuery();
