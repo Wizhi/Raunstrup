@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Data.MsSql.Proxies;
 using Raunstrup.Domain;
 
@@ -8,6 +9,13 @@ namespace Raunstrup.Data.MsSql.Mappers
 {
     class ProjectMapper
     {
+        private static readonly IDictionary<string, FieldInfo> ReportFields = new Dictionary<string, FieldInfo>
+        {
+            { "Id", new FieldInfo("ProjectId") { DbType = DbType.Int32 } },
+            { "OrderDate", new FieldInfo("OrderDate") { DbType = DbType.Date } },
+            { "Draft", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
+        };
+
         private readonly DataContext _context;
 
         public ProjectMapper(DataContext context)
@@ -20,9 +28,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT p.ProjectId, p.OrderDate, p.DraftId 
-                                        FROM Project p 
-                                        WHERE ProjectId = @id";
+                command.CommandText = @"SELECT ProjectId, OrderDate, DraftId 
+                                        FROM Project
+                                        WHERE ProjectId = @id;";
 
                 var idParam = command.CreateParameter();
 
@@ -37,7 +45,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
@@ -47,11 +55,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT 
-                                          p.ProjectId, p.OrderDate, 
-                                          p.DraftId, p.ResponsibleEmployeeId 
-                                        FROM Project p 
-                                        ORDER BY p.ProjectId";
+                command.CommandText = @"SELECT ProjectId, OrderDate, DraftId
+                                        FROM Project";
 
                 connection.Open();
                 command.Prepare();
@@ -66,91 +71,68 @@ namespace Raunstrup.Data.MsSql.Mappers
         public void Insert(Project project)
         {
             using (var connection = _context.CreateConnection())
-            using (var command = connection.CreateCommand())
+            using (var insert = new InsertCommandWrapper(connection.CreateCommand()))
             {
-                command.CommandText = @"INSERT INTO Project (OrderDate, DraftId) 
-                                        VALUES (@date, @draftId);
-                                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
-                
-                SetParameters(command, project);
+                insert.Target("Project")
+                    .Field(ReportFields["OrderDate"])
+                    .Field(ReportFields["Draft"])
+                    .Values(project.OrderDate, project.Draft.Id)
+                    .Apply();
+
+                insert.Command.CommandText += "SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 
                 connection.Open();
-                command.Prepare();
-                
-                project.Id = (int) command.ExecuteScalar();
+                insert.Command.Prepare();
+
+                project.Id = (int) insert.Command.ExecuteScalar();
             }
         }
 
         public void Update(Project project)
         {
             using (var connection = _context.CreateConnection())
-            using (var command = connection.CreateCommand())
+            using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             {
-                command.CommandText = @"UPDATE Project SET
-                                        OrderDate=@date, DraftId=@draftId
-                                        WHERE ProjectId=@id;";
+                update.Target("Project")
+                    .Set(ReportFields["OrderDate"], project.OrderDate)
+                    .Set(ReportFields["Draft"], project.Draft.Id)
+                    .Where("ProjectId = @id")
+                    .Apply();
 
-                var idParam = command.CreateParameter();
+                var idParam = update.Command.CreateParameter();
 
                 idParam.ParameterName = "@id";
                 idParam.Value = project.Id;
                 idParam.DbType = DbType.Int32;
 
-                command.Parameters.Add(idParam);
-
-                SetParameters(command, project);
-
+                update.Command.Parameters.Add(idParam);
+                
                 connection.Open();
-                command.Prepare();
+                update.Command.Prepare();
 
-                project.Id = (int) command.ExecuteScalar();
+                project.Id = (int) update.Command.ExecuteScalar();
             }
         }
 
-        public Project Map(IDataReader reader)
+        public Project Map(IDataRecord record)
         {
-            Project project = null;
-
-            if (reader.Read())
+            return new Project(new DraftProxy(_context, (int) record["DraftId"]))
             {
-                project = new Project(new DraftProxy(_context, (int) reader["DraftId"]))
-                {
-                    Id = (int) reader["ProjectId"],
-                    OrderDate = (DateTime) reader["OrderDate"]
-                };
-            }
-
-            return project;
+                Id = (int) record["ProjectId"],
+                OrderDate = (DateTime) record["OrderDate"]
+            };
         }
 
         public IList<Project> MapAll(IDataReader reader)
         {
             var projects = new List<Project>();
-            Project project;
 
-            while ((project = Map(reader)) != null)
+            while (reader.Read())
             {
-                projects.Add(project);
+                projects.Add(Map(reader));
             }
 
             return projects;
-        }
-
-        private void SetParameters(IDbCommand command, Project project)
-        {
-            var dateParam = command.CreateParameter();
-            var draftParam = command.CreateParameter();
-
-            dateParam.ParameterName = "@date";
-            dateParam.Value = project.OrderDate;
-            dateParam.DbType = DbType.Date;
-
-            draftParam.ParameterName = "@draftId";
-            draftParam.Value = project.Draft.Id;
-            draftParam.DbType = DbType.Int32;
-
-            command.Parameters.Add(dateParam);
-            command.Parameters.Add(draftParam);
         }
     }
 }
