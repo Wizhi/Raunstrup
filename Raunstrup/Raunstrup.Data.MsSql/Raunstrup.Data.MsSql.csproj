@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\CommandWrapper.cs" />
     <Compile Include="Command\FieldInfo.cs" />
     <Compile Include="Command\InsertCommandWrapper.cs" />
     <Compile Include="Command\ParameterBag.cs" />
