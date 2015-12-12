@@ -1,20 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 
 namespace Raunstrup.Data.MsSql.Command
 {
-    public class InsertCommandWrapper
+    class InsertCommandWrapper : IDisposable
     {
         private string _target;
+        private readonly ParameterBag _parameters;
         private readonly IList<FieldInfo> _fields = new List<FieldInfo>();
-        private readonly IList<IDbDataParameter> _parameters = new List<IDbDataParameter>();
         private readonly IList<IList<string>> _names = new List<IList<string>>(); 
+        private readonly IList<string> _statics = new List<string>();
         
         public InsertCommandWrapper(IDbCommand command)
         {
             Command = command;
+            _parameters = new ParameterBag(command.CreateParameter);
         }
 
         public IDbCommand Command { get; private set; }
@@ -58,43 +61,43 @@ namespace Raunstrup.Data.MsSql.Command
 
         public InsertCommandWrapper Values(params object[] values)
         {
-            if (values.Length != _fields.Count)
-            {
-                // TODO: Handle number of values doesn't match number of fields.
-            }
-
-            // TODO: Consider storing the values instead, and then building parameters when applied.
             var names = new string[values.Length];
 
             for (var i = 0; i < values.Length; i++)
             {
-                var value = values[i];
-                IDbDataParameter parameter;
-
-                if (value is IDbDataParameter)
-                {
-                    parameter = (IDbDataParameter) value;
-                }
-                else
-                {
-                    var field = _fields[i];
-                    parameter = Command.CreateParameter();
-
-                    parameter.ParameterName = "@_p" + _parameters.Count;
-                    parameter.DbType = field.DbType;
-                    parameter.Size = field.Size;
-                    parameter.Precision = field.Precision;
-                    parameter.Scale = field.Scale;
-                    parameter.Value = value;
-                }
+                var parameter = _parameters.Add(_fields[i], values[i]);
 
                 names[i] = parameter.ParameterName;
-                _parameters.Add(parameter);
             }
 
             _names.Add(names);
+            
+            return this;
+        }
+
+        public InsertCommandWrapper Static(FieldInfo field, string value)
+        {
+            _fields.Add(field);
+            _statics.Add(value);
 
             return this;
+        }
+
+        public InsertCommandWrapper Static(FieldInfo field, string name, out IDbDataParameter parameter)
+        {
+            parameter = field.ToParameter(Command.CreateParameter);
+            parameter.ParameterName = name;
+            
+            _parameters.Add(parameter);
+
+            return Static(field, name);
+        }
+
+        public InsertCommandWrapper Static(FieldInfo field, string name, object value)
+        {
+            _parameters.Add(field, value);
+
+            return Static(field, name);
         }
 
         public InsertCommandWrapper Reset()
@@ -124,16 +127,22 @@ namespace Raunstrup.Data.MsSql.Command
             {
                 Command.Parameters.Add(parameter);
             }
-
-            foreach (var names in _names)
-            {
-                sb.AppendLine("(" + string.Join(", ", names) + "),");
-            }
-
-            // We need to trim whitespace, and then trailing comma.
-            Command.CommandText = sb.ToString().TrimEnd().TrimEnd(',') + ";";
+            
+            sb.Append(
+                string.Join(
+                    ", ",
+                    _names.Select(names => "(" + string.Join(", ", names.Concat(_statics)) + ")")
+                )
+            );
+            
+            Command.CommandText = sb.AppendLine(";").ToString();
 
             return this;
+        }
+
+        public void Dispose()
+        {
+            Reset();
         }
     }
 }
