@@ -19,7 +19,7 @@
         }
 
         public Product Item { get; private set; }
-        public int Quantity { get; private set; }
+        public int Quantity { get; set; }
 
         public ReportLine(Product item, int quantity)
         {

@@ -10,8 +10,6 @@ namespace Raunstrup.Domain
         private int _id;
         private DateTime _startDate = DateTime.Now;
         private DateTime _endDate;
-        // TODO: Investigate whether we use C# 6. How the hell am I not sure about that?
-        private readonly IList<OrderLine> _orderLines = new List<OrderLine>();
 
         public virtual int Id
         {
@@ -78,9 +76,9 @@ namespace Raunstrup.Domain
 
         public double DiscountPercentage { get; set; }
 
-        public decimal Total { get { return _orderLines.Sum(x => x.SubTotal); } }
+        public decimal Total { get { return OrderLines.Sum(x => x.SubTotal); } }
 
-        public virtual IList<OrderLine> OrderLines { get { return _orderLines; } }
+        public virtual IList<OrderLine> OrderLines { get; private set; }
         
         public Draft(Customer customer)
         {
@@ -88,6 +86,7 @@ namespace Raunstrup.Domain
             CreationDate = DateTime.Now;
             EndDate = _startDate.AddDays(7);
             DiscountPercentage = 0;
+            OrderLines = new List<OrderLine>();
         }
 
         public void AddOrderLine(Product item, int quantity)
@@ -108,7 +107,7 @@ namespace Raunstrup.Domain
         //TODO: This need to be removed, is still there for compability
         public IList<OrderLine> GetOrderLines()
         {
-            return _orderLines;
+            return OrderLines;
         }
     }
 }

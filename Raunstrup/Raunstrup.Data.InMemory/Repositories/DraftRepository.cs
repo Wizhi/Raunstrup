@@ -1,4 +1,5 @@
-﻿using Raunstrup.Data.Repositories;
+﻿using System.Collections.Generic;
+using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.InMemory.Repositories
@@ -13,6 +14,11 @@ namespace Raunstrup.Data.InMemory.Repositories
         protected override int GetId(Draft entity)
         {
             return entity.Id;
+        }
+
+        public IList<Draft> GetUncommittedDrafts()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
