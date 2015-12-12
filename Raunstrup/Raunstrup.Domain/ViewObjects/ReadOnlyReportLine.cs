@@ -11,7 +11,7 @@
 
         public ReadOnlyProduct Product
         {
-            get { return new ReadOnlyProduct(_reportLine.Item);}
+            get { return new ReadOnlyProduct(_reportLine.Product);}
         }
 
         public int Quantity

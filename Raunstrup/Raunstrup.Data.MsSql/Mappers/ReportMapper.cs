@@ -102,9 +102,9 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Field(ReportLineFields["Product"])
                     .Static(ReportLineFields["Report"], "@reportId", out reportIdParameter);
                 
-                foreach (var reportLine in report.Lines)
+                foreach (var reportLine in report.ReportLines)
                 {
-                    reportLinesInsert.Values(reportLine.Quantity, reportLine.Item.Id);
+                    reportLinesInsert.Values(reportLine.Quantity, reportLine.Product.Id);
                 }
 
                 reportLinesInsert.Apply();
@@ -154,9 +154,9 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Field(ReportLineFields["Quantity"])
                     .Field(ReportLineFields["Product"]);
                 
-                foreach (var reportLine in report.Lines)
+                foreach (var reportLine in report.ReportLines)
                 {
-                    tempInsert.Values(reportLine.Id, reportLine.Quantity, reportLine.Item.Id);
+                    tempInsert.Values(reportLine.Id, reportLine.Quantity, reportLine.Product.Id);
                 }
 
                 tempInsert.Apply();
@@ -193,7 +193,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                     update.Command.ExecuteNonQuery();
                     tempCreate.ExecuteNonQuery();
                     
-                    if (report.Lines.Count > 0)
+                    if (report.ReportLines.Count > 0)
                     {
                         tempInsert.Command.Prepare();
                         tempInsert.Command.ExecuteNonQuery();

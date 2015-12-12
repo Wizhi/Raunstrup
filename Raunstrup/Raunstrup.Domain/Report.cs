@@ -12,7 +12,7 @@ namespace Raunstrup.Domain
             Employee = employee;
             Project = project;
             Date = DateTime.Now;
-            Lines = new List<ReportLine>();
+            ReportLines = new List<ReportLine>();
         }
 
         public virtual int Id
@@ -32,16 +32,16 @@ namespace Raunstrup.Domain
         public virtual Employee Employee { get; private set; }
         public virtual Project Project { get; private set; }
         public virtual DateTime Date { get; set; }
-        public virtual IList<ReportLine> Lines { get; private set; } 
+        public virtual IList<ReportLine> ReportLines { get; private set; } 
         
         public IList<ReportLine> GetLines()
         {
-            return Lines;
+            return ReportLines;
         }
 
         public void AddReportLine(Product item, int quantity)
         {
-            Lines.Add(new ReportLine(item,quantity));
+            ReportLines.Add(new ReportLine(item,quantity));
         }
     }
 

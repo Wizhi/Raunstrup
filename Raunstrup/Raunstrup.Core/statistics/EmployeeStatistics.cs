@@ -93,9 +93,9 @@ namespace Raunstrup.Core.Statistics
             IList<Report> Reports = _reportRepository.FindByDurationAndEmployee(Start, End, _employee);
             foreach (var report in Reports)
             {
-                foreach (var reportLine in report.Lines)
+                foreach (var reportLine in report.ReportLines)
                 {
-                    if (reportLine.Item.GetType() == typeof (WorkHour))
+                    if (reportLine.Product.GetType() == typeof (WorkHour))
                     {
                         if (HoursWorked.ContainsKey(report.Date))
                         {

@@ -14,6 +14,6 @@ namespace Raunstrup.Data.MsSql.Ghost
             _reportLines = new Lazy<IList<ReportLine>>(reportLines);
         }
 
-        public override IList<ReportLine> Lines { get { return _reportLines.Value; } }
+        public override IList<ReportLine> ReportLines { get { return _reportLines.Value; } }
     }
 }

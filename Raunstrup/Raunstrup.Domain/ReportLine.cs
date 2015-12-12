@@ -18,17 +18,17 @@
             }
         }
 
-        public Product Item { get; private set; }
+        public Product Product { get; private set; }
         public int Quantity { get; set; }
 
-        public ReportLine(Product item, int quantity)
+        public ReportLine(Product product, int quantity)
         {
-            Item = item;
+            Product = product;
             Quantity = quantity;
         }
         public Product GetLineItem()
         {
-            return Item;
+            return Product;
         }
 
         public int GetQuantity()

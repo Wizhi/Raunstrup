@@ -17,7 +17,7 @@ namespace Raunstrup.Domain.ViewObjects
             //Convert ReportLines into ReadOnlyReportLines
             get
             {
-                IList<ReportLine> originalLines = _report.Lines;
+                IList<ReportLine> originalLines = _report.ReportLines;
                 IList<ReadOnlyReportLine> returnLines = new List<ReadOnlyReportLine>();
                 foreach (var line in originalLines)
                 {
