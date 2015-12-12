@@ -9,7 +9,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 {
     class ProjectMapper
     {
-        private static readonly IDictionary<string, FieldInfo> ReportFields = new Dictionary<string, FieldInfo>
+        private static readonly IDictionary<string, FieldInfo> ProjectFields = new Dictionary<string, FieldInfo>
         {
             { "Id", new FieldInfo("ProjectId") { DbType = DbType.Int32 } },
             { "OrderDate", new FieldInfo("OrderDate") { DbType = DbType.Date } },
@@ -74,8 +74,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var insert = new InsertCommandWrapper(connection.CreateCommand()))
             {
                 insert.Target("Project")
-                    .Field(ReportFields["OrderDate"])
-                    .Field(ReportFields["Draft"])
+                    .Field(ProjectFields["OrderDate"])
+                    .Field(ProjectFields["Draft"])
                     .Values(project.OrderDate, project.Draft.Id)
                     .Apply();
 
@@ -94,8 +94,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             {
                 update.Target("Project")
-                    .Set(ReportFields["OrderDate"], project.OrderDate)
-                    .Set(ReportFields["Draft"], project.Draft.Id)
+                    .Set(ProjectFields["OrderDate"], project.OrderDate)
+                    .Set(ProjectFields["Draft"], project.Draft.Id)
                     .Where("ProjectId = @id")
                     .Apply();
 
