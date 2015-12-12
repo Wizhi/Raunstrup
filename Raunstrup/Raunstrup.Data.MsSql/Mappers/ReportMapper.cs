@@ -35,8 +35,12 @@ namespace Raunstrup.Data.MsSql.Mappers
         public Report Get(int id)
         {
             using (var connection = _context.CreateConnection())
+            using (var command = connection.CreateCommand())
             {
-                var command = connection.CreateCommand();
+                command.CommandText = @"SELECT ReportId, [Date], ProjectId, EmployeeId
+                                        FROM Report
+                                        WHERE ReportId = @id;";
+
                 var idParam = command.CreateParameter();
 
                 idParam.ParameterName = "@id";
@@ -44,23 +48,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 idParam.Value = id;
 
                 command.Parameters.Add(idParam);
-
-                var fields = new[]
-                {
-                     "ReportId",
-                     "[Date]",
-                     "ProjectId",
-                     "EmployeeId"
-                };
-
-                var query = new[]
-                {
-                    "SELECT " + string.Join(",", fields),
-                    "FROM Report"
-                };
-
-                command.CommandText = string.Join(" ", query);
-
+                
                 connection.Open();
                 command.Prepare();
 
@@ -74,28 +62,10 @@ namespace Raunstrup.Data.MsSql.Mappers
         public IList<Report> GetAll()
         {
             using (var connection = _context.CreateConnection())
+            using (var command = connection.CreateCommand())
             {
-                var command = connection.CreateCommand();
-                
-                var fields = new[]
-                {
-                     "r.ReportId",
-                     "r.[Date]",
-                     "r.ProjectId",
-                     "r.EmployeeId",
-                     "rl.Quantity",
-                     "rl.ProductId"
-                };
-
-                var query = new[]
-                {
-                    "SELECT " + string.Join(",", fields),
-                    "FROM Report r",
-                    "JOIN ReportLine rl ON rl.ReportId = r.ReportId",
-                    "ORDER BY r.ReportId"
-                };
-
-                command.CommandText = string.Join(" ", query);
+                command.CommandText = @"SELECT ReportId, [Date], ProjectId, EmployeeId
+                                        FROM Report;";
 
                 connection.Open();
                 command.Prepare();
@@ -123,20 +93,15 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Apply();
 
                 reportInsert.Command.CommandText += "SELECT CAST(SCOPE_IDENTITY() AS INT);";
-                
+
+                IDbDataParameter reportIdParameter;
+
                 reportLinesInsert
                     .Target("ReportLine")
                     .Field(ReportLineFields["Quantity"])
                     .Field(ReportLineFields["Product"])
-                    .Static(ReportLineFields["Report"], "@reportId");
-
-                var reportIdParameter = reportLinesInsert.Command.CreateParameter();
-
-                reportIdParameter.ParameterName = "@reportId";
-                reportIdParameter.DbType = DbType.Int32;
-
-                reportLinesInsert.Command.Parameters.Add(reportIdParameter);
-
+                    .Static(ReportLineFields["Report"], "@reportId", out reportIdParameter);
+                
                 foreach (var reportLine in report.Lines)
                 {
                     reportLinesInsert.Values(reportLine.Quantity, reportLine.Item.Id);
@@ -176,16 +141,9 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Set(ReportFields["Date"], report.Date)
                     .Set(ReportFields["Project"], report.Project.Id)
                     .Set(ReportFields["Employee"], report.Employee.Id)
+                    .Parameter(ReportFields["Id"], "@updateId", report.Id)
                     .Where("ReportId = @updateId")
                     .Apply();
-
-                var updateIdParameter = update.Command.CreateParameter();
-
-                updateIdParameter.ParameterName = "@updateId";
-                updateIdParameter.Value = report.Id;
-                updateIdParameter.DbType = DbType.Int32;
-
-                update.Command.Parameters.Add(updateIdParameter);
 
                 tempCreate.CommandText = @"CREATE TABLE #TempReportLine 
                                            (ReportLineId int, Quantity int, ProductId int);";
@@ -273,29 +231,6 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
 
             return reports;
-        }
-
-        private void SetParameters(IDbCommand command, Report report)
-        {
-            var dateParam = command.CreateParameter();
-            var projectIdParameter = command.CreateParameter();
-            var employeeIdParameter = command.CreateParameter();
-
-            dateParam.ParameterName = "@date";
-            dateParam.Value = report.Date;
-            dateParam.DbType = DbType.Date;
-
-            projectIdParameter.ParameterName = "@projectId";
-            projectIdParameter.Value = report.Project.Id;
-            projectIdParameter.DbType = DbType.Int32;
-
-            employeeIdParameter.ParameterName = "@employeeId";
-            employeeIdParameter.Value = report.Employee.Id;
-            employeeIdParameter.DbType = DbType.Int32;
-
-            command.Parameters.Add(dateParam);
-            command.Parameters.Add(projectIdParameter);
-            command.Parameters.Add(employeeIdParameter);
         }
 
         private IList<ReportLine> LoadReportLines(int reportId)
