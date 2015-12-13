@@ -158,8 +158,6 @@ namespace Raunstrup.Data.MsSql.Mappers
                 {
                     tempInsert.Values(reportLine.Id, reportLine.Quantity, reportLine.Product.Id);
                 }
-
-                tempInsert.Apply();
                 
                 merge.CommandText = @"MERGE INTO ReportLine AS t
                                       USING #TempReportLine AS s
@@ -171,12 +169,11 @@ namespace Raunstrup.Data.MsSql.Mappers
 	                                      VALUES (s.Quantity, s.ProductId, @mergeId)
                                       WHEN NOT MATCHED BY SOURCE AND t.ReportId = @mergeId THEN DELETE;";
 
-                var mergeIdParameter = merge.CreateParameter();
-
+                var mergeIdParameter = ReportLineFields["Report"].ToParameter(merge.CreateParameter);
+                
                 mergeIdParameter.ParameterName = "@mergeId";
                 mergeIdParameter.Value = report.Id;
-                mergeIdParameter.DbType = DbType.Int32;
-
+                
                 merge.Parameters.Add(mergeIdParameter);
 
                 connection.Open();
@@ -195,6 +192,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                     
                     if (report.ReportLines.Count > 0)
                     {
+                        // We only bother to build and execute the temporary insert, if it's actually needed.
+                        tempInsert.Apply();
                         tempInsert.Command.Prepare();
                         tempInsert.Command.ExecuteNonQuery();
                     }
