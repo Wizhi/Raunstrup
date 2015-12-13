@@ -194,7 +194,7 @@ namespace Raunstrup.Data.MsSql.Command
             Command.CommandText = string.Empty;
 
             // We only want to remove the generated parameters.
-            foreach (var parameter in _parameters)
+            foreach (var parameter in _parameters.Where(parameter => Command.Parameters.Contains(parameter)))
             {
                 Command.Parameters.Remove(parameter);
             }

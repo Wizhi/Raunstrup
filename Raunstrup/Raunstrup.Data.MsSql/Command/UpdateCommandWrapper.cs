@@ -149,7 +149,8 @@ namespace Raunstrup.Data.MsSql.Command
         /// <returns></returns>
         public override CommandWrapper Reset()
         {
-            foreach (var parameter in _parameters)
+            // We only want to remove the generated parameters.
+            foreach (var parameter in _parameters.Where(parameter => Command.Parameters.Contains(parameter)))
             {
                 Command.Parameters.Remove(parameter);
             }
