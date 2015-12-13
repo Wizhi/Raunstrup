@@ -51,7 +51,7 @@ namespace Raunstrup.Core.Controllers
                 var report = parser.Parse(xml);
                 
                 // TODO: Figure out a better way of handling "dynamic" offers. This is ugly.
-                if (report.Project.Draft.Type == Draft.DraftType.Dynamic)
+                if (report.Project.Draft.Type == Draft.DraftType.Estimate)
                 {
                     foreach (var reportLine in report.ReportLines)
                     {
