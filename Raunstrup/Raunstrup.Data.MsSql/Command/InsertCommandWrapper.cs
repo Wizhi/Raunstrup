@@ -143,7 +143,12 @@ namespace Raunstrup.Data.MsSql.Command
         /// <returns></returns>
         public InsertCommandWrapper Static(FieldInfo field, string name, object value)
         {
-            _parameters.Add(field, value);
+            var parameter = field.ToParameter(Command.CreateParameter);
+
+            parameter.ParameterName = name;
+            parameter.Value = value;
+
+            _parameters.Add(parameter);
 
             return Static(field, name);
         }
