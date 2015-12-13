@@ -17,6 +17,11 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "OrderDate", new FieldInfo("OrderDate") { DbType = DbType.Date } },
             { "Draft", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
         };
+        private static readonly IDictionary<string, FieldInfo> EmployeeRelationFields = new Dictionary<string, FieldInfo>
+        {
+            { "Project", new FieldInfo("ProjectId") { DbType = DbType.Int32 } },
+            { "Employee", new FieldInfo("EmployeeId") { DbType = DbType.Int32} }
+        };
 
         private readonly DataContext _context;
 
@@ -74,6 +79,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         {
             using (var connection = _context.CreateConnection())
             using (var insert = new InsertCommandWrapper(connection.CreateCommand()))
+            using (var employeeRelation = new InsertCommandWrapper(connection.CreateCommand()))
             {
                 insert.Target("Project")
                     .Field(ProjectFields["OrderDate"])
@@ -82,11 +88,31 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Apply();
 
                 insert.Command.CommandText += "SELECT CAST(SCOPE_IDENTITY() AS INT);";
-                
+
+
+                IDbDataParameter projectIdParameter;
+
+                employeeRelation
+                    .Target("OrderLine")
+                    .Field(EmployeeRelationFields["Employee"])
+                    .Static(EmployeeRelationFields["Project"], "@projectId", out projectIdParameter);
+
+                foreach (var employee in project.Employees)
+                {
+                    employeeRelation.Values(employee.Id);
+                }
+
                 connection.Open();
                 insert.Command.Prepare();
 
-                project.Id = (int) insert.Command.ExecuteScalar();
+                projectIdParameter.Value = project.Id = (int) insert.Command.ExecuteScalar();
+
+                if (project.Employees.Count > 0)
+                {
+                    employeeRelation.Apply();
+                    employeeRelation.Command.Prepare();
+                    employeeRelation.Command.ExecuteNonQuery();
+                }
             }
         }
 
@@ -94,6 +120,9 @@ namespace Raunstrup.Data.MsSql.Mappers
         {
             using (var connection = _context.CreateConnection())
             using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
+            using (var tempCreate = connection.CreateCommand())
+            using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
+            using (var merge = connection.CreateCommand())
             {
                 update.Target("Project")
                     .Set(ProjectFields["OrderDate"], project.OrderDate)
@@ -101,11 +130,58 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Parameter(ProjectFields["Id"], "@id", project.Id)
                     .Where("ProjectId = @id")
                     .Apply();
-                
+
+                tempCreate.CommandText = @"CREATE TABLE #TempProjectEmployee (EmployeeId int);";
+
+                tempInsert.Target("#TempProjectEmployee")
+                    .Field(EmployeeRelationFields["Employee"]);
+
+                foreach (var employee in project.Employees)
+                {
+                    tempInsert.Values(employee.Id);
+                }
+
+                merge.CommandText = @"MERGE INTO ProjectEmployee AS t
+                                     USING #TempProjectEmployee AS s
+                                     ON t.ProjectId = @mergeId AND t.EmployeeId = s.EmployeeId
+                                     WHEN NOT MATCHED BY TARGET THEN
+	                                   INSERT (EmployeeId, ProjectId)
+	                                   VALUES (s.EmployeeId, @mergeId)
+                                     WHEN NOT MATCHED BY SOURCE AND t.ProjectId = @mergeId THEN DELETE;";
+
+                var mergeIdParameter = merge.CreateParameter();
+
+                mergeIdParameter.ParameterName = "@mergeId";
+                mergeIdParameter.Value = project.Id;
+                mergeIdParameter.DbType = DbType.Int32;
+
+                merge.Parameters.Add(mergeIdParameter);
+
                 connection.Open();
                 update.Command.Prepare();
+                merge.Prepare();
 
-                project.Id = (int) update.Command.ExecuteScalar();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    update.Command.Transaction = transaction;
+                    tempCreate.Transaction = transaction;
+                    tempInsert.Command.Transaction = transaction;
+                    merge.Transaction = transaction;
+
+                    update.Command.ExecuteNonQuery();
+                    tempCreate.ExecuteNonQuery();
+
+                    if (project.Employees.Count > 0)
+                    {
+                        tempInsert.Apply();
+                        tempInsert.Command.Prepare();
+                        tempInsert.Command.ExecuteNonQuery();
+                    }
+
+                    merge.ExecuteNonQuery();
+
+                    transaction.Commit();
+                }
             }
         }
 
