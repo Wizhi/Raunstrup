@@ -26,8 +26,8 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Id", new FieldInfo("OrderLineId") { DbType = DbType.Int32 } },
             { "Quantity", new FieldInfo("Quantity") { DbType = DbType.Int32 } },
             { "UnitPrice", new FieldInfo("PricePerUnit") { DbType = DbType.Decimal, Precision = 9, Size = 2 } },
-            { "ProductId", new FieldInfo("ProductId") { DbType = DbType.Int32 } },
-            { "DraftId", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
+            { "Product", new FieldInfo("ProductId") { DbType = DbType.Int32 } },
+            { "Draft", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
         };
 
         private readonly DataContext _context;
@@ -116,8 +116,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Target("OrderLine")
                     .Field(OrderLineFields["Quantity"])
                     .Field(OrderLineFields["UnitPrice"])
-                    .Field(OrderLineFields["ProductId"])
-                    .Static(OrderLineFields["DraftId"], "@draftId", out draftIdParameter);
+                    .Field(OrderLineFields["Product"])
+                    .Static(OrderLineFields["Draft"], "@draftId", out draftIdParameter);
                 
                 foreach (var orderLine in draft.OrderLines)
                 {
@@ -176,8 +176,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Field(OrderLineFields["Id"])
                     .Field(OrderLineFields["Quantity"])
                     .Field(OrderLineFields["UnitPrice"])
-                    .Field(OrderLineFields["ProductId"])
-                    .Static(OrderLineFields["DraftId"], "@insertId", draft.Id);
+                    .Field(OrderLineFields["Product"])
+                    .Static(OrderLineFields["Draft"], "@insertId", draft.Id);
 
                 foreach (var orderLine in draft.OrderLines)
                 {
@@ -193,12 +193,19 @@ namespace Raunstrup.Data.MsSql.Mappers
                                       USING #TempOrderLine AS s
                                       ON t.OrderLineId = s.OrderLineId
                                       WHEN MATCHED THEN 
-                                        UPDATE SET t.Quantity=s.Quantity, t.PricePerUnit=s.PricePerUnit
+                                        UPDATE SET Quantity=s.Quantity, PricePerUnit=s.PricePerUnit
                                       WHEN NOT MATCHED BY TARGET THEN 
                                         INSERT (Quantity, PricePerUnit, ProductId, DraftId) 
-                                        VALUES (s.Quantity, s.PricePerUnit, s.ProductId, s.DraftId);
-                                      --WHEN NOT MATCHED BY SOURCE AND t.DraftId = @mergeId THEN DELETE;";
-                
+                                        VALUES (s.Quantity, s.PricePerUnit, s.ProductId, @mergeId)
+                                      WHEN NOT MATCHED BY SOURCE AND t.DraftId = @mergeId THEN DELETE;";
+
+                var mergeIdParameter = OrderLineFields["Draft"].ToParameter(merge.CreateParameter);
+
+                mergeIdParameter.ParameterName = "@mergeId";
+                mergeIdParameter.Value = draft.Id;
+
+                merge.Parameters.Add(mergeIdParameter);
+
                 connection.Open();
                 update.Command.Prepare();
 
@@ -236,7 +243,6 @@ namespace Raunstrup.Data.MsSql.Mappers
                 Id = id,
                 Title = (string) reader["WorkTitle"],
                 Description = (string) reader["Description"],
-                // TODO: Consider making Discount a float
                 DiscountPercentage = (double) reader["Discount"],
                 StartDate = (DateTime) reader["StartDate"],
                 EndDate = (DateTime) reader["EndDate"],
