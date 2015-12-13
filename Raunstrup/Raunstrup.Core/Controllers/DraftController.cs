@@ -12,18 +12,36 @@ namespace Raunstrup.Core.Controllers
     public class DraftController
     {
         private Draft _currentDraft;
+        private Project _currentProject;
         private readonly ICustomerRepository _customerRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
         private readonly IDraftRepository _draftRepository;
+        private readonly IProjectRepository _projectRepository;
 
-        public DraftController(ICustomerRepository customerRepository,IEmployeeRepository employeeRepository, IProductRepository productRepository, IDraftRepository draftRepository)
+        public DraftController(ICustomerRepository customerRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository, IDraftRepository draftRepository, IProjectRepository projectRepository)
         {
             _draftRepository = draftRepository;
             _customerRepository = customerRepository;
             _productRepository = productRepository;
             _employeeRepository = employeeRepository;
+            _projectRepository = projectRepository;
+        }
+        
+        public void MakeProject()
+        {
+            _currentProject = new Project(_currentDraft);
+            _projectRepository.Save(_currentProject);
+        }
 
+        public void SetAsEstimate()
+        {
+            _currentDraft.Type = Draft.DraftType.Estimate;
+        }
+
+        public void SetAsOffer()
+        {
+            _currentDraft.Type = Draft.DraftType.Offer;
         }
 
         public void CreateNewDraft(int customerId)
