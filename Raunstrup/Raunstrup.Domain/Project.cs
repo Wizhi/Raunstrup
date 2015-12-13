@@ -1,10 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Raunstrup.Domain
 {
     public class Project
     {
         private int _id;
+
+        public Project(Draft draft)
+        {
+            Draft = draft;
+            OrderDate = DateTime.Now;
+            Employees = new List<Employee>();
+        }
 
         public virtual int Id
         {
@@ -24,10 +32,6 @@ namespace Raunstrup.Domain
         // TODO: Consider renaming this to something more related to "beginning a project".
         public virtual DateTime OrderDate { get; set; }
 
-        public Project(Draft draft)
-        {
-            Draft = draft;
-            OrderDate = DateTime.Now;
-        }
+        public virtual IList<Employee> Employees { get; private set; }
     }
 }

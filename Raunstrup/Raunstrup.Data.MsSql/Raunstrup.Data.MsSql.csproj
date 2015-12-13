@@ -51,6 +51,7 @@
     <Compile Include="DataContext.cs" />
     <Compile Include="Ghost\DraftGhost.cs" />
     <Compile Include="Ghost\EmployeeGhost.cs" />
+    <Compile Include="Ghost\GhostProject.cs" />
     <Compile Include="Ghost\ReportGhost.cs" />
     <Compile Include="Mappers\CustomerMapper.cs" />
     <Compile Include="Mappers\DraftMapper.cs" />
@@ -68,8 +69,8 @@
     <Compile Include="Proxies\ProductProxy.cs" />
     <Compile Include="Proxies\ProjectProxy.cs" />
     <Compile Include="Proxies\SkillProxy.cs" />
+    <Compile Include="Query\EmployeesByProjectQuery.cs" />
     <Compile Include="Query\IQuery.cs" />
-    <Compile Include="Query\OrderLinesByDraftQuery.cs" />
     <Compile Include="Query\ReportByDurationAndEmployeeQuery.cs" />
     <Compile Include="Query\ReportByProjectQuery.cs" />
     <Compile Include="Query\SkillsByEmployeeQuery.cs" />

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using Raunstrup.Data.MsSql.Command;
+using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
+using Raunstrup.Data.MsSql.Query;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
@@ -109,9 +111,13 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public Project Map(IDataRecord record)
         {
-            return new Project(new DraftProxy(_context, (int) record["DraftId"]))
-            {
-                Id = (int) record["ProjectId"],
+            var id = (int) record["ProjectId"];
+
+            return new GhostProject(
+                new DraftProxy(_context, (int) record["DraftId"]),
+                () => new EmployeesByProjectQuery(id).Execute(_context)
+            ) {
+                Id = id,
                 OrderDate = (DateTime) record["OrderDate"]
             };
         }
