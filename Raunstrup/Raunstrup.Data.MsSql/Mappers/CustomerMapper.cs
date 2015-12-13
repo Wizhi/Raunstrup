@@ -8,8 +8,9 @@ namespace Raunstrup.Data.MsSql.Mappers
     class CustomerMapper
     {
         private readonly DataContext _context;
-        private readonly IDictionary<string, FieldInfo> _fields = new Dictionary<string, FieldInfo>
+        private readonly IDictionary<string, FieldInfo> CustomerFields = new Dictionary<string, FieldInfo>
         {
+            { "Id", new FieldInfo("CustomerId") { DbType = DbType.Int32 } },
             { "Name", new FieldInfo("Name") { DbType = DbType.AnsiString, Size = 100 } },
             { "City", new FieldInfo("City") { DbType = DbType.AnsiString, Size = 50 } },
             { "PostalCode", new FieldInfo("PostalCode") { DbType = DbType.AnsiString, Size = 4 } },
@@ -75,11 +76,11 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 wrapped
                     .Target("Customer")
-                    .Field(_fields["Name"])
-                    .Field(_fields["City"])
-                    .Field(_fields["PostalCode"])
-                    .Field(_fields["StreetName"])
-                    .Field(_fields["StreetNumber"])
+                    .Field(CustomerFields["Name"])
+                    .Field(CustomerFields["City"])
+                    .Field(CustomerFields["PostalCode"])
+                    .Field(CustomerFields["StreetName"])
+                    .Field(CustomerFields["StreetNumber"])
                     .Values(
                         customer.Name, customer.City,
                         customer.PostalCode, customer.StreetName,
@@ -105,12 +106,12 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 wrapped
                     .Target("Customer")
-                    .Set(_fields["Name"], customer.Name)
-                    .Set(_fields["City"], customer.City)
-                    .Set(_fields["PostalCode"], customer.PostalCode)
-                    .Set(_fields["StreetName"], customer.StreetName)
-                    .Set(_fields["StreetNumber"], customer.StreetNumber)
-                    .Parameter(_fields["Id"], "@id", customer.Id)
+                    .Set(CustomerFields["Name"], customer.Name)
+                    .Set(CustomerFields["City"], customer.City)
+                    .Set(CustomerFields["PostalCode"], customer.PostalCode)
+                    .Set(CustomerFields["StreetName"], customer.StreetName)
+                    .Set(CustomerFields["StreetNumber"], customer.StreetNumber)
+                    .Parameter(CustomerFields["Id"], "@id", customer.Id)
                     .Where("CustomerId = @id")
                     .Apply();
                 
