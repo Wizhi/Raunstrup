@@ -86,6 +86,8 @@ namespace Raunstrup.Domain
 
         public decimal Total { get { return OrderLines.Sum(x => x.SubTotal); } }
 
+        public virtual  Project Project { get; set; }
+
         public virtual IList<OrderLine> OrderLines { get; private set; }
         
         public Draft(Customer customer)
