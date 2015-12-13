@@ -61,6 +61,11 @@ namespace Raunstrup.Core
             return new EmployeeCRUDController(_employeeRepository, _skillRepository);
         }
 
+        public CustomerCRUDController CreateCustomerCRUDController()
+        {
+            return new CustomerCRUDController(_customerRepository);
+        }
+
         public string Name { get; set; }
         public string Address { get; set; }
 
