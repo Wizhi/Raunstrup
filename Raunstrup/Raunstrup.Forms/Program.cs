@@ -33,7 +33,8 @@ namespace Raunstrup.Forms
             //Application.Run(new DraftCreateForm(company/*,controller.GetDraft()*/));
             //Application.Run(new EmployeeStatisticsForm(company));
             //Application.Run(new ProductSelectForm(company));
-            Application.Run(new EmployeeCRUDForm(company));
+            //Application.Run(new EmployeeCRUDForm(company));
+            Application.Run(new CustomerSelectForm(company));
         }
                
     }
