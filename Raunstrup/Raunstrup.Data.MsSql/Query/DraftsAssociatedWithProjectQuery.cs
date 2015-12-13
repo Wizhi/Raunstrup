@@ -4,7 +4,7 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Query
 {
-    class UncommittedDraftsQuery : IQuery<IList<Draft>>
+    class DraftsAssociatedWithProjectQuery : IQuery<IList<Draft>>
     {
         public IList<Draft> Execute(DataContext context)
         {

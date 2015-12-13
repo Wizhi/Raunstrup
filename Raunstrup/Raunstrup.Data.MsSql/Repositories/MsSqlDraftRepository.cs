@@ -45,9 +45,9 @@ namespace Raunstrup.Data.MsSql.Repositories
             throw new NotImplementedException();
         }
 
-        public IList<Draft> GetUncommittedDrafts()
+        public IList<Draft> GetDraftsAssociatedWithAProject()
         {
-            return new UncommittedDraftsQuery().Execute(_context);
+            return new DraftsAssociatedWithProjectQuery().Execute(_context);
         }
     }
 }

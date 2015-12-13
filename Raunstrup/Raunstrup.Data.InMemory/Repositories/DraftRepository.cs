@@ -16,7 +16,7 @@ namespace Raunstrup.Data.InMemory.Repositories
             return entity.Id;
         }
 
-        public IList<Draft> GetUncommittedDrafts()
+        public IList<Draft> GetDraftsAssociatedWithAProject()
         {
             throw new System.NotImplementedException();
         }
