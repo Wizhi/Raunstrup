@@ -11,13 +11,13 @@ namespace Raunstrup.Core
 {
     public class Company
     {
-        private readonly IDraftRepository DraftRepository;
-        private readonly IProjectRepository ProjectRepository;
-        private readonly ICustomerRepository CustomerRepository;
-        private readonly IReportRepository ReportRepository;
-        private readonly IEmployeeRepository EmployeeRepository;
-        private readonly IProductRepository ProductRepository;
-        private readonly ISkillRepository SkillRepository;
+        private readonly IDraftRepository _draftRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IReportRepository _reportRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ISkillRepository _skillRepository;
 
         public Company()
         {
@@ -31,34 +31,34 @@ namespace Raunstrup.Core
 
             var context = new DataContext(provider, con.ConnectionString);
 
-            DraftRepository = new MsSqlDraftRepository(context);
-            ProjectRepository = new MsSqlProjectRepository(context);
-            CustomerRepository = new MsSqlCustomerRepository(context);
-            ReportRepository = new MsSqlReportRepository(context);
-            EmployeeRepository = new MsSqlEmployeeRepository(context);
-            ProductRepository = new MsSqlProductRepository(context);
-            SkillRepository = new MsSqlSkillRepository(context);
+            _draftRepository = new MsSqlDraftRepository(context);
+            _projectRepository = new MsSqlProjectRepository(context);
+            _customerRepository = new MsSqlCustomerRepository(context);
+            _reportRepository = new MsSqlReportRepository(context);
+            _employeeRepository = new MsSqlEmployeeRepository(context);
+            _productRepository = new MsSqlProductRepository(context);
+            _skillRepository = new MsSqlSkillRepository(context);
             //SetupTestData();
         }
 
         public ReportController CreateReportController()
         {
-            return new ReportController(ReportRepository,ProjectRepository,EmployeeRepository,ProductRepository);
+            return new ReportController(_reportRepository,_projectRepository, _draftRepository, _employeeRepository,_productRepository);
         }
 
         public DraftController CreateDraftController()
         {
-            return new DraftController(CustomerRepository,EmployeeRepository,ProductRepository,DraftRepository);
+            return new DraftController(_customerRepository,_employeeRepository,_productRepository,_draftRepository);
         }
 
         public ProductCRUDController CreateProductController()
         {
-            return new ProductCRUDController(ProductRepository);
+            return new ProductCRUDController(_productRepository);
         }
 
         public EmployeeCRUDController CreateEmployeeCRUDController()
         {
-            return new EmployeeCRUDController(EmployeeRepository, SkillRepository);
+            return new EmployeeCRUDController(_employeeRepository, _skillRepository);
         }
 
         public string Name { get; set; }
@@ -87,7 +87,7 @@ namespace Raunstrup.Core
 
             foreach (var product in products)
             {
-                ProductRepository.Save(product);
+                _productRepository.Save(product);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Raunstrup.Core
 
             foreach (var customer in customers)
             {
-                CustomerRepository.Save(customer);
+                _customerRepository.Save(customer);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Raunstrup.Core
 
             foreach (var employee in employees)
             {
-                EmployeeRepository.Save(employee);
+                _employeeRepository.Save(employee);
             }
         }
 
@@ -124,56 +124,56 @@ namespace Raunstrup.Core
         {
             var drafts = new[]
             {
-                new Draft(CustomerRepository.Get(1))
+                new Draft(_customerRepository.Get(1))
                 {
                     Title = "Draft #1", 
-                    ResponsiblEmployee = EmployeeRepository.Get(1),
+                    ResponsiblEmployee = _employeeRepository.Get(1),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Fyldning af Tobias ører."
                 },
-                new Draft(CustomerRepository.Get(1))
+                new Draft(_customerRepository.Get(1))
                 {
                     Title = "Draft #2", 
-                    ResponsiblEmployee = EmployeeRepository.Get(2),
+                    ResponsiblEmployee = _employeeRepository.Get(2),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Lapning af Simons mund."
                 },
-                new Draft(CustomerRepository.Get(2))
+                new Draft(_customerRepository.Get(2))
                 {
                     Title = "Draft #3", 
-                    ResponsiblEmployee = EmployeeRepository.Get(3),
+                    ResponsiblEmployee = _employeeRepository.Get(3),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Udsugning af Emils bussemænd."
                 },
-                new Draft(CustomerRepository.Get(2))
+                new Draft(_customerRepository.Get(2))
                 {
                     Title = "Draft #4", 
-                    ResponsiblEmployee = EmployeeRepository.Get(1),
+                    ResponsiblEmployee = _employeeRepository.Get(1),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Seppoku."
                 },
             };
 
-            drafts[0].AddOrderLine(ProductRepository.Get(1), 2);
-            drafts[0].AddOrderLine(ProductRepository.Get(2), 3);
-            drafts[0].AddOrderLine(ProductRepository.Get(3), 1);
+            drafts[0].AddOrderLine(_productRepository.Get(1), 2);
+            drafts[0].AddOrderLine(_productRepository.Get(2), 3);
+            drafts[0].AddOrderLine(_productRepository.Get(3), 1);
 
-            drafts[1].AddOrderLine(ProductRepository.Get(1), 5);
+            drafts[1].AddOrderLine(_productRepository.Get(1), 5);
 
-            drafts[2].AddOrderLine(ProductRepository.Get(1), 3);
-            drafts[2].AddOrderLine(ProductRepository.Get(2), 6);
+            drafts[2].AddOrderLine(_productRepository.Get(1), 3);
+            drafts[2].AddOrderLine(_productRepository.Get(2), 6);
 
-            drafts[0].AddOrderLine(ProductRepository.Get(1), 1);
-            drafts[0].AddOrderLine(ProductRepository.Get(2), 6);
-            drafts[0].AddOrderLine(ProductRepository.Get(3), 3);
+            drafts[0].AddOrderLine(_productRepository.Get(1), 1);
+            drafts[0].AddOrderLine(_productRepository.Get(2), 6);
+            drafts[0].AddOrderLine(_productRepository.Get(3), 3);
 
             foreach (var draft in drafts)
             {
-                DraftRepository.Save(draft);
+                _draftRepository.Save(draft);
             }
         }
 
@@ -181,14 +181,14 @@ namespace Raunstrup.Core
         {
             var projects = new[]
             {
-                new Project(DraftRepository.Get(1)), 
-                new Project(DraftRepository.Get(2)), 
-                new Project(DraftRepository.Get(3))
+                new Project(_draftRepository.Get(1)), 
+                new Project(_draftRepository.Get(2)), 
+                new Project(_draftRepository.Get(3))
             };
 
             foreach (var project in projects)
             {
-                ProjectRepository.Save(project);
+                _projectRepository.Save(project);
             }
         }
 
@@ -196,56 +196,56 @@ namespace Raunstrup.Core
         {
             var reports = new[]
             {
-                new Report(EmployeeRepository.Get(1), ProjectRepository.Get(1))
+                new Report(_employeeRepository.Get(1), _projectRepository.Get(1))
                 {
-                    Date = ProjectRepository.Get(1).OrderDate.AddDays(1)
+                    Date = _projectRepository.Get(1).OrderDate.AddDays(1)
                 },
-                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(1))
+                new Report(_employeeRepository.Get(2), _projectRepository.Get(1))
                 {
-                    Date = ProjectRepository.Get(1).OrderDate.AddDays(2)
+                    Date = _projectRepository.Get(1).OrderDate.AddDays(2)
                 },
-                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                new Report(_employeeRepository.Get(2), _projectRepository.Get(2))
                 {
-                    Date = ProjectRepository.Get(2).OrderDate.AddDays(2)
+                    Date = _projectRepository.Get(2).OrderDate.AddDays(2)
                 },
-                new Report(EmployeeRepository.Get(3), ProjectRepository.Get(2))
+                new Report(_employeeRepository.Get(3), _projectRepository.Get(2))
                 {
-                    Date = ProjectRepository.Get(2).OrderDate.AddDays(4)
+                    Date = _projectRepository.Get(2).OrderDate.AddDays(4)
                 },
-                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                new Report(_employeeRepository.Get(2), _projectRepository.Get(2))
                 {
-                    Date = ProjectRepository.Get(2).OrderDate.AddDays(3)
+                    Date = _projectRepository.Get(2).OrderDate.AddDays(3)
                 },
-                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                new Report(_employeeRepository.Get(2), _projectRepository.Get(2))
                 {
-                    Date = ProjectRepository.Get(2).OrderDate.AddDays(4)
+                    Date = _projectRepository.Get(2).OrderDate.AddDays(4)
                 },
-                new Report(EmployeeRepository.Get(2), ProjectRepository.Get(2))
+                new Report(_employeeRepository.Get(2), _projectRepository.Get(2))
                 {
-                    Date = ProjectRepository.Get(2).OrderDate.AddDays(5)
+                    Date = _projectRepository.Get(2).OrderDate.AddDays(5)
                 },
             };
 
-            reports[0].AddReportLine(ProductRepository.Get(1), 4);
-            reports[0].AddReportLine(ProductRepository.Get(3), 2);
-            reports[0].AddReportLine(ProductRepository.Get(2), 1);
+            reports[0].AddReportLine(_productRepository.Get(1), 4);
+            reports[0].AddReportLine(_productRepository.Get(3), 2);
+            reports[0].AddReportLine(_productRepository.Get(2), 1);
 
-            reports[1].AddReportLine(ProductRepository.Get(3), 4);
-            reports[1].AddReportLine(ProductRepository.Get(2), 6);
+            reports[1].AddReportLine(_productRepository.Get(3), 4);
+            reports[1].AddReportLine(_productRepository.Get(2), 6);
 
-            reports[2].AddReportLine(ProductRepository.Get(3), 7);
+            reports[2].AddReportLine(_productRepository.Get(3), 7);
 
-            reports[3].AddReportLine(ProductRepository.Get(2), 2);
-            reports[3].AddReportLine(ProductRepository.Get(3), 4);
-            reports[3].AddReportLine(ProductRepository.Get(1), 7);
+            reports[3].AddReportLine(_productRepository.Get(2), 2);
+            reports[3].AddReportLine(_productRepository.Get(3), 4);
+            reports[3].AddReportLine(_productRepository.Get(1), 7);
 
-            reports[4].AddReportLine(ProductRepository.Get(3), 1);
-            reports[5].AddReportLine(ProductRepository.Get(3), 7);
-            reports[6].AddReportLine(ProductRepository.Get(3), 7);
+            reports[4].AddReportLine(_productRepository.Get(3), 1);
+            reports[5].AddReportLine(_productRepository.Get(3), 7);
+            reports[6].AddReportLine(_productRepository.Get(3), 7);
 
             foreach (var report in reports)
             {
-                ReportRepository.Save(report);
+                _reportRepository.Save(report);
             }
         }
         //This should be deltede sometime
