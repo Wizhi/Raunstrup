@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace Raunstrup.Domain
 {
-    public class Draft
+    public class Draft : IEquatable<Draft>
     {
         public enum DraftType
         {
@@ -117,6 +117,11 @@ namespace Raunstrup.Domain
         public IList<OrderLine> GetOrderLines()
         {
             return OrderLines;
+        }
+
+        public bool Equals(Draft other)
+        {
+            return Id == other.Id;
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Raunstrup.Domain
 {
-    public class Employee
+    public class Employee : IEquatable<Employee>
     {
         private int _id;
 
@@ -27,6 +28,11 @@ namespace Raunstrup.Domain
         public Employee()
         {
             Skills = new List<Skill>();
+        }
+
+        public bool Equals(Employee other)
+        {
+            return Id == other.Id;
         }
     }
 }
