@@ -139,11 +139,11 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 merge.CommandText = @"MERGE INTO EmployeeSkill AS t
                                       USING #TempEmployeeSkill AS s
-                                      ON t.EmployeeId = @employeeId AND t.SkillId = s.SkillId
+                                      ON t.EmployeeId = @mergeId AND t.SkillId = s.SkillId
                                       WHEN NOT MATCHED BY TARGET THEN
 	                                      INSERT (EmployeeId, SkillId)
-	                                      VALUES (@employeeId, s.SkillId)
-                                      WHEN NOT MATCHED BY SOURCE AND t.EmployeeId = @employeeId THEN DELETE;";
+	                                      VALUES (@mergeId, s.SkillId)
+                                      WHEN NOT MATCHED BY SOURCE AND t.EmployeeId = @mergeId THEN DELETE;";
 
                 var mergeIdParameter = merge.CreateParameter();
 
@@ -155,6 +155,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 connection.Open();
                 update.Command.Prepare();
+                merge.Prepare();
 
                 using (var transaction = connection.BeginTransaction())
                 {
