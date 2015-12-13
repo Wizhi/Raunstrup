@@ -102,8 +102,11 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 employeeIdParameter.Value = employee.Id = (int) employeeInsert.Command.ExecuteScalar();
 
-                skillRelation.Command.Prepare();
-                skillRelation.Command.ExecuteNonQuery();
+                if (employee.Skills.Count > 0)
+                {
+                    skillRelation.Command.Prepare();
+                    skillRelation.Command.ExecuteNonQuery();
+                }
             }
         }
 
