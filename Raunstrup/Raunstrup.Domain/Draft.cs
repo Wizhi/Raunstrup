@@ -9,8 +9,8 @@ namespace Raunstrup.Domain
     {
         public enum DraftType
         {
-            Static,
-            Dynamic
+            Offer,
+            Estimate
         }
 
         private int _id;
@@ -94,7 +94,7 @@ namespace Raunstrup.Domain
             CreationDate = DateTime.Now;
             EndDate = _startDate.AddDays(7);
             DiscountPercentage = 0;
-            Type = DraftType.Static;
+            Type = DraftType.Offer;
             OrderLines = new List<OrderLine>();
         }
 
