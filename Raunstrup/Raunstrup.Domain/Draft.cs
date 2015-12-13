@@ -7,6 +7,12 @@ namespace Raunstrup.Domain
 {
     public class Draft
     {
+        public enum DraftType
+        {
+            Static,
+            Dynamic
+        }
+
         private int _id;
         private DateTime _startDate = DateTime.Now;
         private DateTime _endDate;
@@ -25,6 +31,8 @@ namespace Raunstrup.Domain
                 _id = value;
             }
         }
+
+        public virtual DraftType Type { get; set; }
 
         public virtual DateTime StartDate
         {
@@ -86,6 +94,7 @@ namespace Raunstrup.Domain
             CreationDate = DateTime.Now;
             EndDate = _startDate.AddDays(7);
             DiscountPercentage = 0;
+            Type = DraftType.Static;
             OrderLines = new List<OrderLine>();
         }
 

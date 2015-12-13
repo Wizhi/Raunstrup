@@ -16,6 +16,7 @@ namespace Raunstrup.Data.MsSql.Proxies
         }
         
         public override int Id { get { return _real.Value.Id; } }
+        public override DraftType Type { get { return _real.Value.Type; } }
         public override DateTime StartDate { get { return _real.Value.StartDate; } }
         public override DateTime EndDate { get { return _real.Value.EndDate; } }
         public override string Title { get { return _real.Value.Title; } }

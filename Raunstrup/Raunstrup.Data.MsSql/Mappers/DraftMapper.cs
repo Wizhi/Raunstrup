@@ -18,8 +18,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "StartDate", new FieldInfo("StartDate") { DbType = DbType.Date } },
             { "EndDate", new FieldInfo("EndDate") { DbType = DbType.Date } },
             { "DiscountPercentage", new FieldInfo("Discount") { DbType = DbType.Double } },
-            { "CustomerId", new FieldInfo("CustomerId") { DbType = DbType.Int32 } },
-            { "EmployeeId", new FieldInfo("ResponsibleEmployeeId") { DbType = DbType.Int32 } }
+            { "Type", new FieldInfo("IsDynamic") { DbType = DbType.Boolean } },
+            { "Customer", new FieldInfo("CustomerId") { DbType = DbType.Int32 } },
+            { "Employee", new FieldInfo("ResponsibleEmployeeId") { DbType = DbType.Int32 } }
         };
         private static readonly IDictionary<string, FieldInfo> OrderLineFields = new Dictionary<string, FieldInfo>
         {
@@ -43,7 +44,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT 
-                                          DraftId, WorkTitle, [Description], Discount, 
+                                          DraftId, WorkTitle, [Description], Discount, IsDynamic,
                                           StartDate, EndDate, CustomerId, ResponsibleEmployeeId
                                         FROM Draft
                                         WHERE DraftId = @id";
@@ -72,7 +73,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT 
-                                          DraftId, WorkTitle, [Description], Discount, 
+                                          DraftId, WorkTitle, [Description], Discount, IsDynamic,
                                           StartDate, EndDate, CustomerId, ResponsibleEmployeeId
                                         FROM Draft";
 
@@ -98,11 +99,13 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Field(DraftFields["StartDate"])
                     .Field(DraftFields["EndDate"])
                     .Field(DraftFields["DiscountPercentage"])
-                    .Field(DraftFields["CustomerId"])
-                    .Field(DraftFields["EmployeeId"])
+                    .Field(DraftFields["Type"])
+                    .Field(DraftFields["Customer"])
+                    .Field(DraftFields["Employee"])
                     .Values(
                         draft.Title, draft.Description,
                         draft.StartDate, draft.EndDate,
+                        draft.Type == Draft.DraftType.Dynamic,
                         draft.DiscountPercentage, draft.Customer.Id,
                         draft.ResponsiblEmployee.Id
                     )
@@ -163,7 +166,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Set(DraftFields["StartDate"], draft.StartDate)
                     .Set(DraftFields["EndDate"], draft.EndDate)
                     .Set(DraftFields["DiscountPercentage"], draft.DiscountPercentage)
-                    .Set(DraftFields["CustomerId"], draft.Customer.Id)
+                    .Set(DraftFields["Type"], draft.Type == Draft.DraftType.Dynamic)
+                    .Set(DraftFields["Customer"], draft.Customer.Id)
                     .Parameter(DraftFields["Id"], "@updateId", draft.Id)
                     .Where("DraftId = @updateId")
                     .Apply();
@@ -246,6 +250,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 DiscountPercentage = (double) reader["Discount"],
                 StartDate = (DateTime) reader["StartDate"],
                 EndDate = (DateTime) reader["EndDate"],
+                Type = (bool) reader["IsDynamic"] ? Draft.DraftType.Dynamic : Draft.DraftType.Static,
                 ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
             };
         }
