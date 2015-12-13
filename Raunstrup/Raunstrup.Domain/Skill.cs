@@ -1,6 +1,8 @@
-﻿namespace Raunstrup.Domain
+﻿using System;
+
+namespace Raunstrup.Domain
 {
-    public class Skill
+    public class Skill : IEquatable<Skill>
     {
         private int _id;
 
@@ -19,5 +21,10 @@
         }
 
         public virtual string Name { get; set; }
+
+        public bool Equals(Skill other)
+        {
+            return Id == other.Id;
+        }
     }
 }

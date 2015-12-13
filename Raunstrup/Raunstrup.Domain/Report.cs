@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Raunstrup.Domain
 {
-    public class Report
+    public class Report : IEquatable<Report>
     {
         private int _id;
         
@@ -42,6 +42,11 @@ namespace Raunstrup.Domain
         public void AddReportLine(Product item, int quantity)
         {
             ReportLines.Add(new ReportLine(item,quantity));
+        }
+
+        public bool Equals(Report other)
+        {
+            return Id == other.Id;
         }
     }
 

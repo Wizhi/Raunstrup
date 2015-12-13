@@ -52,6 +52,11 @@ namespace Raunstrup.Domain.ViewObjects
             get { return new ReadOnlyCustomer(_draft.Customer);}
         }
 
+        public ReadOnlyProject Project
+        {
+            get { return _draft.Project == null ? null : new ReadOnlyProject(_draft.Project); }
+        }
+
         public IList<ReadOnlyOrderLine> OrderLines
         {
             get

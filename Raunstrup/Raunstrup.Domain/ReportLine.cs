@@ -1,6 +1,8 @@
-﻿namespace Raunstrup.Domain
+﻿using System;
+
+namespace Raunstrup.Domain
 {
-    public class ReportLine
+    public class ReportLine : IEquatable<ReportLine>
     {
         private int _id;
 
@@ -34,6 +36,11 @@
         public int GetQuantity()
         {
             return Quantity;
+        }
+
+        public bool Equals(ReportLine other)
+        {
+            return Id == other.Id;
         }
     }
 }

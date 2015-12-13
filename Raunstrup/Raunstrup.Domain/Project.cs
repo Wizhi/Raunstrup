@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Raunstrup.Domain
 {
-    public class Project
+    public class Project : IEquatable<Project>
     {
         private int _id;
 
@@ -33,5 +33,10 @@ namespace Raunstrup.Domain
         public virtual DateTime OrderDate { get; set; }
 
         public virtual IList<Employee> Employees { get; private set; }
+
+        public bool Equals(Project other)
+        {
+            return Id == other.Id;
+        }
     }
 }
