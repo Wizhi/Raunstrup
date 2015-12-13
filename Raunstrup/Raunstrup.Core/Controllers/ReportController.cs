@@ -18,13 +18,15 @@ namespace Raunstrup.Core.Controllers
         // så på den måde bliver company det centrale "acces point" til hele bussiness logikken
         private readonly IReportRepository _reportRepository;
         private readonly IProjectRepository _projectRepository;
+        private readonly IDraftRepository _draftRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
 
-        public ReportController(IReportRepository reportRepository, IProjectRepository projectRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository)
+        public ReportController(IReportRepository reportRepository, IProjectRepository projectRepository, IDraftRepository draftRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository)
         {
             _reportRepository = reportRepository;
             _projectRepository = projectRepository;
+            _draftRepository = draftRepository;
             _employeeRepository = employeeRepository;
             _productRepository = productRepository;
         }
@@ -51,14 +53,24 @@ namespace Raunstrup.Core.Controllers
             return returnList;
         } 
 
-        public void UploadReport(string path)
+        public void ReadReport(string path)
         {
             try
             {
                 var xml = File.ReadAllText(path);
                 var parser = new XmlReportParser(_projectRepository, _employeeRepository, _productRepository);
                 var report = parser.Parse(xml);
+                
+                // TODO: Figure out a better way of handling "dynamic" offers. This is ugly.
+                if (report.Project.Draft.Type == Draft.DraftType.Dynamic)
+                {
+                    foreach (var reportLine in report.ReportLines)
+                    {
+                        report.Project.Draft.OrderLines.Add(new OrderLine(reportLine.Product, reportLine.Quantity));
+                    }
+                }
 
+                _draftRepository.Save(report.Project.Draft);
                 _reportRepository.Save(report);
             }
             catch (FileNotFoundException)
