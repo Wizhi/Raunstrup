@@ -57,6 +57,7 @@
     <Compile Include="ViewObjects\ReadOnlyMaterial.cs" />
     <Compile Include="ViewObjects\ReadOnlyOrderLine.cs" />
     <Compile Include="ViewObjects\ReadOnlyProduct.cs" />
+    <Compile Include="ViewObjects\ReadOnlyProject.cs" />
     <Compile Include="ViewObjects\ReadOnlyReport.cs" />
     <Compile Include="ViewObjects\ReadOnlyReportLine.cs" />
     <Compile Include="ViewObjects\ReadOnlySkill.cs" />

@@ -44,10 +44,12 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT 
-                                          DraftId, WorkTitle, [Description], Discount, IsOffer,
-                                          StartDate, EndDate, CustomerId, ResponsibleEmployeeId
-                                        FROM Draft
-                                        WHERE DraftId = @id";
+                                          d.DraftId, d.WorkTitle, d.[Description], d.Discount, d.IsOffer,
+                                          d.StartDate, d.EndDate, d.CustomerId, d.ResponsibleEmployeeId,
+                                          p.ProjectId
+                                        FROM Draft d
+                                        LEFT JOIN Project p ON p.DraftId = d.DraftId
+                                        WHERE d.DraftId = @id";
 
                 var idParam = command.CreateParameter();
 
@@ -73,9 +75,11 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT 
-                                          DraftId, WorkTitle, [Description], Discount, IsOffer,
-                                          StartDate, EndDate, CustomerId, ResponsibleEmployeeId
-                                        FROM Draft";
+                                          d.DraftId, d.WorkTitle, d.[Description], d.Discount, d.IsOffer,
+                                          d.StartDate, d.EndDate, d.CustomerId, d.ResponsibleEmployeeId,
+                                          p.ProjectId
+                                        FROM Draft d
+                                        LEFT JOIN Project p ON p.DraftId = d.DraftId";
 
                 connection.Open();
 
@@ -107,7 +111,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                         draft.StartDate, draft.EndDate,
                         draft.Type == Draft.DraftType.Estimate,
                         draft.DiscountPercentage, draft.Customer.Id,
-                        draft.ResponsiblEmployee.Id
+                        draft.ResponsiblEmployee.Id,
+                        draft.Project.Id
                     )
                     .Apply();
 
@@ -251,7 +256,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                 StartDate = (DateTime) reader["StartDate"],
                 EndDate = (DateTime) reader["EndDate"],
                 Type = (bool) reader["IsOffer"] ? Draft.DraftType.Offer : Draft.DraftType.Estimate,
-                ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"])
+                ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"]),
+                Project = reader["ProjectId"] is DBNull ? null : new ProjectProxy(_context, (int) reader["ProjectId"])
             };
         }
 
