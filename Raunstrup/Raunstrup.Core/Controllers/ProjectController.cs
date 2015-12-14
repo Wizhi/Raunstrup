@@ -1,31 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Raunstrup.Core.Domain;
-using Raunstrup.Core.Repos;
+using Raunstrup.Data.Repositories;
+using Raunstrup.Domain;
+using Raunstrup.Domain.ViewObjects;
 
 namespace Raunstrup.Core.Controllers
 {
     public class ProjectController
     {
-        private IDraftRepository _draftRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private Project _project;
 
-        public ProjectController(IDraftRepository draftRepository)
+        public ProjectController(IProjectRepository projectProjectRepository, IEmployeeRepository employeeRepository)
         {
-            _draftRepository = draftRepository;
-        }
-        public Draft createDraft(Employee employee, string title, Customer customer)
-        {
-            Draft draft = new Draft(customer,title,employee);
-            _draftRepository.Save(draft);
-            return draft;
+            _projectRepository = projectProjectRepository;
+            _employeeRepository = employeeRepository;
         }
 
-        public void SetDraftTitle(Draft draft, string title)
+        public ReadOnlyProject Load(int id)
         {
-            
+            _project = _projectRepository.Get(id);
+
+            // TODO: Handle Project not found.
+
+            return new ReadOnlyProject(_project);
+        }
+
+        public void Save()
+        {
+            _projectRepository.Save(_project);
+        }
+
+        public IEnumerable<ReadOnlyEmployee> GetAvailableEmployees()
+        {
+            return _employeeRepository.GetAll()
+                .Except(_project.Employees)
+                .Select(employee => new ReadOnlyEmployee(employee))
+                .ToList();
+        }
+
+        public void AddEmployee(int id)
+        {
+            _project.Employees.Add(_employeeRepository.Get(id));
+        }
+
+        public void RemoveEmployee(int id)
+        {
+            _project.Employees.Remove(_project.Employees.FirstOrDefault(x => x.Id == id));
         }
     }
 }
