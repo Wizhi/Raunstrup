@@ -48,7 +48,7 @@ namespace Raunstrup.Core
 
         public DraftController CreateDraftController()
         {
-            return new DraftController(_customerRepository,_employeeRepository,_productRepository,_draftRepository);
+            return new DraftController(_customerRepository,_employeeRepository,_productRepository,_draftRepository, _projectRepository);
         }
 
         public ProductCRUDController CreateProductController()
