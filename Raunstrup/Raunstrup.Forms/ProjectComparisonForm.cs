@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
 using Raunstrup.Core.Statistics;
 
@@ -14,12 +15,15 @@ namespace Raunstrup.Forms
 {
     public partial class ProjectComparisonForm : Form
     {
-        public ProjectComparisonForm(ReportController reportController, int projectId)
+        private Company _company;
+        private ReportController _reportController;
+        public ProjectComparisonForm(Company company, int projectId)
         {
             InitializeComponent();
-            bindComparisonToListBox(reportController.GetProjectComparison(projectId));
-            bindComparsionToProgressBar(reportController.GetProjectComparison(projectId));
-            bindComparsionToPercentLabel(reportController.GetProjectComparison(projectId));
+            _reportController = company.CreateReportController();
+            bindComparisonToListBox(_reportController.GetProjectComparison(projectId));
+            bindComparsionToProgressBar(_reportController.GetProjectComparison(projectId));
+            bindComparsionToPercentLabel(_reportController.GetProjectComparison(projectId));
         }
 
         private void bindComparisonToListBox(ProjectComparison comparison)

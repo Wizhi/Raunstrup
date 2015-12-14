@@ -265,10 +265,33 @@ namespace Raunstrup.Data.MsSql.Mappers
 
             while (reader.Read())
             {
+                Product product = null;
+
+                if (!(reader["MaterialId"] is DBNull))
+                {
+                    product = new Material() { CostPrice = (decimal)reader["CostPrice"] };
+                }
+                else if (!(reader["WorkHourId"] is DBNull))
+                {
+                    product = new WorkHour();
+                }
+                else if (!(reader["TransportId"] is DBNull))
+                {
+                    product = new Transport();
+                }
+                else
+                {
+                    // TODO: Handle invalid product.
+                }
+
+                product.Id = (int) reader["ProductId"];
+                product.Name = (string) reader["Name"];
+                product.SalesPrice = (decimal) reader["SalesPrice"];
+
                 reportLines.Add(new ReportLine(
-                    new ProductProxy(_context, (int)reader["ProductId"]), 
-                    (int) reader["Quantity"])
-                );
+                    product, 
+                    (int) reader["Quantity"]
+                ));
             }
 
             return reportLines;
