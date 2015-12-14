@@ -94,8 +94,6 @@ namespace Raunstrup.Data.MsSql.Mappers
                 {
                     skillRelation.Values(skill.Id);
                 }
-
-                skillRelation.Apply();
                 
                 connection.Open();
                 employeeInsert.Command.Prepare();
@@ -104,6 +102,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 if (employee.Skills.Count > 0)
                 {
+                    skillRelation.Apply();
                     skillRelation.Command.Prepare();
                     skillRelation.Command.ExecuteNonQuery();
                 }
