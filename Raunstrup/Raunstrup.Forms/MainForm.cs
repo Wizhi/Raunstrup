@@ -67,6 +67,18 @@ namespace Raunstrup.Forms
             _draftOLV.Refresh();
         }
 
+        private void kundekatalogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var customerSelectForm = new CustomerSelectForm(_company);
+            customerSelectForm.ShowDialog();
+        }
+
+        private void ansatteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var employeeSelectForm = new EmployeeCRUDForm(_company);
+            employeeSelectForm.ShowDialog();
+        }
+
 
     }
 }

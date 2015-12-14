@@ -43,6 +43,8 @@
             this._openDraftButton = new System.Windows.Forms.Button();
             this._openProjectDraftButton = new System.Windows.Forms.Button();
             this._createDraftButton = new System.Windows.Forms.Button();
+            this.kundekatalogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ansatteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._projectOLV)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._draftOLV)).BeginInit();
@@ -59,6 +61,7 @@
             this.ProjectDate,
             this.ProjectCustomer});
             this._projectOLV.Cursor = System.Windows.Forms.Cursors.Default;
+            this._projectOLV.FullRowSelect = true;
             this._projectOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._projectOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._projectOLV.Location = new System.Drawing.Point(12, 44);
@@ -80,6 +83,9 @@
             // 
             // katalogToolStripMenuItem
             // 
+            this.katalogToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kundekatalogToolStripMenuItem,
+            this.ansatteToolStripMenuItem});
             this.katalogToolStripMenuItem.Name = "katalogToolStripMenuItem";
             this.katalogToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.katalogToolStripMenuItem.Text = "Katalog";
@@ -95,6 +101,7 @@
             this.DraftDate,
             this.DraftCustomer});
             this._draftOLV.Cursor = System.Windows.Forms.Cursors.Default;
+            this._draftOLV.FullRowSelect = true;
             this._draftOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._draftOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._draftOLV.Location = new System.Drawing.Point(278, 44);
@@ -113,9 +120,10 @@
             // ProjectDate
             // 
             this.ProjectDate.AspectName = "OrderDate";
+            this.ProjectDate.AspectToStringFormat = "{0:d}";
             this.ProjectDate.Groupable = false;
             this.ProjectDate.Text = "Ordredato";
-            this.ProjectDate.Width = 100;
+            this.ProjectDate.Width = 90;
             // 
             // ProjectCustomer
             // 
@@ -127,17 +135,21 @@
             // DraftTitle
             // 
             this.DraftTitle.AspectName = "Title";
+            this.DraftTitle.Groupable = false;
             this.DraftTitle.Text = "Titel";
             // 
             // DraftDate
             // 
             this.DraftDate.AspectName = "CreationDate";
+            this.DraftDate.AspectToStringFormat = "{0:d}";
+            this.DraftDate.Groupable = false;
             this.DraftDate.Text = "Oprettelsesdato";
-            this.DraftDate.Width = 100;
+            this.DraftDate.Width = 90;
             // 
             // DraftCustomer
             // 
             this.DraftCustomer.AspectName = "Customer.Name";
+            this.DraftCustomer.Groupable = false;
             this.DraftCustomer.Text = "Kunde";
             this.DraftCustomer.Width = 100;
             // 
@@ -155,9 +167,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(278, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(36, 13);
+            this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Ordrer";
+            this.label2.Text = "Kladder";
             // 
             // _openDraftButton
             // 
@@ -188,6 +200,20 @@
             this._createDraftButton.Text = "Opret";
             this._createDraftButton.UseVisualStyleBackColor = true;
             this._createDraftButton.Click += new System.EventHandler(this._createDraftButton_Click);
+            // 
+            // kundekatalogToolStripMenuItem
+            // 
+            this.kundekatalogToolStripMenuItem.Name = "kundekatalogToolStripMenuItem";
+            this.kundekatalogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.kundekatalogToolStripMenuItem.Text = "Kunder";
+            this.kundekatalogToolStripMenuItem.Click += new System.EventHandler(this.kundekatalogToolStripMenuItem_Click);
+            // 
+            // ansatteToolStripMenuItem
+            // 
+            this.ansatteToolStripMenuItem.Name = "ansatteToolStripMenuItem";
+            this.ansatteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ansatteToolStripMenuItem.Text = "Ansatte";
+            this.ansatteToolStripMenuItem.Click += new System.EventHandler(this.ansatteToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -232,5 +258,7 @@
         private System.Windows.Forms.Button _openDraftButton;
         private System.Windows.Forms.Button _openProjectDraftButton;
         private System.Windows.Forms.Button _createDraftButton;
+        private System.Windows.Forms.ToolStripMenuItem kundekatalogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ansatteToolStripMenuItem;
     }
 }
