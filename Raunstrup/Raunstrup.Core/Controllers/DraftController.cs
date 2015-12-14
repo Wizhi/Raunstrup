@@ -34,6 +34,31 @@ namespace Raunstrup.Core.Controllers
             _projectRepository.Save(_currentProject);
         }
 
+        public List<ReadOnlyDraft> GetDraftsWitihoutProject()
+        {
+            IList<Draft> drafts = _draftRepository.GetAll();
+            List<ReadOnlyDraft> returnList = new List<ReadOnlyDraft>();
+            foreach (var draft in drafts)
+            {
+                if (draft.Project == null)
+                {
+                    returnList.Add(new ReadOnlyDraft(draft));
+                }
+            }
+            return returnList;
+        }
+
+        public List<ReadOnlyProject> GetAllProjects()
+        {
+            IList<Project> projects = _projectRepository.GetAll();
+            List<ReadOnlyProject> returnList = new List<ReadOnlyProject>();
+            foreach (var project in projects)
+            {
+                returnList.Add(new ReadOnlyProject(project));
+            }
+            return returnList;
+        }
+
         public void SetAsEstimate()
         {
             _currentDraft.Type = Draft.DraftType.Estimate;
