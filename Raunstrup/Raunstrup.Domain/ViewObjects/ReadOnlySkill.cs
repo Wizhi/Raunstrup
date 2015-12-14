@@ -8,21 +8,21 @@ namespace Raunstrup.Domain.ViewObjects
 {
     public class ReadOnlySkill
     {
-        private readonly Skill _real;
+        private readonly Skill _skill;
 
-        public ReadOnlySkill(Skill real)
+        public ReadOnlySkill(Skill skill)
         {
-            _real = real;
+            _skill = skill;
         }
 
         public int Id
         {
-            get { return _real.Id; }
+            get { return _skill.Id; }
         }
 
         public string Name
         {
-            get { return _real.Name; }
+            get { return _skill.Name; }
         }
     }
 }

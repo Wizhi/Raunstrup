@@ -60,16 +60,21 @@
             this.label3 = new System.Windows.Forms.Label();
             this._filterTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this._offerRadioButton = new System.Windows.Forms.RadioButton();
+            this._estimateRadioButton = new System.Windows.Forms.RadioButton();
+            this._draftGroupBox = new System.Windows.Forms.GroupBox();
+            this._makeProjectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._quantityNumericUpDown)).BeginInit();
+            this._draftGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // _draftTitleLabel
             // 
             this._draftTitleLabel.AutoSize = true;
-            this._draftTitleLabel.Location = new System.Drawing.Point(11, 71);
+            this._draftTitleLabel.Location = new System.Drawing.Point(6, 77);
             this._draftTitleLabel.Name = "_draftTitleLabel";
             this._draftTitleLabel.Size = new System.Drawing.Size(66, 13);
             this._draftTitleLabel.TabIndex = 0;
@@ -81,7 +86,7 @@
             this._customerComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this._customerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._customerComboBox.FormattingEnabled = true;
-            this._customerComboBox.Location = new System.Drawing.Point(110, 12);
+            this._customerComboBox.Location = new System.Drawing.Point(105, 18);
             this._customerComboBox.Name = "_customerComboBox";
             this._customerComboBox.Size = new System.Drawing.Size(134, 21);
             this._customerComboBox.TabIndex = 1;
@@ -89,14 +94,14 @@
             // 
             // _draftTitleTextBox
             // 
-            this._draftTitleTextBox.Location = new System.Drawing.Point(110, 68);
+            this._draftTitleTextBox.Location = new System.Drawing.Point(105, 74);
             this._draftTitleTextBox.Name = "_draftTitleTextBox";
             this._draftTitleTextBox.Size = new System.Drawing.Size(134, 20);
             this._draftTitleTextBox.TabIndex = 2;
             // 
             // _draftDescriptionTextBox
             // 
-            this._draftDescriptionTextBox.Location = new System.Drawing.Point(110, 94);
+            this._draftDescriptionTextBox.Location = new System.Drawing.Point(105, 100);
             this._draftDescriptionTextBox.Multiline = true;
             this._draftDescriptionTextBox.Name = "_draftDescriptionTextBox";
             this._draftDescriptionTextBox.Size = new System.Drawing.Size(134, 20);
@@ -105,7 +110,7 @@
             // _draftDescriptionLabel
             // 
             this._draftDescriptionLabel.AutoSize = true;
-            this._draftDescriptionLabel.Location = new System.Drawing.Point(11, 97);
+            this._draftDescriptionLabel.Location = new System.Drawing.Point(6, 103);
             this._draftDescriptionLabel.Name = "_draftDescriptionLabel";
             this._draftDescriptionLabel.Size = new System.Drawing.Size(67, 13);
             this._draftDescriptionLabel.TabIndex = 4;
@@ -114,7 +119,7 @@
             // _startDateLabel
             // 
             this._startDateLabel.AutoSize = true;
-            this._startDateLabel.Location = new System.Drawing.Point(11, 123);
+            this._startDateLabel.Location = new System.Drawing.Point(6, 129);
             this._startDateLabel.Name = "_startDateLabel";
             this._startDateLabel.Size = new System.Drawing.Size(59, 13);
             this._startDateLabel.TabIndex = 6;
@@ -122,7 +127,7 @@
             // 
             // _startDateDateTimePicker
             // 
-            this._startDateDateTimePicker.Location = new System.Drawing.Point(110, 120);
+            this._startDateDateTimePicker.Location = new System.Drawing.Point(105, 126);
             this._startDateDateTimePicker.Name = "_startDateDateTimePicker";
             this._startDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this._startDateDateTimePicker.TabIndex = 7;
@@ -130,7 +135,7 @@
             // 
             // _endDateDateTimePicker
             // 
-            this._endDateDateTimePicker.Location = new System.Drawing.Point(110, 146);
+            this._endDateDateTimePicker.Location = new System.Drawing.Point(105, 152);
             this._endDateDateTimePicker.Name = "_endDateDateTimePicker";
             this._endDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this._endDateDateTimePicker.TabIndex = 9;
@@ -139,7 +144,7 @@
             // _endDateLabel
             // 
             this._endDateLabel.AutoSize = true;
-            this._endDateLabel.Location = new System.Drawing.Point(11, 149);
+            this._endDateLabel.Location = new System.Drawing.Point(6, 155);
             this._endDateLabel.Name = "_endDateLabel";
             this._endDateLabel.Size = new System.Drawing.Size(55, 13);
             this._endDateLabel.TabIndex = 8;
@@ -148,7 +153,7 @@
             // _discountInPercentLabel
             // 
             this._discountInPercentLabel.AutoSize = true;
-            this._discountInPercentLabel.Location = new System.Drawing.Point(11, 175);
+            this._discountInPercentLabel.Location = new System.Drawing.Point(6, 181);
             this._discountInPercentLabel.Name = "_discountInPercentLabel";
             this._discountInPercentLabel.Size = new System.Drawing.Size(50, 13);
             this._discountInPercentLabel.TabIndex = 10;
@@ -165,7 +170,7 @@
             this._productOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._productOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._productOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
-            this._productOLV.Location = new System.Drawing.Point(591, 12);
+            this._productOLV.Location = new System.Drawing.Point(586, 18);
             this._productOLV.Name = "_productOLV";
             this._productOLV.Size = new System.Drawing.Size(256, 180);
             this._productOLV.TabIndex = 12;
@@ -189,7 +194,7 @@
             // 
             // _addToDraftOrderLineOLV
             // 
-            this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(521, 71);
+            this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(516, 77);
             this._addToDraftOrderLineOLV.Name = "_addToDraftOrderLineOLV";
             this._addToDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
             this._addToDraftOrderLineOLV.TabIndex = 13;
@@ -199,7 +204,7 @@
             // 
             // _removeFromDraftOrderLineOLV
             // 
-            this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(521, 100);
+            this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(516, 106);
             this._removeFromDraftOrderLineOLV.Name = "_removeFromDraftOrderLineOLV";
             this._removeFromDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
             this._removeFromDraftOrderLineOLV.TabIndex = 14;
@@ -210,7 +215,7 @@
             // _customerLabel
             // 
             this._customerLabel.AutoSize = true;
-            this._customerLabel.Location = new System.Drawing.Point(11, 15);
+            this._customerLabel.Location = new System.Drawing.Point(6, 21);
             this._customerLabel.Name = "_customerLabel";
             this._customerLabel.Size = new System.Drawing.Size(44, 13);
             this._customerLabel.TabIndex = 15;
@@ -218,7 +223,7 @@
             // 
             // _saveDraftButton
             // 
-            this._saveDraftButton.Location = new System.Drawing.Point(180, 198);
+            this._saveDraftButton.Location = new System.Drawing.Point(175, 204);
             this._saveDraftButton.Name = "_saveDraftButton";
             this._saveDraftButton.Size = new System.Drawing.Size(64, 23);
             this._saveDraftButton.TabIndex = 16;
@@ -229,7 +234,7 @@
             // _discountInPercentNumericUpDown
             // 
             this._discountInPercentNumericUpDown.DecimalPlaces = 2;
-            this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(110, 172);
+            this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(105, 178);
             this._discountInPercentNumericUpDown.Name = "_discountInPercentNumericUpDown";
             this._discountInPercentNumericUpDown.Size = new System.Drawing.Size(134, 20);
             this._discountInPercentNumericUpDown.TabIndex = 17;
@@ -238,7 +243,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 42);
+            this.label1.Location = new System.Drawing.Point(6, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(93, 13);
             this.label1.TabIndex = 19;
@@ -250,7 +255,7 @@
             this._employeeComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this._employeeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._employeeComboBox.FormattingEnabled = true;
-            this._employeeComboBox.Location = new System.Drawing.Point(110, 39);
+            this._employeeComboBox.Location = new System.Drawing.Point(105, 45);
             this._employeeComboBox.Name = "_employeeComboBox";
             this._employeeComboBox.Size = new System.Drawing.Size(134, 21);
             this._employeeComboBox.TabIndex = 18;
@@ -263,7 +268,7 @@
             this.Quantity,
             this.TotalPrice});
             this._draftProductsLV.FullRowSelect = true;
-            this._draftProductsLV.Location = new System.Drawing.Point(250, 12);
+            this._draftProductsLV.Location = new System.Drawing.Point(245, 18);
             this._draftProductsLV.MultiSelect = false;
             this._draftProductsLV.Name = "_draftProductsLV";
             this._draftProductsLV.Size = new System.Drawing.Size(265, 180);
@@ -295,7 +300,7 @@
             // _priceNumericUpDown
             // 
             this._priceNumericUpDown.DecimalPlaces = 2;
-            this._priceNumericUpDown.Location = new System.Drawing.Point(283, 200);
+            this._priceNumericUpDown.Location = new System.Drawing.Point(278, 206);
             this._priceNumericUpDown.Name = "_priceNumericUpDown";
             this._priceNumericUpDown.Size = new System.Drawing.Size(61, 20);
             this._priceNumericUpDown.TabIndex = 23;
@@ -304,7 +309,7 @@
             // 
             // _quantityNumericUpDown
             // 
-            this._quantityNumericUpDown.Location = new System.Drawing.Point(390, 200);
+            this._quantityNumericUpDown.Location = new System.Drawing.Point(385, 206);
             this._quantityNumericUpDown.Name = "_quantityNumericUpDown";
             this._quantityNumericUpDown.Size = new System.Drawing.Size(67, 20);
             this._quantityNumericUpDown.TabIndex = 24;
@@ -312,7 +317,7 @@
             // 
             // _editOrderLineButton
             // 
-            this._editOrderLineButton.Location = new System.Drawing.Point(463, 198);
+            this._editOrderLineButton.Location = new System.Drawing.Point(458, 204);
             this._editOrderLineButton.Name = "_editOrderLineButton";
             this._editOrderLineButton.Size = new System.Drawing.Size(52, 23);
             this._editOrderLineButton.TabIndex = 25;
@@ -323,7 +328,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(250, 203);
+            this.label2.Location = new System.Drawing.Point(245, 209);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 26;
@@ -332,7 +337,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(350, 203);
+            this.label3.Location = new System.Drawing.Point(345, 209);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(34, 13);
             this.label3.TabIndex = 27;
@@ -340,7 +345,7 @@
             // 
             // _filterTextBox
             // 
-            this._filterTextBox.Location = new System.Drawing.Point(626, 198);
+            this._filterTextBox.Location = new System.Drawing.Point(621, 204);
             this._filterTextBox.Name = "_filterTextBox";
             this._filterTextBox.Size = new System.Drawing.Size(134, 20);
             this._filterTextBox.TabIndex = 29;
@@ -349,43 +354,90 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(588, 200);
+            this.label4.Location = new System.Drawing.Point(583, 206);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 28;
             this.label4.Text = "Søg: ";
             // 
+            // _offerRadioButton
+            // 
+            this._offerRadioButton.AutoSize = true;
+            this._offerRadioButton.Location = new System.Drawing.Point(9, 207);
+            this._offerRadioButton.Name = "_offerRadioButton";
+            this._offerRadioButton.Size = new System.Drawing.Size(54, 17);
+            this._offerRadioButton.TabIndex = 32;
+            this._offerRadioButton.TabStop = true;
+            this._offerRadioButton.Text = "Tilbud";
+            this._offerRadioButton.UseVisualStyleBackColor = true;
+            this._offerRadioButton.CheckedChanged += new System.EventHandler(this._offerRadioButton_CheckedChanged);
+            // 
+            // _estimateRadioButton
+            // 
+            this._estimateRadioButton.AutoSize = true;
+            this._estimateRadioButton.Location = new System.Drawing.Point(69, 207);
+            this._estimateRadioButton.Name = "_estimateRadioButton";
+            this._estimateRadioButton.Size = new System.Drawing.Size(67, 17);
+            this._estimateRadioButton.TabIndex = 33;
+            this._estimateRadioButton.TabStop = true;
+            this._estimateRadioButton.Text = "Overslag";
+            this._estimateRadioButton.UseVisualStyleBackColor = true;
+            this._estimateRadioButton.CheckedChanged += new System.EventHandler(this._estimateRadioButton_CheckedChanged);
+            // 
+            // _draftGroupBox
+            // 
+            this._draftGroupBox.Controls.Add(this._customerLabel);
+            this._draftGroupBox.Controls.Add(this._productOLV);
+            this._draftGroupBox.Controls.Add(this._draftTitleLabel);
+            this._draftGroupBox.Controls.Add(this._filterTextBox);
+            this._draftGroupBox.Controls.Add(this._customerComboBox);
+            this._draftGroupBox.Controls.Add(this._draftProductsLV);
+            this._draftGroupBox.Controls.Add(this._draftTitleTextBox);
+            this._draftGroupBox.Controls.Add(this.label4);
+            this._draftGroupBox.Controls.Add(this._draftDescriptionLabel);
+            this._draftGroupBox.Controls.Add(this._priceNumericUpDown);
+            this._draftGroupBox.Controls.Add(this._draftDescriptionTextBox);
+            this._draftGroupBox.Controls.Add(this._estimateRadioButton);
+            this._draftGroupBox.Controls.Add(this._startDateLabel);
+            this._draftGroupBox.Controls.Add(this.label3);
+            this._draftGroupBox.Controls.Add(this._startDateDateTimePicker);
+            this._draftGroupBox.Controls.Add(this._offerRadioButton);
+            this._draftGroupBox.Controls.Add(this._endDateLabel);
+            this._draftGroupBox.Controls.Add(this._quantityNumericUpDown);
+            this._draftGroupBox.Controls.Add(this._endDateDateTimePicker);
+            this._draftGroupBox.Controls.Add(this.label2);
+            this._draftGroupBox.Controls.Add(this._discountInPercentLabel);
+            this._draftGroupBox.Controls.Add(this._editOrderLineButton);
+            this._draftGroupBox.Controls.Add(this._addToDraftOrderLineOLV);
+            this._draftGroupBox.Controls.Add(this.label1);
+            this._draftGroupBox.Controls.Add(this._removeFromDraftOrderLineOLV);
+            this._draftGroupBox.Controls.Add(this._employeeComboBox);
+            this._draftGroupBox.Controls.Add(this._saveDraftButton);
+            this._draftGroupBox.Controls.Add(this._discountInPercentNumericUpDown);
+            this._draftGroupBox.Location = new System.Drawing.Point(12, 12);
+            this._draftGroupBox.Name = "_draftGroupBox";
+            this._draftGroupBox.Size = new System.Drawing.Size(858, 236);
+            this._draftGroupBox.TabIndex = 34;
+            this._draftGroupBox.TabStop = false;
+            this._draftGroupBox.Text = "Opret kladde";
+            // 
+            // _makeProjectButton
+            // 
+            this._makeProjectButton.Location = new System.Drawing.Point(776, 254);
+            this._makeProjectButton.Name = "_makeProjectButton";
+            this._makeProjectButton.Size = new System.Drawing.Size(78, 23);
+            this._makeProjectButton.TabIndex = 34;
+            this._makeProjectButton.Text = "Lav til projekt";
+            this._makeProjectButton.UseVisualStyleBackColor = true;
+            this._makeProjectButton.Click += new System.EventHandler(this._makeProjectButton_Click);
+            // 
             // DraftCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 229);
-            this.Controls.Add(this._filterTextBox);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this._editOrderLineButton);
-            this.Controls.Add(this._draftProductsLV);
-            this.Controls.Add(this._quantityNumericUpDown);
-            this.Controls.Add(this._priceNumericUpDown);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this._employeeComboBox);
-            this.Controls.Add(this._discountInPercentNumericUpDown);
-            this.Controls.Add(this._saveDraftButton);
-            this.Controls.Add(this._customerLabel);
-            this.Controls.Add(this._removeFromDraftOrderLineOLV);
-            this.Controls.Add(this._addToDraftOrderLineOLV);
-            this.Controls.Add(this._productOLV);
-            this.Controls.Add(this._discountInPercentLabel);
-            this.Controls.Add(this._endDateDateTimePicker);
-            this.Controls.Add(this._endDateLabel);
-            this.Controls.Add(this._startDateDateTimePicker);
-            this.Controls.Add(this._startDateLabel);
-            this.Controls.Add(this._draftDescriptionTextBox);
-            this.Controls.Add(this._draftDescriptionLabel);
-            this.Controls.Add(this._draftTitleTextBox);
-            this.Controls.Add(this._customerComboBox);
-            this.Controls.Add(this._draftTitleLabel);
+            this.ClientSize = new System.Drawing.Size(882, 282);
+            this.Controls.Add(this._makeProjectButton);
+            this.Controls.Add(this._draftGroupBox);
             this.Name = "DraftCreateForm";
             this.Text = "DraftCreateForm";
             this.Load += new System.EventHandler(this.DraftCreateForm_Load);
@@ -393,8 +445,9 @@
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._quantityNumericUpDown)).EndInit();
+            this._draftGroupBox.ResumeLayout(false);
+            this._draftGroupBox.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -432,5 +485,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox _filterTextBox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton _offerRadioButton;
+        private System.Windows.Forms.RadioButton _estimateRadioButton;
+        private System.Windows.Forms.GroupBox _draftGroupBox;
+        private System.Windows.Forms.Button _makeProjectButton;
     }
 }

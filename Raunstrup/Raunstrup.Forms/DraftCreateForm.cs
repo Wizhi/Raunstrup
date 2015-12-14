@@ -41,6 +41,7 @@ namespace Raunstrup.Forms
             _employeeComboBox.DataSource = employees;
             _employeeComboBox.DisplayMember = "Name";
             _editMode = true;
+            _draftGroupBox.Text = string.Format("Kladde #{0}",draft.Id);
 
             _draftController.EditDraft(draft.Id);
             foreach (var orderLine in draft.OrderLines)
@@ -136,6 +137,14 @@ namespace Raunstrup.Forms
                 _draftController.SetEndDate(_endDateDateTimePicker.Value);
                 _draftController.SetTitle(_draftTitleTextBox.Text);
                 _draftController.SetDiscountPercentage((double) _discountInPercentNumericUpDown.Value);
+                if (_estimateRadioButton.Checked)
+                {
+                    _draftController.SetAsEstimate();
+                }
+                else if (_offerRadioButton.Checked)
+                {
+                    _draftController.SetAsOffer();
+                }
                 _draftController.SaveDraft();
             }
 
@@ -237,6 +246,29 @@ namespace Raunstrup.Forms
         {
             _productOLV.ModelFilter = TextMatchFilter.Contains(_productOLV, _filterTextBox.Text);
             _productOLV.Refresh();
+        }
+
+        private void _estimateRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_estimateRadioButton.Checked)
+            {
+                _addToDraftOrderLineOLV.Enabled = false;
+                _removeFromDraftOrderLineOLV.Enabled = false;
+            }
+        }
+
+        private void _offerRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_offerRadioButton.Checked)
+            {
+                _addToDraftOrderLineOLV.Enabled = true;
+                _removeFromDraftOrderLineOLV.Enabled = true;
+            }
+        }
+
+        private void _makeProjectButton_Click(object sender, EventArgs e)
+        {
+            _draftController.MakeProject();
         }
     }
 }

@@ -53,6 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerCRUDForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerCRUDForm.Designer.cs">
+      <DependentUpon>CustomerCRUDForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerSelectForm.Designer.cs">
+      <DependentUpon>CustomerSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeCRUDForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +121,12 @@
     <Compile Include="SkillSelectForm.Designer.cs">
       <DependentUpon>SkillSelectForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CustomerCRUDForm.resx">
+      <DependentUpon>CustomerCRUDForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomerSelectForm.resx">
+      <DependentUpon>CustomerSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeCRUDForm.resx">
       <DependentUpon>EmployeeCRUDForm.cs</DependentUpon>
     </EmbeddedResource>
