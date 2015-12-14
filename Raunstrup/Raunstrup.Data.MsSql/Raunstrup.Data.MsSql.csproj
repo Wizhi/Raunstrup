@@ -56,7 +56,6 @@
     <Compile Include="Mappers\CustomerMapper.cs" />
     <Compile Include="Mappers\DraftMapper.cs" />
     <Compile Include="Mappers\EmployeeMapper.cs" />
-    <Compile Include="Mappers\IDataMapper.cs" />
     <Compile Include="Mappers\ProductMapper.cs" />
     <Compile Include="Mappers\ProjectMapper.cs" />
     <Compile Include="Mappers\ReportMapper.cs" />
