@@ -121,12 +121,12 @@ namespace Raunstrup.Forms
         {
             _employeeCRUDController.SetEmployeeName(_employeeNameTextBox.Text);
             _employeeCRUDController.SaveEmployee();
+            MessageBox.Show(@"Den ansatte blev gemt.");
             var employees = _employeeCRUDController.GetAllEmployees();
             _employeeComboBox.DataSource = employees;
             _employeeComboBox.DisplayMember = "Name";
             _employeeComboBox.SelectedItem = null;
             _employeeNameTextBox.Text = "";
-            
         }
 
         private void _deleteEmployeeButton_Click(object sender, EventArgs e)

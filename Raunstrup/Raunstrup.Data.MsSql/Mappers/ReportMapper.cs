@@ -237,9 +237,10 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT Quantity, ProductId 
-                                        FROM ReportLine 
-                                        WHERE ReportId = @id;";
+                command.CommandText = @"SELECT rl.ReportLineId, rl.Quantity, ap.*
+                                        FROM ReportLine rl
+                                        JOIN AllProducts ap ON ap.ProductId = rl.ProductId 
+                                        WHERE rl.ReportId = @id";
 
                 var idParam = command.CreateParameter();
 
@@ -269,7 +270,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 if (!(reader["MaterialId"] is DBNull))
                 {
-                    product = new Material() { CostPrice = (decimal)reader["CostPrice"] };
+                    product = new Material() { CostPrice = (decimal) reader["CostPrice"] };
                 }
                 else if (!(reader["WorkHourId"] is DBNull))
                 {
@@ -291,7 +292,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 reportLines.Add(new ReportLine(
                     product, 
                     (int) reader["Quantity"]
-                ));
+                ) { Id = (int) reader["ReportLineId"] });
             }
 
             return reportLines;

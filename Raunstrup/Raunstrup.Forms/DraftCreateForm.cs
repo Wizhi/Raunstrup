@@ -25,9 +25,9 @@ namespace Raunstrup.Forms
             _customerComboBox.DisplayMember = "Name";
             _employeeComboBox.DataSource = employees;
             _employeeComboBox.DisplayMember = "Name";
-            _customerComboBox.SelectedItem = null;
+            _customerComboBox.SelectedIndex = -1;
             _employeeComboBox.SelectedItem = null;
-            _addToDraftOrderLineOLV.Enabled = false;
+            _offerRadioButton.Checked = true;
             _editMode = false;
         }
         public DraftCreateForm(Company company, ReadOnlyDraft draft)
@@ -55,6 +55,18 @@ namespace Raunstrup.Forms
                         (orderLine.UnitPrice*orderLine.Quantity).ToString(CultureInfo.CurrentCulture)
                     }));
                 _productIds.Add(orderLine.Product.ID);
+            }
+            if (draft.Project != null)
+            {
+                _makeProjectButton.Enabled = false;
+            }
+            if (_draftController.IsEstimate())
+            {
+                _estimateRadioButton.Checked = true;
+            }
+            else if (!_draftController.IsEstimate())
+            {
+                _offerRadioButton.Checked = true;
             }
             _draftDescriptionTextBox.Text = draft.Description;
             _draftTitleTextBox.Text = draft.Title;
@@ -146,6 +158,7 @@ namespace Raunstrup.Forms
                     _draftController.SetAsOffer();
                 }
                 _draftController.SaveDraft();
+                MessageBox.Show(@"Ordren blev gemt.");
             }
 
         }
@@ -239,7 +252,17 @@ namespace Raunstrup.Forms
 
         private void _customerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _addToDraftOrderLineOLV.Enabled = true;
+            _addToDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+            _estimateRadioButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _offerRadioButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _removeFromDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+            _draftTitleTextBox.Enabled = _customerComboBox.SelectedIndex > -1;
+            _startDateDateTimePicker.Enabled = _customerComboBox.SelectedIndex > -1;
+            _endDateDateTimePicker.Enabled = _customerComboBox.SelectedIndex > -1;
+            _draftDescriptionTextBox.Enabled = _customerComboBox.SelectedIndex > -1;
+            _discountInPercentNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
+            _makeProjectButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _employeeComboBox.Enabled = _customerComboBox.SelectedIndex > -1;
         }
 
         private void _filterTextBox_TextChanged(object sender, EventArgs e)
@@ -254,6 +277,7 @@ namespace Raunstrup.Forms
             {
                 _addToDraftOrderLineOLV.Enabled = false;
                 _removeFromDraftOrderLineOLV.Enabled = false;
+                _editOrderLineButton.Enabled = false;
             }
         }
 
@@ -261,14 +285,32 @@ namespace Raunstrup.Forms
         {
             if (_offerRadioButton.Checked)
             {
-                _addToDraftOrderLineOLV.Enabled = true;
-                _removeFromDraftOrderLineOLV.Enabled = true;
+                _addToDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+                _removeFromDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
             }
         }
 
         private void _makeProjectButton_Click(object sender, EventArgs e)
         {
             _draftController.MakeProject();
+            _makeProjectButton.Enabled = false;
+        }
+
+        private void _draftTitleTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (_draftTitleTextBox.Text != "" && !_editMode)
+            {
+                var readOnlyCustomer = _customerComboBox.SelectedItem as ReadOnlyCustomer;
+                if (readOnlyCustomer != null)
+                {
+                    if (!_editMode)
+                    {
+                        _draftController.CreateNewDraft(((ReadOnlyCustomer)_customerComboBox.SelectedItem).Id);
+                        _customerComboBox.Enabled = false;
+                        _editMode = true;
+                    }
+                }
+            }
         }
     }
 }

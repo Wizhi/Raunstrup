@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
+using Raunstrup.Core;
 using Raunstrup.Core.Controllers;
 using Raunstrup.Domain.ViewObjects;
 
@@ -8,14 +9,16 @@ namespace Raunstrup.Forms
 {
     public partial class ProjectManagementForm : Form
     {
+        private readonly Company _company;
         private readonly ProjectController _controller;
         private readonly ReadOnlyProject _project;
 
-        public ProjectManagementForm(ProjectController controller, int id)
+        public ProjectManagementForm(Company company, int id)
         {
             InitializeComponent();
 
-            _controller = controller;
+            _company = company;
+            _controller = company.CreateProjectController();
             _project = _controller.Load(id);
         }
 
@@ -32,7 +35,6 @@ namespace Raunstrup.Forms
             foreach (ReadOnlyEmployee employee in _employeesOLV.SelectedObjects)
             {
                 _controller.RemoveEmployee(employee.Id);
-                Console.WriteLine("REMOVE {0}", employee.Name);
             }
             
             _employeesOLV.RemoveObjects(selected);
@@ -46,7 +48,6 @@ namespace Raunstrup.Forms
             foreach (ReadOnlyEmployee employee in _availableEmployeesOLV.SelectedObjects)
             {
                 _controller.AddEmployee(employee.Id);
-                Console.WriteLine("ADD {0}", employee.Name);
             }
 
             _availableEmployeesOLV.RemoveObjects(selected);
@@ -80,6 +81,11 @@ namespace Raunstrup.Forms
 
             _employeesOLV.Refresh();
             _availableEmployeesOLV.Refresh();
+        }
+
+        private void forbrugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ProjectComparisonForm(_company, _project.Id).ShowDialog();
         }
     }
 }
