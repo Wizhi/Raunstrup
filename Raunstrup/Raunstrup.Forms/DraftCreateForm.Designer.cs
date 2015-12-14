@@ -63,9 +63,9 @@
             this._offerRadioButton = new System.Windows.Forms.RadioButton();
             this._estimateRadioButton = new System.Windows.Forms.RadioButton();
             this._draftGroupBox = new System.Windows.Forms.GroupBox();
-            this._makeProjectButton = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this._makeProjectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).BeginInit();
@@ -96,6 +96,7 @@
             // 
             // _draftTitleTextBox
             // 
+            this._draftTitleTextBox.Enabled = false;
             this._draftTitleTextBox.Location = new System.Drawing.Point(106, 88);
             this._draftTitleTextBox.Name = "_draftTitleTextBox";
             this._draftTitleTextBox.Size = new System.Drawing.Size(134, 20);
@@ -104,6 +105,7 @@
             // 
             // _draftDescriptionTextBox
             // 
+            this._draftDescriptionTextBox.Enabled = false;
             this._draftDescriptionTextBox.Location = new System.Drawing.Point(106, 114);
             this._draftDescriptionTextBox.Multiline = true;
             this._draftDescriptionTextBox.Name = "_draftDescriptionTextBox";
@@ -130,6 +132,7 @@
             // 
             // _startDateDateTimePicker
             // 
+            this._startDateDateTimePicker.Enabled = false;
             this._startDateDateTimePicker.Location = new System.Drawing.Point(106, 140);
             this._startDateDateTimePicker.Name = "_startDateDateTimePicker";
             this._startDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
@@ -138,6 +141,7 @@
             // 
             // _endDateDateTimePicker
             // 
+            this._endDateDateTimePicker.Enabled = false;
             this._endDateDateTimePicker.Location = new System.Drawing.Point(106, 166);
             this._endDateDateTimePicker.Name = "_endDateDateTimePicker";
             this._endDateDateTimePicker.Size = new System.Drawing.Size(134, 20);
@@ -197,6 +201,7 @@
             // 
             // _addToDraftOrderLineOLV
             // 
+            this._addToDraftOrderLineOLV.Enabled = false;
             this._addToDraftOrderLineOLV.Location = new System.Drawing.Point(517, 91);
             this._addToDraftOrderLineOLV.Name = "_addToDraftOrderLineOLV";
             this._addToDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
@@ -207,6 +212,7 @@
             // 
             // _removeFromDraftOrderLineOLV
             // 
+            this._removeFromDraftOrderLineOLV.Enabled = false;
             this._removeFromDraftOrderLineOLV.Location = new System.Drawing.Point(517, 120);
             this._removeFromDraftOrderLineOLV.Name = "_removeFromDraftOrderLineOLV";
             this._removeFromDraftOrderLineOLV.Size = new System.Drawing.Size(64, 23);
@@ -237,6 +243,7 @@
             // _discountInPercentNumericUpDown
             // 
             this._discountInPercentNumericUpDown.DecimalPlaces = 2;
+            this._discountInPercentNumericUpDown.Enabled = false;
             this._discountInPercentNumericUpDown.Location = new System.Drawing.Point(106, 192);
             this._discountInPercentNumericUpDown.Name = "_discountInPercentNumericUpDown";
             this._discountInPercentNumericUpDown.Size = new System.Drawing.Size(134, 20);
@@ -257,6 +264,7 @@
             this._employeeComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this._employeeComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this._employeeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._employeeComboBox.Enabled = false;
             this._employeeComboBox.FormattingEnabled = true;
             this._employeeComboBox.Location = new System.Drawing.Point(106, 59);
             this._employeeComboBox.Name = "_employeeComboBox";
@@ -303,6 +311,7 @@
             // _priceNumericUpDown
             // 
             this._priceNumericUpDown.DecimalPlaces = 2;
+            this._priceNumericUpDown.Enabled = false;
             this._priceNumericUpDown.Location = new System.Drawing.Point(279, 220);
             this._priceNumericUpDown.Name = "_priceNumericUpDown";
             this._priceNumericUpDown.Size = new System.Drawing.Size(61, 20);
@@ -312,6 +321,7 @@
             // 
             // _quantityNumericUpDown
             // 
+            this._quantityNumericUpDown.Enabled = false;
             this._quantityNumericUpDown.Location = new System.Drawing.Point(386, 220);
             this._quantityNumericUpDown.Name = "_quantityNumericUpDown";
             this._quantityNumericUpDown.Size = new System.Drawing.Size(67, 20);
@@ -320,6 +330,7 @@
             // 
             // _editOrderLineButton
             // 
+            this._editOrderLineButton.Enabled = false;
             this._editOrderLineButton.Location = new System.Drawing.Point(459, 218);
             this._editOrderLineButton.Name = "_editOrderLineButton";
             this._editOrderLineButton.Size = new System.Drawing.Size(52, 23);
@@ -366,6 +377,7 @@
             // _offerRadioButton
             // 
             this._offerRadioButton.AutoSize = true;
+            this._offerRadioButton.Enabled = false;
             this._offerRadioButton.Location = new System.Drawing.Point(10, 221);
             this._offerRadioButton.Name = "_offerRadioButton";
             this._offerRadioButton.Size = new System.Drawing.Size(54, 17);
@@ -378,6 +390,7 @@
             // _estimateRadioButton
             // 
             this._estimateRadioButton.AutoSize = true;
+            this._estimateRadioButton.Enabled = false;
             this._estimateRadioButton.Location = new System.Drawing.Point(70, 221);
             this._estimateRadioButton.Name = "_estimateRadioButton";
             this._estimateRadioButton.Size = new System.Drawing.Size(67, 17);
@@ -426,15 +439,14 @@
             this._draftGroupBox.TabStop = false;
             this._draftGroupBox.Text = "Opret kladde";
             // 
-            // _makeProjectButton
+            // label6
             // 
-            this._makeProjectButton.Location = new System.Drawing.Point(777, 266);
-            this._makeProjectButton.Name = "_makeProjectButton";
-            this._makeProjectButton.Size = new System.Drawing.Size(78, 23);
-            this._makeProjectButton.TabIndex = 34;
-            this._makeProjectButton.Text = "Lav til projekt";
-            this._makeProjectButton.UseVisualStyleBackColor = true;
-            this._makeProjectButton.Click += new System.EventHandler(this._makeProjectButton_Click);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(587, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(51, 13);
+            this.label6.TabIndex = 35;
+            this.label6.Text = "Alle varer";
             // 
             // label5
             // 
@@ -445,14 +457,16 @@
             this.label5.TabIndex = 34;
             this.label5.Text = "Ordrelinjer";
             // 
-            // label6
+            // _makeProjectButton
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(587, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(51, 13);
-            this.label6.TabIndex = 35;
-            this.label6.Text = "Alle varer";
+            this._makeProjectButton.Enabled = false;
+            this._makeProjectButton.Location = new System.Drawing.Point(777, 266);
+            this._makeProjectButton.Name = "_makeProjectButton";
+            this._makeProjectButton.Size = new System.Drawing.Size(78, 23);
+            this._makeProjectButton.TabIndex = 34;
+            this._makeProjectButton.Text = "Lav til projekt";
+            this._makeProjectButton.UseVisualStyleBackColor = true;
+            this._makeProjectButton.Click += new System.EventHandler(this._makeProjectButton_Click);
             // 
             // DraftCreateForm
             // 

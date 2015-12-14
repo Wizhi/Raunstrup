@@ -25,11 +25,10 @@ namespace Raunstrup.Forms
             _customerComboBox.DisplayMember = "Name";
             _employeeComboBox.DataSource = employees;
             _employeeComboBox.DisplayMember = "Name";
-            _customerComboBox.SelectedItem = null;
+            _customerComboBox.SelectedIndex = -1;
             _employeeComboBox.SelectedItem = null;
-            _addToDraftOrderLineOLV.Enabled = false;
-            _editMode = false;
             _offerRadioButton.Checked = true;
+            _editMode = false;
         }
         public DraftCreateForm(Company company, ReadOnlyDraft draft)
         {
@@ -253,7 +252,20 @@ namespace Raunstrup.Forms
 
         private void _customerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _addToDraftOrderLineOLV.Enabled = true;
+            if (_customerComboBox.SelectedIndex > -1)
+            {
+                _addToDraftOrderLineOLV.Enabled = true;
+                _estimateRadioButton.Enabled = true;
+                _offerRadioButton.Enabled = true;
+                _removeFromDraftOrderLineOLV.Enabled = true;
+                _draftTitleTextBox.Enabled = true;
+                _startDateDateTimePicker.Enabled = true;
+                _endDateDateTimePicker.Enabled = true;
+                _draftDescriptionTextBox.Enabled = true;
+                _discountInPercentNumericUpDown.Enabled = true;
+                _makeProjectButton.Enabled = true;
+                _employeeComboBox.Enabled = true;
+            }
         }
 
         private void _filterTextBox_TextChanged(object sender, EventArgs e)
@@ -268,6 +280,7 @@ namespace Raunstrup.Forms
             {
                 _addToDraftOrderLineOLV.Enabled = false;
                 _removeFromDraftOrderLineOLV.Enabled = false;
+                _editOrderLineButton.Enabled = false;
             }
         }
 
