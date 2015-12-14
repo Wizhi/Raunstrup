@@ -279,9 +279,10 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT Quantity, PricePerUnit, ProductId 
-                                        FROM OrderLine 
-                                        WHERE DraftId = @id";
+                command.CommandText = @"SELECT rl.Quantity, ap.*
+                                        FROM ReportLine rl
+                                        JOIN AllProducts ap ON ap.ProductId = rl.ProductId 
+                                        WHERE rl.DraftId = @id";
 
                 var idParam = command.CreateParameter();
 
