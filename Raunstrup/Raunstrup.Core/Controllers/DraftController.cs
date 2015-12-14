@@ -32,6 +32,7 @@ namespace Raunstrup.Core.Controllers
         {
             _currentProject = new Project(_currentDraft);
             _projectRepository.Save(_currentProject);
+            _currentDraft.Project = _currentProject;
         }
 
         public List<ReadOnlyDraft> GetDraftsWitihoutProject()
