@@ -21,6 +21,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Id", new FieldInfo("DraftId") { DbType = DbType.Int32} },
             { "Title", new FieldInfo("WorkTitle") { DbType = DbType.AnsiString, Size = 100 } },
             { "Description", new FieldInfo("[Description]") { DbType = DbType.AnsiString, Size = -1 } },
+            { "CreationDate", new FieldInfo("CreationDate") { DbType = DbType.Date } },
             { "StartDate", new FieldInfo("StartDate") { DbType = DbType.Date } },
             { "EndDate", new FieldInfo("EndDate") { DbType = DbType.Date } },
             { "DiscountPercentage", new FieldInfo("Discount") { DbType = DbType.Double } },
@@ -67,15 +68,14 @@ namespace Raunstrup.Data.MsSql.Mappers
                 command.CommandText = @"SELECT 
                                           d.DraftId, d.WorkTitle, d.[Description], d.Discount, d.IsOffer,
                                           d.StartDate, d.EndDate, d.CustomerId, d.ResponsibleEmployeeId,
-                                          p.ProjectId
+                                          d.CreationDate, p.ProjectId
                                         FROM Draft d
                                         LEFT JOIN Project p ON p.DraftId = d.DraftId
                                         WHERE d.DraftId = @id";
-
-                var idParam = command.CreateParameter();
+                
+                var idParam = DraftFields["Id"].ToParameter(command.CreateParameter);
 
                 idParam.ParameterName = "@id";
-                idParam.DbType = DbType.Int32;
                 idParam.Value = id;
 
                 command.Parameters.Add(idParam);
@@ -102,7 +102,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 command.CommandText = @"SELECT 
                                           d.DraftId, d.WorkTitle, d.[Description], d.Discount, d.IsOffer,
                                           d.StartDate, d.EndDate, d.CustomerId, d.ResponsibleEmployeeId,
-                                          p.ProjectId
+                                          d.CreationDate, p.ProjectId
                                         FROM Draft d
                                         LEFT JOIN Project p ON p.DraftId = d.DraftId";
 
@@ -128,6 +128,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 draftInsert.Target("Draft")
                     .Field(DraftFields["Title"])
                     .Field(DraftFields["Description"])
+                    .Field(DraftFields["CreationDate"])
                     .Field(DraftFields["StartDate"])
                     .Field(DraftFields["EndDate"])
                     .Field(DraftFields["DiscountPercentage"])
@@ -136,10 +137,10 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Field(DraftFields["Employee"])
                     .Values(
                         draft.Title, draft.Description,
-                        draft.StartDate, draft.EndDate,
+                        draft.CreationDate, draft.StartDate, 
+                        draft.EndDate, draft.DiscountPercentage,
                         draft.Type == Draft.DraftType.Estimate,
-                        draft.DiscountPercentage, draft.Customer.Id,
-                        draft.ResponsiblEmployee.Id
+                        draft.Customer.Id, draft.ResponsiblEmployee.Id
                     )
                     .Apply();
 
@@ -167,7 +168,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                     draftInsert.Command.Transaction = transaction;
                     orderLinesInsert.Command.Transaction = transaction;
 
-                    var draftId = (int) draftInsert.Command.ExecuteScalar();
+                    var draftId = draftInsert.Command.ExecuteScalar();
 
                     if (draft.OrderLines.Count > 0)
                     {
@@ -178,7 +179,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                     transaction.Commit();
 
-                    draft.Id = draftId;
+                    draft.Id = (int) draftId;
                 }
             }
         }
@@ -283,9 +284,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             var id = (int) record["DraftId"];
             return new DraftGhost(
                 new CustomerProxy(_context, (int) record["CustomerId"]), 
+                (DateTime) record["CreationDate"],
                 () => LoadOrderLines(id)
-            )
-            {
+            ) {
                 Id = id,
                 Title = (string) record["WorkTitle"],
                 Description = (string) record["Description"],
