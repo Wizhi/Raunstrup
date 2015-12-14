@@ -48,7 +48,9 @@ namespace Raunstrup.Forms
             _customerCRUDController.SetStreet(_streetNameTextBox.Text, _streetNumberTextBox.Text);
             _customerCRUDController.SetCity(_cityTextBox.Text, _postalCodeTextBox.Text);
             _customerCRUDController.SaveCustomer();
+            MessageBox.Show(@"Kunden blev gemt.");
             _changed = true;
+
         }
     }
 }
