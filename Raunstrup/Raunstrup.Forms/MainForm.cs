@@ -43,7 +43,17 @@ namespace Raunstrup.Forms
 
         private void _openDraftButton_Click(object sender, EventArgs e)
         {
-            var draft = (ReadOnlyDraft) _draftOLV.SelectedObject;
+            ReadOnlyDraft draft = null;
+
+            if (_draftOLV.SelectedIndex > -1)
+            {
+                draft = (ReadOnlyDraft) _draftOLV.SelectedObject;
+            }
+            else if (_projectOLV.SelectedIndex > -1)
+            {
+                draft = ((ReadOnlyProject) _projectOLV.SelectedObject).Draft;
+            }
+            
             if (draft != null)
             {
                 var draftForm = new DraftCreateForm(_company, draft);
@@ -79,6 +89,27 @@ namespace Raunstrup.Forms
             employeeSelectForm.ShowDialog();
         }
 
+        private void _projectOLV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Recursion is fun.
+            if (_projectOLV.SelectedIndex != -1)
+            {
+                _draftOLV.SelectedIndex = -1;
+            }
+        }
 
+        private void _draftOLV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Recursion is fun.
+            if (_draftOLV.SelectedIndex != -1)
+            {
+                _projectOLV.SelectedIndex = -1;
+            }
+        }
+
+        private void ansatteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            new EmployeeStatisticsForm(_company).Show();
+        }
     }
 }
