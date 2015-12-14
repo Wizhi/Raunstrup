@@ -8,7 +8,6 @@ namespace Raunstrup.Data.MsSql.Query
     class ReportByProjectQuery : IQuery<IList<Report>>
     {
         private readonly Project _project;
-        private readonly ReportMapper _mapper;
 
         public ReportByProjectQuery(Project project)
         {
