@@ -297,6 +297,7 @@ namespace Raunstrup.Forms
             {
                 _addToDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
                 _removeFromDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+                _editOrderLineButton.Enabled = _customerComboBox.SelectedIndex > -1;
             }
         }
 
