@@ -8,6 +8,9 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
+    /// <summary>
+    /// The DraftMapper is responsible for mapping database records to and from <see cref="Draft"/> objects.
+    /// </summary>
     class DraftMapper
     {
         private static readonly IDictionary<string, FieldInfo> DraftFields = new Dictionary<string, FieldInfo>
@@ -96,8 +99,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             using (var draftInsert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var orderLinesInsert = new InsertCommandWrapper(connection.CreateCommand()))
             {
-                draftInsert
-                    .Target("Draft")
+                draftInsert.Target("Draft")
                     .Field(DraftFields["Title"])
                     .Field(DraftFields["Description"])
                     .Field(DraftFields["StartDate"])
@@ -111,8 +113,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                         draft.StartDate, draft.EndDate,
                         draft.Type == Draft.DraftType.Estimate,
                         draft.DiscountPercentage, draft.Customer.Id,
-                        draft.ResponsiblEmployee.Id,
-                        draft.Project.Id
+                        draft.ResponsiblEmployee.Id
                     )
                     .Apply();
 
