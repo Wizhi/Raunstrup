@@ -285,8 +285,8 @@ namespace Raunstrup.Forms
         {
             if (_offerRadioButton.Checked)
             {
-                _addToDraftOrderLineOLV.Enabled = true;
-                _removeFromDraftOrderLineOLV.Enabled = true;
+                _addToDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+                _removeFromDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
             }
         }
 
