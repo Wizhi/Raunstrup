@@ -40,25 +40,6 @@ namespace Raunstrup.Core.Statistics
             return HoursWorked;
         }
 
-        public IDictionary<Week, int> GetHoursWorkedByWeek()
-        {
-            Dictionary<Week, int> returnDictionary = new Dictionary<Week, int>();
-            Week tempWeek;
-            foreach (var date in HoursWorked.Keys)
-            {
-                tempWeek = new Week(date);
-                if (returnDictionary.ContainsKey(tempWeek))
-                {
-                    returnDictionary[tempWeek] += HoursWorked[date];
-                }
-                else
-                {
-                    returnDictionary.Add(tempWeek, HoursWorked[date]);
-                }
-            }
-            return returnDictionary;
-        } 
-
         private void SetupDictionary()
         {
             DateTime current = Start;
