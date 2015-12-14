@@ -26,6 +26,7 @@ namespace Raunstrup.Forms
             bindComparsionToPercentLabel(_reportController.GetProjectComparison(projectId));
         }
 
+        //Adds all the comparison lines to the ListBox
         private void bindComparisonToListBox(ProjectComparison comparison)
         {
             foreach (var line in comparison.GetComparisonLines())
@@ -34,6 +35,7 @@ namespace Raunstrup.Forms
             }
         }
 
+        //Adds the total completion percent to the progress bar
         private void bindComparsionToProgressBar(ProjectComparison comparison)
         {
             int value = Convert.ToInt32(comparison.GetTotalPercent());
@@ -44,6 +46,7 @@ namespace Raunstrup.Forms
             ProjectProgressBar.Value = value;
         }
 
+        //Adds the total completion percent to the label
         private void bindComparsionToPercentLabel(ProjectComparison comparison)
         {
             int value = Convert.ToInt32(comparison.GetTotalPercent());
