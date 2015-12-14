@@ -29,6 +29,7 @@ namespace Raunstrup.Forms
             _employeeComboBox.SelectedItem = null;
             _addToDraftOrderLineOLV.Enabled = false;
             _editMode = false;
+            _offerRadioButton.Checked = true;
         }
         public DraftCreateForm(Company company, ReadOnlyDraft draft)
         {
@@ -55,6 +56,18 @@ namespace Raunstrup.Forms
                         (orderLine.UnitPrice*orderLine.Quantity).ToString(CultureInfo.CurrentCulture)
                     }));
                 _productIds.Add(orderLine.Product.ID);
+            }
+            if (draft.Project != null)
+            {
+                _makeProjectButton.Enabled = false;
+            }
+            if (_draftController.IsEstimate())
+            {
+                _estimateRadioButton.Checked = true;
+            }
+            else if (!_draftController.IsEstimate())
+            {
+                _offerRadioButton.Checked = true;
             }
             _draftDescriptionTextBox.Text = draft.Description;
             _draftTitleTextBox.Text = draft.Title;
@@ -146,6 +159,7 @@ namespace Raunstrup.Forms
                     _draftController.SetAsOffer();
                 }
                 _draftController.SaveDraft();
+                MessageBox.Show(@"Ordren blev gemt.");
             }
 
         }
@@ -269,6 +283,24 @@ namespace Raunstrup.Forms
         private void _makeProjectButton_Click(object sender, EventArgs e)
         {
             _draftController.MakeProject();
+            _makeProjectButton.Enabled = false;
+        }
+
+        private void _draftTitleTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (_draftTitleTextBox.Text != "" && !_editMode)
+            {
+                var readOnlyCustomer = _customerComboBox.SelectedItem as ReadOnlyCustomer;
+                if (readOnlyCustomer != null)
+                {
+                    if (!_editMode)
+                    {
+                        _draftController.CreateNewDraft(((ReadOnlyCustomer)_customerComboBox.SelectedItem).Id);
+                        _customerComboBox.Enabled = false;
+                        _editMode = true;
+                    }
+                }
+            }
         }
     }
 }
