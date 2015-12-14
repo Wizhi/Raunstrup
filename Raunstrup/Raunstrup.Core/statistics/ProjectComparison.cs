@@ -20,9 +20,13 @@ namespace Raunstrup.Core.Statistics
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
-            var ProductIdentityMap = new Dictionary<int, Product>();
             IList<OrderLine> orderLines = _project.Draft.GetOrderLines();
             Dictionary<int, int> amountsInOrderlines = new Dictionary<int, int>();
+            //Creates a identity map, to map an id to a product, this is due to a weakness
+            //In the dataacesse code, which create several objects repersenting the same product
+            //so comparison of products have to be made by using the id, and not be using objects
+            var ProductIdentityMap = new Dictionary<int, Product>();
+            //Finds and maps amount of products in orderlines
             foreach (var line in orderLines)
             {
                 if (amountsInOrderlines.ContainsKey(line.GetProduct().Id))
@@ -65,6 +69,7 @@ namespace Raunstrup.Core.Statistics
             }
         }
 
+        //Calculates the total percent of products used
         public double GetTotalPercent()
         {
             int totalOrder = 0;
@@ -74,12 +79,14 @@ namespace Raunstrup.Core.Statistics
                 totalOrder += line.GetOrdered();
                 totalUsed += line.GetUsed();
             }
+            //This is about avoiding dividing by zero
             if (totalOrder == 0)
             {
                 return 0;
             }
             return ((Convert.ToDouble(totalUsed) / Convert.ToDouble(totalOrder)) * 100);
         }
+
         public List<ProjectComparisonLine> GetComparisonLines()
         {
             return _comparisonLines;
@@ -101,6 +108,7 @@ namespace Raunstrup.Core.Statistics
 
         public double CalculatePercentage()
         {
+            //Must check, to avoid dividing by zero
             if (AmountOrdered == 0)
             {
                 return 0;
