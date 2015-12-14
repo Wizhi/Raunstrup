@@ -12,7 +12,6 @@ namespace Raunstrup.Core.Controllers
     public class DraftController
     {
         private Draft _currentDraft;
-        private Project _currentProject;
         private readonly ICustomerRepository _customerRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
@@ -30,9 +29,8 @@ namespace Raunstrup.Core.Controllers
         
         public void MakeProject()
         {
-            _currentProject = new Project(_currentDraft);
-            _projectRepository.Save(_currentProject);
-            _currentDraft.Project = _currentProject;
+            _currentDraft.Project = new Project(_currentDraft);
+            _projectRepository.Save(_currentDraft.Project);
         }
 
         public List<ReadOnlyDraft> GetDraftsWitihoutProject()
