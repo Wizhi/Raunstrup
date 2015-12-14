@@ -111,5 +111,11 @@ namespace Raunstrup.Forms
         {
             new EmployeeStatisticsForm(_company).Show();
         }
+
+        private void varerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var productSelectForm = new ProductSelectForm(_company);
+            productSelectForm.ShowDialog();
+        }
     }
 }
