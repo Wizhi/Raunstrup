@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Raunstrup.Domain
+﻿namespace Raunstrup.Domain
 {
-    public class Customer : IEquatable<Customer>
+    public class Customer
     {
         private int _id;
 
@@ -29,10 +27,5 @@ namespace Raunstrup.Domain
         public virtual string City { get; set; }
 
         public virtual string PostalCode { get; set; }
-
-        public bool Equals(Customer other)
-        {
-            return Id == other.Id;
-        }
     }
 }

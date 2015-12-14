@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Domain
 {
-    public abstract class Product : IEquatable<Product>
+    public abstract class Product
     {
         private int _id;
         
@@ -23,10 +23,5 @@ namespace Raunstrup.Domain
         public virtual string Name { get; set; }
 
         public virtual decimal SalesPrice { get; set; }
-
-        public bool Equals(Product other)
-        {
-            return Id == other.Id;
-        }
     }
 }

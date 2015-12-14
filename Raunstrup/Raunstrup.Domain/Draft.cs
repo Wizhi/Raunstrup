@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace Raunstrup.Domain
 {
-    public class Draft : IEquatable<Draft>
+    public class Draft
     {
         public enum DraftType
         {
@@ -119,11 +118,6 @@ namespace Raunstrup.Domain
         public IList<OrderLine> GetOrderLines()
         {
             return OrderLines;
-        }
-
-        public bool Equals(Draft other)
-        {
-            return Id == other.Id;
         }
     }
 }

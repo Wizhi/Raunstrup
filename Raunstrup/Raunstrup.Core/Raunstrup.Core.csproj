@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Controllers\EmployeeCRUDController.cs" />
     <Compile Include="Controllers\ProductCRUDController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="InvoiceTextFormatter.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="Controllers\DraftController.cs" />

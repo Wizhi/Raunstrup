@@ -2,7 +2,7 @@
 
 namespace Raunstrup.Domain
 {
-    public class OrderLine : IEquatable<OrderLine>
+    public class OrderLine
     {
         private int _id;
 
@@ -42,11 +42,6 @@ namespace Raunstrup.Domain
         public int GetQuantity()
         {
             return Quantity;
-        }
-
-        public bool Equals(OrderLine other)
-        {
-            return Id == other.Id;
         }
     }
 }
