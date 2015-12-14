@@ -8,7 +8,7 @@ namespace Raunstrup.Core.Statistics
     public class ProjectComparison
     {
         private Project _project;
-        private List<ProjectComparisonLine> _comparisonLines = new List<ProjectComparisonLine>(); 
+        private readonly List<ProjectComparisonLine> _comparisonLines = new List<ProjectComparisonLine>(); 
         public ProjectComparison(Project project, IReportRepository repository)
         {
             IList<Report> reports = repository.FindByProject(project);
@@ -20,32 +20,34 @@ namespace Raunstrup.Core.Statistics
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
+            var ProductIdentityMap = new Dictionary<int, Product>();
             IList<OrderLine> orderLines = _project.Draft.GetOrderLines();
-            Dictionary<Product, int> amountsInOrderlines = new Dictionary<Product, int>();
+            Dictionary<int, int> amountsInOrderlines = new Dictionary<int, int>();
             foreach (var line in orderLines)
             {
-                if (amountsInOrderlines.ContainsKey(line.GetProduct()))
+                if (amountsInOrderlines.ContainsKey(line.GetProduct().Id))
                 {
-                    amountsInOrderlines[line.GetProduct()] += line.GetQuantity();
+                    amountsInOrderlines[line.GetProduct().Id] += line.GetQuantity();
                 }
                 else
                 {
-                    amountsInOrderlines.Add(line.GetProduct(), line.GetQuantity()); 
+                    ProductIdentityMap.Add(line.GetProduct().Id,line.Product);
+                    amountsInOrderlines.Add(line.GetProduct().Id, line.GetQuantity()); 
                 }
             }
             //Do the same for the report lines
-            Dictionary<Product, int> amountsInReportLines = new Dictionary<Product, int>();
+            var amountsInReportLines = new Dictionary<int , int>();
             foreach (var report in reports)
             {
                 foreach (var line in report.GetLines())
                 {
-                    if (amountsInReportLines.ContainsKey(line.GetLineItem()))
+                    if (amountsInReportLines.ContainsKey(line.GetLineItem().Id))
                     {
-                        amountsInReportLines[line.GetLineItem()] += line.GetQuantity();
+                        amountsInReportLines[line.GetLineItem().Id] += line.GetQuantity();
                     }
                     else
                     {
-                        amountsInReportLines.Add(line.GetLineItem(), line.GetQuantity());
+                        amountsInReportLines.Add(line.GetLineItem().Id, line.GetQuantity());
                     }
                 }
             }
@@ -54,15 +56,13 @@ namespace Raunstrup.Core.Statistics
             {
                 if (amountsInReportLines.ContainsKey(pair.Key))
                 {
-                    _comparisonLines.Add(new ProjectComparisonLine(pair.Key,pair.Value,amountsInReportLines[pair.Key]));
+                    _comparisonLines.Add(new ProjectComparisonLine(ProductIdentityMap[pair.Key],pair.Value,amountsInReportLines[pair.Key]));
                 }
                 else
                 {
-                    _comparisonLines.Add(new ProjectComparisonLine(pair.Key, pair.Value, 0));
+                    _comparisonLines.Add(new ProjectComparisonLine(ProductIdentityMap[pair.Key], pair.Value, 0));
                 }
             }
-
-
         }
 
         public double GetTotalPercent()
@@ -73,6 +73,10 @@ namespace Raunstrup.Core.Statistics
             {
                 totalOrder += line.GetOrdered();
                 totalUsed += line.GetUsed();
+            }
+            if (totalOrder == 0)
+            {
+                return 0;
             }
             return ((Convert.ToDouble(totalUsed) / Convert.ToDouble(totalOrder)) * 100);
         }
@@ -97,6 +101,10 @@ namespace Raunstrup.Core.Statistics
 
         public double CalculatePercentage()
         {
+            if (AmountOrdered == 0)
+            {
+                return 0;
+            }
             return (Convert.ToDouble(AmountUsed) / Convert.ToDouble(AmountOrdered)) * 100;
         }
 
