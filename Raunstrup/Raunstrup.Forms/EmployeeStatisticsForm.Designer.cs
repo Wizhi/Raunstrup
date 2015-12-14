@@ -34,19 +34,14 @@
             this.EmployeeBox = new System.Windows.Forms.ComboBox();
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.EmployeeLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.DayRadioButton = new System.Windows.Forms.RadioButton();
-            this.WeekRadioButton = new System.Windows.Forms.RadioButton();
-            this.FormatLabel = new System.Windows.Forms.Label();
             this.GetButton = new System.Windows.Forms.Button();
             this.HoursWorkedChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ChartPanel = new System.Windows.Forms.Panel();
-            this.PercentDescriptionLabel = new System.Windows.Forms.Label();
             this.InvoicedDegreeLabel = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.PercentDescriptionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.HoursWorkedChart)).BeginInit();
             this.ChartPanel.SuspendLayout();
             this.SuspendLayout();
@@ -73,15 +68,6 @@
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(200, 20);
             this.EndDatePicker.TabIndex = 2;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.WeekRadioButton);
-            this.panel1.Controls.Add(this.DayRadioButton);
-            this.panel1.Location = new System.Drawing.Point(24, 141);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 50);
-            this.panel1.TabIndex = 3;
             // 
             // EmployeeLabel
             // 
@@ -110,40 +96,9 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Slut Dato";
             // 
-            // DayRadioButton
-            // 
-            this.DayRadioButton.AutoSize = true;
-            this.DayRadioButton.Checked = true;
-            this.DayRadioButton.Location = new System.Drawing.Point(3, 3);
-            this.DayRadioButton.Name = "DayRadioButton";
-            this.DayRadioButton.Size = new System.Drawing.Size(45, 17);
-            this.DayRadioButton.TabIndex = 0;
-            this.DayRadioButton.TabStop = true;
-            this.DayRadioButton.Text = "Dag";
-            this.DayRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // WeekRadioButton
-            // 
-            this.WeekRadioButton.AutoSize = true;
-            this.WeekRadioButton.Location = new System.Drawing.Point(3, 26);
-            this.WeekRadioButton.Name = "WeekRadioButton";
-            this.WeekRadioButton.Size = new System.Drawing.Size(45, 17);
-            this.WeekRadioButton.TabIndex = 1;
-            this.WeekRadioButton.Text = "Uge";
-            this.WeekRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // FormatLabel
-            // 
-            this.FormatLabel.AutoSize = true;
-            this.FormatLabel.Location = new System.Drawing.Point(24, 128);
-            this.FormatLabel.Name = "FormatLabel";
-            this.FormatLabel.Size = new System.Drawing.Size(39, 13);
-            this.FormatLabel.TabIndex = 7;
-            this.FormatLabel.Text = "Format";
-            // 
             // GetButton
             // 
-            this.GetButton.Location = new System.Drawing.Point(24, 206);
+            this.GetButton.Location = new System.Drawing.Point(24, 140);
             this.GetButton.Name = "GetButton";
             this.GetButton.Size = new System.Drawing.Size(200, 23);
             this.GetButton.TabIndex = 8;
@@ -181,15 +136,6 @@
             this.ChartPanel.Size = new System.Drawing.Size(721, 273);
             this.ChartPanel.TabIndex = 10;
             // 
-            // PercentDescriptionLabel
-            // 
-            this.PercentDescriptionLabel.AutoSize = true;
-            this.PercentDescriptionLabel.Location = new System.Drawing.Point(3, 3);
-            this.PercentDescriptionLabel.Name = "PercentDescriptionLabel";
-            this.PercentDescriptionLabel.Size = new System.Drawing.Size(94, 13);
-            this.PercentDescriptionLabel.TabIndex = 11;
-            this.PercentDescriptionLabel.Text = "Fakturerings Grad:";
-            // 
             // InvoicedDegreeLabel
             // 
             this.InvoicedDegreeLabel.AutoSize = true;
@@ -199,6 +145,15 @@
             this.InvoicedDegreeLabel.TabIndex = 12;
             this.InvoicedDegreeLabel.Text = "0%";
             // 
+            // PercentDescriptionLabel
+            // 
+            this.PercentDescriptionLabel.AutoSize = true;
+            this.PercentDescriptionLabel.Location = new System.Drawing.Point(3, 3);
+            this.PercentDescriptionLabel.Name = "PercentDescriptionLabel";
+            this.PercentDescriptionLabel.Size = new System.Drawing.Size(94, 13);
+            this.PercentDescriptionLabel.TabIndex = 11;
+            this.PercentDescriptionLabel.Text = "Fakturerings Grad:";
+            // 
             // EmployeeStatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -206,18 +161,14 @@
             this.ClientSize = new System.Drawing.Size(976, 298);
             this.Controls.Add(this.ChartPanel);
             this.Controls.Add(this.GetButton);
-            this.Controls.Add(this.FormatLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.EmployeeLabel);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.EndDatePicker);
             this.Controls.Add(this.StartDatePicker);
             this.Controls.Add(this.EmployeeBox);
             this.Name = "EmployeeStatisticsForm";
             this.Text = "EmployeeStatisticsForm";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HoursWorkedChart)).EndInit();
             this.ChartPanel.ResumeLayout(false);
             this.ChartPanel.PerformLayout();
@@ -231,13 +182,9 @@
         private System.Windows.Forms.ComboBox EmployeeBox;
         private System.Windows.Forms.DateTimePicker StartDatePicker;
         private System.Windows.Forms.DateTimePicker EndDatePicker;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton WeekRadioButton;
-        private System.Windows.Forms.RadioButton DayRadioButton;
         private System.Windows.Forms.Label EmployeeLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label FormatLabel;
         private System.Windows.Forms.Button GetButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart HoursWorkedChart;
         private System.Windows.Forms.Panel ChartPanel;

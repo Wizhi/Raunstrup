@@ -10,6 +10,9 @@ namespace Raunstrup.Core.Statistics
 {
     public class EmployeeStatistics
     {
+        //This class uses a dictioanry to keep track of how many hours an employeee
+        //have worked each day, between a start and end date
+        //it scans reports to find out how many hours have been worked
         private readonly IDictionary<DateTime, int> HoursWorked = new Dictionary<DateTime, int>();
         public readonly DateTime Start;
         public readonly DateTime End;
@@ -40,6 +43,7 @@ namespace Raunstrup.Core.Statistics
             return HoursWorked;
         }
 
+        //Setups the dictionary, adding all dates between start and end
         private void SetupDictionary()
         {
             DateTime current = Start;
@@ -69,6 +73,8 @@ namespace Raunstrup.Core.Statistics
             return (hoursinvoiced / (workingdays * 7));
         }
 
+        //This processes the reports, finding all reportlines with workhours in it
+        //and add it to the coresponding dates in the dictionary
         private void ProcessReports()
         {
             IList<Report> Reports = _reportRepository.FindByDurationAndEmployee(Start, End, _employee);
