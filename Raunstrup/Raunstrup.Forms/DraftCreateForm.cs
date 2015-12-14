@@ -252,20 +252,17 @@ namespace Raunstrup.Forms
 
         private void _customerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_customerComboBox.SelectedIndex > -1)
-            {
-                _addToDraftOrderLineOLV.Enabled = true;
-                _estimateRadioButton.Enabled = true;
-                _offerRadioButton.Enabled = true;
-                _removeFromDraftOrderLineOLV.Enabled = true;
-                _draftTitleTextBox.Enabled = true;
-                _startDateDateTimePicker.Enabled = true;
-                _endDateDateTimePicker.Enabled = true;
-                _draftDescriptionTextBox.Enabled = true;
-                _discountInPercentNumericUpDown.Enabled = true;
-                _makeProjectButton.Enabled = true;
-                _employeeComboBox.Enabled = true;
-            }
+            _addToDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+            _estimateRadioButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _offerRadioButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _removeFromDraftOrderLineOLV.Enabled = _customerComboBox.SelectedIndex > -1;
+            _draftTitleTextBox.Enabled = _customerComboBox.SelectedIndex > -1;
+            _startDateDateTimePicker.Enabled = _customerComboBox.SelectedIndex > -1;
+            _endDateDateTimePicker.Enabled = _customerComboBox.SelectedIndex > -1;
+            _draftDescriptionTextBox.Enabled = _customerComboBox.SelectedIndex > -1;
+            _discountInPercentNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
+            _makeProjectButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _employeeComboBox.Enabled = _customerComboBox.SelectedIndex > -1;
         }
 
         private void _filterTextBox_TextChanged(object sender, EventArgs e)
