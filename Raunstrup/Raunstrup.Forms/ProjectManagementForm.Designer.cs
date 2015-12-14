@@ -41,9 +41,13 @@
             this._employeesGroupBox = new System.Windows.Forms.GroupBox();
             this._cancelButton = new System.Windows.Forms.Button();
             this._saveButton = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.statistikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.forbrugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._employeesOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._availableEmployeesOLV)).BeginInit();
             this._employeesGroupBox.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _employeeRemoveButton
@@ -169,7 +173,7 @@
             this._employeesGroupBox.Controls.Add(this._employeesOLV);
             this._employeesGroupBox.Controls.Add(this._employeeAddButton);
             this._employeesGroupBox.Controls.Add(this._employeeRemoveButton);
-            this._employeesGroupBox.Location = new System.Drawing.Point(12, 12);
+            this._employeesGroupBox.Location = new System.Drawing.Point(12, 31);
             this._employeesGroupBox.Name = "_employeesGroupBox";
             this._employeesGroupBox.Size = new System.Drawing.Size(605, 391);
             this._employeesGroupBox.TabIndex = 4;
@@ -200,12 +204,40 @@
             this._saveButton.UseVisualStyleBackColor = true;
             this._saveButton.Click += new System.EventHandler(this._saveButton_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statistikToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(630, 28);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // statistikToolStripMenuItem
+            // 
+            this.statistikToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.forbrugToolStripMenuItem});
+            this.statistikToolStripMenuItem.Name = "statistikToolStripMenuItem";
+            this.statistikToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.statistikToolStripMenuItem.Text = "Statistik";
+            // 
+            // forbrugToolStripMenuItem
+            // 
+            this.forbrugToolStripMenuItem.Name = "forbrugToolStripMenuItem";
+            this.forbrugToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.forbrugToolStripMenuItem.Text = "Forbrug";
+            this.forbrugToolStripMenuItem.Click += new System.EventHandler(this.forbrugToolStripMenuItem_Click);
+            // 
             // ProjectManagementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 415);
+            this.ClientSize = new System.Drawing.Size(630, 433);
             this.Controls.Add(this._employeesGroupBox);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "ProjectManagementForm";
             this.Text = "ProjectManagementForm";
             this.Load += new System.EventHandler(this.ProjectManagementForm_Load);
@@ -213,7 +245,10 @@
             ((System.ComponentModel.ISupportInitialize)(this._availableEmployeesOLV)).EndInit();
             this._employeesGroupBox.ResumeLayout(false);
             this._employeesGroupBox.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -232,5 +267,8 @@
         private System.Windows.Forms.GroupBox _employeesGroupBox;
         private System.Windows.Forms.Button _cancelButton;
         private System.Windows.Forms.Button _saveButton;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem statistikToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem forbrugToolStripMenuItem;
     }
 }

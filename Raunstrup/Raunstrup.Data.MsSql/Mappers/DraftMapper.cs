@@ -13,11 +13,15 @@ namespace Raunstrup.Data.MsSql.Mappers
     /// </summary>
     class DraftMapper
     {
+        /// <summary>
+        /// Schema information for <see cref="Draft"/>.
+        /// </summary>
         private static readonly IDictionary<string, FieldInfo> DraftFields = new Dictionary<string, FieldInfo>
         {
             { "Id", new FieldInfo("DraftId") { DbType = DbType.Int32} },
             { "Title", new FieldInfo("WorkTitle") { DbType = DbType.AnsiString, Size = 100 } },
             { "Description", new FieldInfo("[Description]") { DbType = DbType.AnsiString, Size = -1 } },
+            { "CreationDate", new FieldInfo("CreationDate") { DbType = DbType.Date } },
             { "StartDate", new FieldInfo("StartDate") { DbType = DbType.Date } },
             { "EndDate", new FieldInfo("EndDate") { DbType = DbType.Date } },
             { "DiscountPercentage", new FieldInfo("Discount") { DbType = DbType.Double } },
@@ -25,6 +29,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Customer", new FieldInfo("CustomerId") { DbType = DbType.Int32 } },
             { "Employee", new FieldInfo("ResponsibleEmployeeId") { DbType = DbType.Int32 } }
         };
+        /// <summary>
+        /// Schema information for <see cref="OrderLine"/>.
+        /// </summary>
         private static readonly IDictionary<string, FieldInfo> OrderLineFields = new Dictionary<string, FieldInfo>
         {
             { "Id", new FieldInfo("OrderLineId") { DbType = DbType.Int32 } },
@@ -34,13 +41,25 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Draft", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
         };
 
+        /// <summary>
+        /// The current <see cref="DataContext"/>.
+        /// </summary>
         private readonly DataContext _context;
 
+        /// <summary>
+        /// Creates a <see cref="DraftMapper"/>.
+        /// </summary>
+        /// <param name="context">The context for the mapper.</param>
         public DraftMapper(DataContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Queries a <see cref="Draft"/> from an id.
+        /// </summary>
+        /// <param name="id">The id of a a <see cref="Draft"/>.</param>
+        /// <returns></returns>
         public Draft Get(int id)
         {
             using (var connection = _context.CreateConnection())
@@ -49,15 +68,14 @@ namespace Raunstrup.Data.MsSql.Mappers
                 command.CommandText = @"SELECT 
                                           d.DraftId, d.WorkTitle, d.[Description], d.Discount, d.IsOffer,
                                           d.StartDate, d.EndDate, d.CustomerId, d.ResponsibleEmployeeId,
-                                          p.ProjectId
+                                          d.CreationDate, p.ProjectId
                                         FROM Draft d
                                         LEFT JOIN Project p ON p.DraftId = d.DraftId
                                         WHERE d.DraftId = @id";
-
-                var idParam = command.CreateParameter();
+                
+                var idParam = DraftFields["Id"].ToParameter(command.CreateParameter);
 
                 idParam.ParameterName = "@id";
-                idParam.DbType = DbType.Int32;
                 idParam.Value = id;
 
                 command.Parameters.Add(idParam);
@@ -72,6 +90,10 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
+        /// <summary>
+        /// Gets all <see cref="Draft"/>s in storage.
+        /// </summary>
+        /// <returns></returns>
         public IList<Draft> GetAll()
         {
             using (var connection = _context.CreateConnection())
@@ -80,7 +102,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 command.CommandText = @"SELECT 
                                           d.DraftId, d.WorkTitle, d.[Description], d.Discount, d.IsOffer,
                                           d.StartDate, d.EndDate, d.CustomerId, d.ResponsibleEmployeeId,
-                                          p.ProjectId
+                                          d.CreationDate, p.ProjectId
                                         FROM Draft d
                                         LEFT JOIN Project p ON p.DraftId = d.DraftId";
 
@@ -93,6 +115,10 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
+        /// <summary>
+        /// Maps a <see cref="Draft"/> to the database.
+        /// </summary>
+        /// <param name="draft"></param>
         public void Insert(Draft draft)
         {
             using (var connection = _context.CreateConnection())
@@ -102,6 +128,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 draftInsert.Target("Draft")
                     .Field(DraftFields["Title"])
                     .Field(DraftFields["Description"])
+                    .Field(DraftFields["CreationDate"])
                     .Field(DraftFields["StartDate"])
                     .Field(DraftFields["EndDate"])
                     .Field(DraftFields["DiscountPercentage"])
@@ -110,10 +137,10 @@ namespace Raunstrup.Data.MsSql.Mappers
                     .Field(DraftFields["Employee"])
                     .Values(
                         draft.Title, draft.Description,
-                        draft.StartDate, draft.EndDate,
+                        draft.CreationDate, draft.StartDate, 
+                        draft.EndDate, draft.DiscountPercentage,
                         draft.Type == Draft.DraftType.Estimate,
-                        draft.DiscountPercentage, draft.Customer.Id,
-                        draft.ResponsiblEmployee.Id
+                        draft.Customer.Id, draft.ResponsiblEmployee.Id
                     )
                     .Apply();
 
@@ -141,7 +168,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                     draftInsert.Command.Transaction = transaction;
                     orderLinesInsert.Command.Transaction = transaction;
 
-                    var draftId = (int) draftInsert.Command.ExecuteScalar();
+                    var draftId = draftInsert.Command.ExecuteScalar();
 
                     if (draft.OrderLines.Count > 0)
                     {
@@ -152,11 +179,16 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                     transaction.Commit();
 
-                    draft.Id = draftId;
+                    draft.Id = (int) draftId;
                 }
             }
         }
 
+        /// <summary>
+        /// Updates the database records associated with the <see cref="Draft"/>.
+        /// </summary>
+        /// <remarks><see cref="Project"/> is not updated. Use the <see cref="ProjectMapper"/>.</remarks>
+        /// <param name="draft">The <see cref="Draft"/> to update.</param>
         public void Update(Draft draft)
         {
             using (var connection = _context.CreateConnection())
@@ -242,26 +274,36 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Draft Map(IDataRecord reader)
+        /// <summary>
+        /// Maps a given database record to a new <see cref="Draft"/>.
+        /// </summary>
+        /// <param name="record">The <see cref="IDataRecord"/> to map.</param>
+        /// <returns></returns>
+        public Draft Map(IDataRecord record)
         {
-            var id = (int) reader["DraftId"];
+            var id = (int) record["DraftId"];
             return new DraftGhost(
-                new CustomerProxy(_context, (int) reader["CustomerId"]), 
+                new CustomerProxy(_context, (int) record["CustomerId"]), 
+                (DateTime) record["CreationDate"],
                 () => LoadOrderLines(id)
-            )
-            {
+            ) {
                 Id = id,
-                Title = (string) reader["WorkTitle"],
-                Description = (string) reader["Description"],
-                DiscountPercentage = (double) reader["Discount"],
-                StartDate = (DateTime) reader["StartDate"],
-                EndDate = (DateTime) reader["EndDate"],
-                Type = (bool) reader["IsOffer"] ? Draft.DraftType.Offer : Draft.DraftType.Estimate,
-                ResponsiblEmployee = new EmployeeProxy(_context, (int) reader["ResponsibleEmployeeId"]),
-                Project = reader["ProjectId"] is DBNull ? null : new ProjectProxy(_context, (int) reader["ProjectId"])
+                Title = (string) record["WorkTitle"],
+                Description = (string) record["Description"],
+                DiscountPercentage = (double) record["Discount"],
+                StartDate = (DateTime) record["StartDate"],
+                EndDate = (DateTime) record["EndDate"],
+                Type = (bool) record["IsOffer"] ? Draft.DraftType.Offer : Draft.DraftType.Estimate,
+                ResponsiblEmployee = new EmployeeProxy(_context, (int) record["ResponsibleEmployeeId"]),
+                Project = record["ProjectId"] is DBNull ? null : new ProjectProxy(_context, (int) record["ProjectId"])
             };
         }
 
+        /// <summary>
+        /// Maps all available <see cref="IDataRecord"/> in the <see cref="IDataReader"/> to new <see cref="Draft"/> instances.
+        /// </summary>
+        /// <param name="reader">The <see cref="IDataReader"/> used to read from the database.</param>
+        /// <returns></returns>
         public IList<Draft> MapAll(IDataReader reader)
         {
             var drafts = new List<Draft>();
@@ -274,14 +316,20 @@ namespace Raunstrup.Data.MsSql.Mappers
             return drafts;
         }
         
+        /// <summary>
+        /// Loads all <see cref="OrderLine"/> objects associated with the given <see cref="Draft.Id"/>.
+        /// </summary>
+        /// <param name="draftId">An id of a <see cref="Draft"/>.</param>
+        /// <returns></returns>
         private IList<OrderLine> LoadOrderLines(int draftId)
         {
             using (var connection = _context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT Quantity, PricePerUnit, ProductId 
-                                        FROM OrderLine 
-                                        WHERE DraftId = @id";
+                command.CommandText = @"SELECT ol.OrderLineId, ol.DraftId, ol.Quantity, ol.PricePerUnit, ap.*
+                                        FROM OrderLine ol
+                                        JOIN AllProducts ap ON ap.ProductId = ol.ProductId 
+                                        WHERE ol.DraftId = @id;";
 
                 var idParam = command.CreateParameter();
 
@@ -301,17 +349,45 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
+        /// <summary>
+        /// Maps all available database records to new <see cref="OrderLine"/> objects.
+        /// </summary>
+        /// <param name="reader">The <see cref="IDataReader"/> used to read from the database.</param>
+        /// <returns></returns>
         private IList<OrderLine> MapOrderLines(IDataReader reader)
         {
             var orderLines = new List<OrderLine>();
 
             while (reader.Read())
             {
+                Product product = null;
+
+                if (!(reader["MaterialId"] is DBNull))
+                {
+                    product = new Material() { CostPrice = (decimal)reader["CostPrice"] };
+                }
+                else if (!(reader["WorkHourId"] is DBNull))
+                {
+                    product = new WorkHour();
+                }
+                else if (!(reader["TransportId"] is DBNull))
+                {
+                    product = new Transport();
+                }
+                else
+                {
+                    // TODO: Handle invalid product.
+                }
+
+                product.Id = (int) reader["ProductId"];
+                product.Name = (string) reader["Name"];
+                product.SalesPrice = (decimal) reader["SalesPrice"];
+
                 orderLines.Add(new OrderLine(
-                    new ProductProxy(_context, (int) reader["ProductId"]), 
-                    (int) reader["Quantity"], 
-                    (decimal) reader["PricePerUnit"])
-                );
+                    product,
+                    (int) reader["Quantity"],
+                    (decimal) reader["PricePerUnit"]
+                ) { Id = (int) reader["OrderLineId"] });
             }
 
             return orderLines;
