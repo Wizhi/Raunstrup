@@ -139,7 +139,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                         draft.Title, draft.Description,
                         draft.CreationDate, draft.StartDate, 
                         draft.EndDate, draft.DiscountPercentage,
-                        draft.Type == Draft.DraftType.Estimate,
+                        draft.Type == Draft.DraftType.Offer,
                         draft.Customer.Id, draft.ResponsiblEmployee.Id
                     )
                     .Apply();
