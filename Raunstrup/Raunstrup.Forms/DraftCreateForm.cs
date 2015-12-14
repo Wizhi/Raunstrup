@@ -13,11 +13,13 @@ namespace Raunstrup.Forms
     public partial class DraftCreateForm : Form
     {
         private readonly DraftController _draftController;
+        private Company _company;
         private bool _editMode;
         
         public DraftCreateForm(Company company)
         {
             InitializeComponent();
+            _company = company;
             _draftController = company.CreateDraftController();
             var customers = _draftController.GetAllCustomers();
             var employees = _draftController.GetAllEmployees();
@@ -33,6 +35,7 @@ namespace Raunstrup.Forms
         public DraftCreateForm(Company company, ReadOnlyDraft draft)
         {
             InitializeComponent();
+            _company = company;
             _draftController = company.CreateDraftController();
             var customers = _draftController.GetAllCustomers();
             var employees = _draftController.GetAllEmployees();
@@ -56,9 +59,13 @@ namespace Raunstrup.Forms
                     }));
                 _productIds.Add(orderLine.Product.ID);
             }
-            if (draft.Project != null)
+            if (_draftController.IsPartOfProject())
             {
-                _makeProjectButton.Enabled = false;
+                _openProjectButton.Enabled = true;
+            }
+            else if (!_draftController.IsPartOfProject())
+            {
+                _makeProjectButton.Enabled = true;
             }
             if (_draftController.IsEstimate())
             {
@@ -158,6 +165,7 @@ namespace Raunstrup.Forms
                     _draftController.SetAsOffer();
                 }
                 _draftController.SaveDraft();
+                _makeProjectButton.Enabled = true;
                 MessageBox.Show(@"Ordren blev gemt.");
             }
 
@@ -261,8 +269,10 @@ namespace Raunstrup.Forms
             _endDateDateTimePicker.Enabled = _customerComboBox.SelectedIndex > -1;
             _draftDescriptionTextBox.Enabled = _customerComboBox.SelectedIndex > -1;
             _discountInPercentNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
-            _makeProjectButton.Enabled = _customerComboBox.SelectedIndex > -1;
             _employeeComboBox.Enabled = _customerComboBox.SelectedIndex > -1;
+            _editOrderLineButton.Enabled = _customerComboBox.SelectedIndex > -1;
+            _quantityNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
+            _priceNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
         }
 
         private void _filterTextBox_TextChanged(object sender, EventArgs e)
@@ -294,6 +304,7 @@ namespace Raunstrup.Forms
         {
             _draftController.MakeProject();
             _makeProjectButton.Enabled = false;
+            _openProjectButton.Enabled = true;
         }
 
         private void _draftTitleTextBox_TextChanged(object sender, EventArgs e)
@@ -311,6 +322,12 @@ namespace Raunstrup.Forms
                     }
                 }
             }
+        }
+
+        private void _openProjectButton_Click(object sender, EventArgs e)
+        {
+            var projectForm = new ProjectManagementForm(_company,_draftController.GetProject().Id);
+            projectForm.ShowDialog();
         }
     }
 }

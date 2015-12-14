@@ -61,7 +61,7 @@ namespace Raunstrup.Core.Controllers
 
         public ReadOnlyProject GetProject()
         {
-            return new ReadOnlyProject(_currentProject);
+            return new ReadOnlyProject(_currentDraft.Project);
         }
 
         public void SetAsEstimate()

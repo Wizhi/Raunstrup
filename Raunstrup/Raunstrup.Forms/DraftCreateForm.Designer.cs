@@ -66,6 +66,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this._makeProjectButton = new System.Windows.Forms.Button();
+            this._openProjectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._productOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._discountInPercentNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._priceNumericUpDown)).BeginInit();
@@ -232,11 +233,11 @@
             // 
             // _saveDraftButton
             // 
-            this._saveDraftButton.Location = new System.Drawing.Point(176, 218);
+            this._saveDraftButton.Location = new System.Drawing.Point(164, 218);
             this._saveDraftButton.Name = "_saveDraftButton";
-            this._saveDraftButton.Size = new System.Drawing.Size(64, 23);
+            this._saveDraftButton.Size = new System.Drawing.Size(76, 23);
             this._saveDraftButton.TabIndex = 16;
-            this._saveDraftButton.Text = "Gem ordre";
+            this._saveDraftButton.Text = "Gem kladde";
             this._saveDraftButton.UseVisualStyleBackColor = true;
             this._saveDraftButton.Click += new System.EventHandler(this._saveDraftButton_Click);
             // 
@@ -468,11 +469,23 @@
             this._makeProjectButton.UseVisualStyleBackColor = true;
             this._makeProjectButton.Click += new System.EventHandler(this._makeProjectButton_Click);
             // 
+            // _openProjectButton
+            // 
+            this._openProjectButton.Enabled = false;
+            this._openProjectButton.Location = new System.Drawing.Point(693, 266);
+            this._openProjectButton.Name = "_openProjectButton";
+            this._openProjectButton.Size = new System.Drawing.Size(78, 23);
+            this._openProjectButton.TabIndex = 35;
+            this._openProjectButton.Text = "Åben projekt";
+            this._openProjectButton.UseVisualStyleBackColor = true;
+            this._openProjectButton.Click += new System.EventHandler(this._openProjectButton_Click);
+            // 
             // DraftCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 298);
+            this.Controls.Add(this._openProjectButton);
             this.Controls.Add(this._makeProjectButton);
             this.Controls.Add(this._draftGroupBox);
             this.Name = "DraftCreateForm";
@@ -528,5 +541,6 @@
         private System.Windows.Forms.Button _makeProjectButton;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button _openProjectButton;
     }
 }
