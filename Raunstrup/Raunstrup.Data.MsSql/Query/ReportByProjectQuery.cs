@@ -30,6 +30,8 @@ namespace Raunstrup.Data.MsSql.Query
 
                 command.Parameters.Add(projectIdParam);
 
+                connection.Open();
+
                 using (var reader = command.ExecuteReader())
                 {
                     return new ReportMapper(context).MapAll(reader);
