@@ -65,6 +65,7 @@
             this._projectOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._projectOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._projectOLV.Location = new System.Drawing.Point(12, 44);
+            this._projectOLV.MultiSelect = false;
             this._projectOLV.Name = "_projectOLV";
             this._projectOLV.Size = new System.Drawing.Size(260, 222);
             this._projectOLV.TabIndex = 0;
@@ -105,6 +106,7 @@
             this._draftOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._draftOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._draftOLV.Location = new System.Drawing.Point(278, 44);
+            this._draftOLV.MultiSelect = false;
             this._draftOLV.Name = "_draftOLV";
             this._draftOLV.Size = new System.Drawing.Size(260, 222);
             this._draftOLV.TabIndex = 2;
