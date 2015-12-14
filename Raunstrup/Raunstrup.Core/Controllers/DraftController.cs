@@ -44,6 +44,16 @@ namespace Raunstrup.Core.Controllers
             _currentDraft.Type = Draft.DraftType.Offer;
         }
 
+        public bool IsEstimate()
+        {
+            return _currentDraft.Type == Draft.DraftType.Estimate;
+        }
+
+        public bool IsPartOfProject()
+        {
+            return _currentDraft.Project != null;
+        }
+
         public void CreateNewDraft(int customerId)
         {
             var customer = _customerRepository.Get(customerId);
