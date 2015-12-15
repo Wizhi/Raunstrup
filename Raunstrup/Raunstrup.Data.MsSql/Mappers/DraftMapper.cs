@@ -291,8 +291,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                 Title = (string) record["WorkTitle"],
                 Description = (string) record["Description"],
                 DiscountPercentage = (double) record["Discount"],
+                EndDate = (DateTime)record["EndDate"],
                 StartDate = (DateTime) record["StartDate"],
-                EndDate = (DateTime) record["EndDate"],
                 Type = (bool) record["IsOffer"] ? Draft.DraftType.Offer : Draft.DraftType.Estimate,
                 ResponsiblEmployee = new EmployeeProxy(_context, (int) record["ResponsibleEmployeeId"]),
                 Project = record["ProjectId"] is DBNull ? null : new ProjectProxy(_context, (int) record["ProjectId"])

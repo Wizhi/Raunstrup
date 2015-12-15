@@ -81,8 +81,10 @@ namespace Raunstrup.Forms
             var selectedEmployee = employees.FirstOrDefault(x => x.Id == draft.ResponsiblEmployee.Id);
             _customerComboBox.SelectedItem = selectedCustomer;
             _employeeComboBox.SelectedItem = selectedEmployee;
+            // TODO: Find a better way to do this since WinForms sucks
+            //Subtracts 5 minutes form the endDate to actually get the correct date (00:00 clock makes it mess it)
+            _endDateDateTimePicker.Value = draft.EndDate.Subtract(TimeSpan.FromMinutes(5));
             _startDateDateTimePicker.Value = draft.StartDate;
-            _endDateDateTimePicker.Value = draft.EndDate;
             _discountInPercentNumericUpDown.Value = (decimal) draft.DiscountPercentage;
             _customerComboBox.Enabled = false;
 
@@ -152,8 +154,8 @@ namespace Raunstrup.Forms
                     MessageBox.Show(@"Vælg venligst en ansvarshavende.");
                 }
                 _draftController.SetDescription(_draftDescriptionTextBox.Text);
-                _draftController.SetStartDate(_startDateDateTimePicker.Value);
                 _draftController.SetEndDate(_endDateDateTimePicker.Value);
+                _draftController.SetStartDate(_startDateDateTimePicker.Value);
                 _draftController.SetTitle(_draftTitleTextBox.Text);
                 _draftController.SetDiscountPercentage((double) _discountInPercentNumericUpDown.Value);
                 if (_estimateRadioButton.Checked)
