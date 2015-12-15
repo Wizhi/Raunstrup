@@ -15,14 +15,7 @@
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:int">
-                <xs:attribute name="type" use="required">
-                  <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                      <xs:enumeration value="1" />
-                      <xs:enumeration value="2" />
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:attribute>
+                <xs:attribute name="type" use="required" />
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>
