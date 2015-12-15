@@ -152,8 +152,8 @@ namespace Raunstrup.Forms
                     MessageBox.Show(@"Vælg venligst en ansvarshavende.");
                 }
                 _draftController.SetDescription(_draftDescriptionTextBox.Text);
-                _draftController.SetStartDate(_startDateDateTimePicker.Value);
                 _draftController.SetEndDate(_endDateDateTimePicker.Value);
+                _draftController.SetStartDate(_startDateDateTimePicker.Value);
                 _draftController.SetTitle(_draftTitleTextBox.Text);
                 _draftController.SetDiscountPercentage((double) _discountInPercentNumericUpDown.Value);
                 if (_estimateRadioButton.Checked)
