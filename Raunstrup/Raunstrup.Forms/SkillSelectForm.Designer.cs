@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Materiale", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Arbejdstime", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Transport", System.Windows.Forms.HorizontalAlignment.Left);
             this._deleteSkillButton = new System.Windows.Forms.Button();
             this._editSkillButton = new System.Windows.Forms.Button();
             this._createNewSkillButton = new System.Windows.Forms.Button();
@@ -73,16 +70,6 @@
             this._skillsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Skill});
             this._skillsListView.FullRowSelect = true;
-            listViewGroup1.Header = "Materiale";
-            listViewGroup1.Name = "MaterialGroup";
-            listViewGroup2.Header = "Arbejdstime";
-            listViewGroup2.Name = "WorkHour";
-            listViewGroup3.Header = "Transport";
-            listViewGroup3.Name = "Transport";
-            this._skillsListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
             this._skillsListView.Location = new System.Drawing.Point(12, 12);
             this._skillsListView.Name = "_skillsListView";
             this._skillsListView.Size = new System.Drawing.Size(237, 183);
