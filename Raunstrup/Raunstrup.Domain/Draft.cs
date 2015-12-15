@@ -47,7 +47,7 @@ namespace Raunstrup.Domain
                 }
                 else
                 {
-                    throw new Exception("Start date have to be earlier than end date");
+                    //throw new Exception("Start date have to be earlier than end date");
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace Raunstrup.Domain
                 }
                 else
                 {
-                    throw new Exception("End date have to be later than start date");
+                    //throw new Exception("End date have to be later than start date");
                 }
             }
         }
