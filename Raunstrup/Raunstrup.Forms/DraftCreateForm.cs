@@ -81,8 +81,10 @@ namespace Raunstrup.Forms
             var selectedEmployee = employees.FirstOrDefault(x => x.Id == draft.ResponsiblEmployee.Id);
             _customerComboBox.SelectedItem = selectedCustomer;
             _employeeComboBox.SelectedItem = selectedEmployee;
+            // TODO: Find a better way to do this since WinForms sucks
+            //Subtracts 5 minutes form the endDate to actually get the correct date (00:00 clock makes it mess it)
+            _endDateDateTimePicker.Value = draft.EndDate.Subtract(TimeSpan.FromMinutes(5));
             _startDateDateTimePicker.Value = draft.StartDate;
-            _endDateDateTimePicker.Value = draft.EndDate;
             _discountInPercentNumericUpDown.Value = (decimal) draft.DiscountPercentage;
             _customerComboBox.Enabled = false;
 
