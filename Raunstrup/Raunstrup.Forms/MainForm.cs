@@ -30,17 +30,6 @@ namespace Raunstrup.Forms
             UpdateOLVs();
         }
 
-        private void _openProjectDraftButton_Click(object sender, EventArgs e)
-        {
-            var project = (ReadOnlyProject) _projectOLV.SelectedObject;
-            if (project != null)
-            {
-                var draftForm = new DraftCreateForm(_company, project.Draft);
-                draftForm.ShowDialog();
-                UpdateOLVs();
-            }
-        }
-
         private void _openDraftButton_Click(object sender, EventArgs e)
         {
             ReadOnlyDraft draft = null;
@@ -116,6 +105,18 @@ namespace Raunstrup.Forms
         {
             var productSelectForm = new ProductSelectForm(_company);
             productSelectForm.ShowDialog();
+        }
+
+        private void indlæsRapportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            var result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                // TODO: Implement a better way of handling reading the report.
+                _company.CreateReportController().ReadReport(dialog.FileName);
+            }
         }
     }
 }
