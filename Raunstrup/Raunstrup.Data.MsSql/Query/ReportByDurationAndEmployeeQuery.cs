@@ -24,7 +24,7 @@ namespace Raunstrup.Data.MsSql.Query
             using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT * FROM ReportFull
+                command.CommandText = @"SELECT * FROM Report
                                         WHERE [Date] BETWEEN @start AND @end AND EmployeeId = @employeeId";
 
                 var startDateParam = command.CreateParameter();
