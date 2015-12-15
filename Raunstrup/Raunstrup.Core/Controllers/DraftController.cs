@@ -33,6 +33,16 @@ namespace Raunstrup.Core.Controllers
             _projectRepository.Save(_currentDraft.Project);
         }
 
+        public void PrintInvoice()
+        {
+            if (_currentDraft != null)
+            {
+                InvoiceFilePrinter filePrinter = new InvoiceFilePrinter();
+                filePrinter.PrintInvoice(_currentDraft);
+            }
+        }
+    
+
         public List<ReadOnlyDraft> GetDraftsWitihoutProject()
         {
             IList<Draft> drafts = _draftRepository.GetAll();
