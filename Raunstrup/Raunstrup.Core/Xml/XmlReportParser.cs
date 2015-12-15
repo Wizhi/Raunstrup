@@ -47,7 +47,6 @@ namespace Raunstrup.Core.Xml
 
             foreach (XmlNode node in rootNode["materials"].ChildNodes)
             {
-                // TODO: Find a better way to do this, wtf.
                 report.AddReportLine(
                     _productRepository.Get(Convert.ToInt32(node.InnerText)),
                     Convert.ToInt32(node.Attributes["quantity"].Value)
