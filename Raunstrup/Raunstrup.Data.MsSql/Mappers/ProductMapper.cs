@@ -224,7 +224,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                             materialUpdate.Command.Transaction = transaction;
 
                             materialUpdate.Target("Material")
-                                .Set(SubFields["Material"], ((Material) product).CostPrice)
+                                .Set(SubFields["CostPrice"], ((Material) product).CostPrice)
                                 .Parameter(SubFields["Material"], "@materialId", product.Id)
                                 .Where("MaterialId = @materialId")
                                 .Apply();
