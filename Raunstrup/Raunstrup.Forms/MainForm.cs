@@ -110,6 +110,9 @@ namespace Raunstrup.Forms
         private void indlæsRapportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog();
+
+            dialog.Filter = "Rapport XML (*.xml)|*.xml";
+
             var result = dialog.ShowDialog();
 
             if (result == DialogResult.OK)
