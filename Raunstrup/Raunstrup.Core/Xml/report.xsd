@@ -20,7 +20,16 @@
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
-        <xs:element name="transport" type="xs:int" />
+        <xs:element name="transport">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:int">
+                <xs:attribute name="type" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <!--<xs:element name="transport" type="xs:int" />-->
         <xs:element name="materials">
           <xs:complexType>
             <xs:sequence>

@@ -49,7 +49,12 @@ namespace Raunstrup.Core.Xml
                 _productRepository.Get(Convert.ToInt32(rootNode["hours"].Attributes["type"].Value)),
                 Convert.ToInt32(rootNode["hours"].InnerText)
             ));
-            
+
+            report.ReportLines.Add(new ReportLine(
+                _productRepository.Get(Convert.ToInt32(rootNode["transport"].Attributes["type"].Value)),
+                Convert.ToInt32(rootNode["transport"].InnerText)
+            ));
+
             foreach (XmlNode node in rootNode["materials"].ChildNodes)
             {
                 report.AddReportLine(
