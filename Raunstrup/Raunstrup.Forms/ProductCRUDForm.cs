@@ -38,6 +38,7 @@ namespace Raunstrup.Forms
             if (product is ReadOnlyMaterial)
             {
                 _materialRadioButton.Checked = true;
+                _costPriceNumericUpDown.Value = ((ReadOnlyMaterial)product).CostPrice;
             }
             else if (product is ReadOnlyWorkHour)
             {
@@ -55,6 +56,7 @@ namespace Raunstrup.Forms
             _workHourRadioButton.Enabled = false;
             _transportRadioButton.Enabled = false;
             _editMode = true;
+
             _productController = company.CreateProductController();
             _productController.EditProduct(product.ID);
         }
@@ -67,6 +69,10 @@ namespace Raunstrup.Forms
                 {
                     _productController.SetName(_productNameTextBox.Text);
                     _productController.SetPrice(_productPriceNumericUpDown.Value);
+                    if (_materialRadioButton.Checked)
+                    {
+                        _productController.SetCostPrice(_costPriceNumericUpDown.Value);
+                    }
                     _productController.SaveProduct();
                 }
                 else if (!_editMode)
@@ -89,10 +95,11 @@ namespace Raunstrup.Forms
                     _productController.SaveProduct();
                 }
                 MessageBox.Show(@"Varen blev gemt.");
+                Close();
             }
             catch(Exception exception)
             {
-                MessageBox.Show(exception.ToString());
+                throw exception;
             }
         }
 
