@@ -177,7 +177,13 @@ namespace Raunstrup.Data.MsSql.Command
                     _names.Select(names => "(" + string.Join(", ", names.Concat(_statics)) + ")")
                 )
             );
-            
+
+            // FIXME/TODO: Hotfix for when there are no names other than statics.
+            if (_names.Count == 0)
+            {
+                sb.Append("(" + string.Join(", ", _statics) + ")");
+            }
+
             Command.CommandText = sb.AppendLine(";").ToString();
 
             return this;
