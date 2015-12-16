@@ -1,22 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class ProductMapper
+    class ProductMapper : AbstractMapper<Product>
     {
-        private readonly DataContext _context;
+        private static readonly IDictionary<string, FieldInfo> ProductFields = new Dictionary<string, FieldInfo>()
+        {
+            { "Id", new FieldInfo("ProductId") { DbType = DbType.Int32 } },
+            { "Name", new FieldInfo("Name") { DbType = DbType.AnsiString, Size = 100 } },
+            { "SalesPrice", new FieldInfo("SalesPrice") { DbType = DbType.Decimal, Precision = 9, Scale = 2 } }
+        }; 
+        // TODO: Give each type a mapping dictionary.
+        private static readonly IDictionary<string, FieldInfo> SubFields = new Dictionary<string, FieldInfo>()
+        {
+            { "Material", new FieldInfo("MaterialId") { DbType = DbType.Int32 } },
+            { "CostPrice", new FieldInfo("CostPrice") { DbType = DbType.Decimal, Precision = 9, Scale = 2 } },
+            { "WorkHour", new FieldInfo("WorkHourId") { DbType = DbType.Int32 } },
+            { "Transport", new FieldInfo("TransportId") { DbType = DbType.Int32 } }
+        }; 
 
         public ProductMapper(DataContext context)
+            : base(context)
         {
-            _context = context;
         }
 
-        public Product Get(int id)
+        public override Product Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             {
                 var command = connection.CreateCommand();
                 var idParam = command.CreateParameter();
@@ -37,14 +51,14 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
 
-        public IList<Product> GetAll()
+        public override IList<Product> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             {
                 var command = connection.CreateCommand();
                 
@@ -68,144 +82,173 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// <param name="product"></param>
         public void Insert(Product product)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var productInsert = connection.CreateCommand())
             using (var subTypeInsert = connection.CreateCommand())
             {
-                productInsert.CommandText = @"INSERT INTO Product (Name, SalesPrice) 
-                                              VALUES (@name, @salesPrice);
-                                              SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                var productInsertWrapped = new InsertCommandWrapper(productInsert);
+                var subTypeInsertWrapped = new InsertCommandWrapper(subTypeInsert);
 
-                SetParameters(productInsert, product);
+                productInsertWrapped.Target("Product")
+                    .Field(ProductFields["Name"])
+                    .Field(ProductFields["SalesPrice"])
+                    .Values(product.Name, product.SalesPrice)
+                    .Apply();
 
-                // Oh dear lord have mercy on me.
-                // TODO: Implement a better way to insert sub-types of Product. The current one stinks.
-                string table;
-                string primaryKeyField;
-                var fields = new List<string>();
-                var names = new List<string>();
+                productInsertWrapped.Command.CommandText += @"SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                
+                //// Oh dear lord have mercy on me.
+                //// TODO: Implement a better way to insert sub-types of Product. The current one stinks.
+                //string table;
+                //string primaryKeyField;
+                //var fields = new List<string>();
+                //var names = new List<string>();
+
+                IDbDataParameter productIdParameter;
 
                 if (product is Material)
                 {
-                    table = "Material";
-                    primaryKeyField = "MaterialId";
+                    subTypeInsertWrapped.Target("Material")
+                        .Field(SubFields["CostPrice"])
+                        .Static(SubFields["Material"], "@productId", out productIdParameter)
+                        .Values(((Material) product).CostPrice);
+                    //table = "Material";
+                    //primaryKeyField = "MaterialId";
 
-                    var costPriceParam = subTypeInsert.CreateParameter();
+                    //var costPriceParam = subTypeInsert.CreateParameter();
 
-                    costPriceParam.ParameterName = "@costPrice";
-                    costPriceParam.Value = ((Material) product).CostPrice;
-                    costPriceParam.DbType = DbType.Decimal;
-                    costPriceParam.Precision = 9;
-                    costPriceParam.Scale = 2;
+                    //costPriceParam.ParameterName = "@costPrice";
+                    //costPriceParam.Value = ((Material) product).CostPrice;
+                    //costPriceParam.DbType = DbType.Decimal;
+                    //costPriceParam.Precision = 9;
+                    //costPriceParam.Scale = 2;
 
-                    subTypeInsert.Parameters.Add(costPriceParam);
-                    
-                    fields.Add("CostPrice");
-                    names.Add(costPriceParam.ParameterName);
+                    //subTypeInsert.Parameters.Add(costPriceParam);
+
+                    //fields.Add("CostPrice");
+                    //names.Add(costPriceParam.ParameterName);
                 }
                 else if (product is WorkHour)
                 {
-                    table = "WorkHour";
-                    primaryKeyField = "WorkHourId";
+                    subTypeInsertWrapped.Target("WorkHour")
+                        .Static(SubFields["WorkHour"], "@productId", out productIdParameter);
+                    //table = "WorkHour";
+                    //primaryKeyField = "WorkHourId";
                 }
                 else if (product is Transport)
                 {
-                    table = "Transport";
-                    primaryKeyField = "TransportId";
+                    subTypeInsertWrapped.Target("Transport")
+                        .Static(SubFields["Transport"], "@productId", out productIdParameter);
+                    //table = "Transport";
+                    //primaryKeyField = "TransportId";
                 }
                 else
                 {
                     throw new ArgumentException("How did you even manage to do this?");
                 }
+                
+                //var productIdParam = subTypeInsert.CreateParameter();
 
-                var productIdParam = subTypeInsert.CreateParameter();
+                //productIdParam.ParameterName = "@productId";
+                //productIdParam.DbType = DbType.Int32;
 
-                productIdParam.ParameterName = "@productId";
-                productIdParam.DbType = DbType.Int32;
+                //fields.Add(primaryKeyField);
+                //names.Add("@productId");
 
-                fields.Add(primaryKeyField);
-                names.Add("@productId");
-
-                subTypeInsert.Parameters.Add(productIdParam);
-                // My eyes are bleeding.
-                subTypeInsert.CommandText = "INSERT INTO " + table + " (" + string.Join(", ", fields) + ") VALUES (" +
-                                            string.Join(", ", names) + ")";
+                //subTypeInsert.Parameters.Add(productIdParam);
+                //// My eyes are bleeding.
+                //subTypeInsert.CommandText = "INSERT INTO " + table + " (" + string.Join(", ", fields) + ") VALUES (" +
+                //                            string.Join(", ", names) + ")";
 
                 connection.Open();
                 productInsert.Prepare();
+                subTypeInsert.Prepare();
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    productInsert.Transaction = transaction;
-                    subTypeInsert.Transaction = transaction;
+                    productInsertWrapped.Command.Transaction = transaction;
+                    subTypeInsertWrapped.Command.Transaction = transaction;
 
-                    productIdParam.Value = productInsert.ExecuteScalar();
+                    productIdParameter.Value = productInsertWrapped.Command.ExecuteScalar();
+                    subTypeInsertWrapped.Apply();
 
-                    subTypeInsert.Prepare();
-
-                    subTypeInsert.ExecuteNonQuery();
+                    subTypeInsertWrapped.Command.ExecuteNonQuery();
                     transaction.Commit();
 
-                    product.Id = (int) productIdParam.Value;
+                    product.Id = (int) productIdParameter.Value;
                 }
             }
         }
 
         public void Update(Product product)
         {
-            using (var connection = _context.CreateConnection())
-            using (var command = connection.CreateCommand())
+            using (var connection = Context.CreateConnection())
+            using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             {
-                command.CommandText = @"UPDATE Product SET 
+                update.Command.CommandText = @"UPDATE Product SET 
                                         Name=@name, SalesPrice=@salesPrice
                                         WHERE ProductId=@id;";
-                
-                var idParam = command.CreateParameter();
 
-                idParam.ParameterName = "@id";
-                idParam.Value = product.Id;
-                idParam.DbType = DbType.Int32;
+                update.Target("Product")
+                    .Set(ProductFields["Name"], product.Name)
+                    .Set(ProductFields["SalesPrice"], product.SalesPrice)
+                    .Parameter(ProductFields["Id"], "@id", product.Id)
+                    .Where("ProductId = @id")
+                    .Apply();
 
-                command.Parameters.Add(idParam);
+                //var idParam = update.CreateParameter();
 
-                SetParameters(command, product);
-                
+                //idParam.ParameterName = "@id";
+                //idParam.Value = product.Id;
+                //idParam.DbType = DbType.Int32;
+
+                //update.Parameters.Add(idParam);
+
+                //SetParameters(update, product);
+
                 connection.Open();
-                command.Prepare();
+                update.Command.Prepare();
 
                 // We kind of need to wrap this in a transaction, since sub-types may be updated as well.
                 using (var transaction = connection.BeginTransaction())
                 {
-                    command.Transaction = transaction;
-                    command.ExecuteNonQuery();
+                    update.Command.Transaction = transaction;
+                    update.Command.ExecuteNonQuery();
 
                     // TODO: Implement a better way of handling sub types!
                     // This is just..gross.
                     if (product is Material)
                     {
-                        using (var materialCommand = connection.CreateCommand())
+                        using (var materialUpdate = new UpdateCommandWrapper(connection.CreateCommand()))
                         {
-                            materialCommand.Transaction = transaction;
-                            materialCommand.CommandText =
-                                "UPDATE Material SET CostPrice=@costPrice WHERE MaterialId=@meterialId";
-                            
-                            var costPriceParam = materialCommand.CreateParameter();
-                            var materialIdParam = materialCommand.CreateParameter();
+                            materialUpdate.Command.Transaction = transaction;
 
-                            materialIdParam.ParameterName = "@meterialId";
-                            materialIdParam.Value = product.Id;
-                            materialIdParam.DbType = DbType.Int32;
+                            materialUpdate.Target("Material")
+                                .Set(SubFields["Material"], ((Material) product).CostPrice)
+                                .Parameter(SubFields["Material"], "@materialId", product.Id)
+                                .Where("MaterialId = @materialId")
+                                .Apply();
 
-                            costPriceParam.ParameterName = "@costPrice";
-                            costPriceParam.Value = ((Material) product).CostPrice;
-                            costPriceParam.DbType = DbType.Decimal;
-                            costPriceParam.Precision = 9;
-                            costPriceParam.Scale = 2;
+                            //materialUpdate.CommandText =
+                            //    "UPDATE Material SET CostPrice=@costPrice WHERE MaterialId=@meterialId";
 
-                            materialCommand.Parameters.Add(costPriceParam);
-                            materialCommand.Parameters.Add(materialIdParam);
+                            //var costPriceParam = materialUpdate.CreateParameter();
+                            //var materialIdParam = materialUpdate.CreateParameter();
 
-                            materialCommand.ExecuteNonQuery();
+                            //materialIdParam.ParameterName = "@meterialId";
+                            //materialIdParam.Value = product.Id;
+                            //materialIdParam.DbType = DbType.Int32;
+
+                            //costPriceParam.ParameterName = "@costPrice";
+                            //costPriceParam.Value = ((Material)product).CostPrice;
+                            //costPriceParam.DbType = DbType.Decimal;
+                            //costPriceParam.Precision = 9;
+                            //costPriceParam.Scale = 2;
+
+                            //materialUpdate.Parameters.Add(costPriceParam);
+                            //materialUpdate.Parameters.Add(materialIdParam);
+
+                            materialUpdate.Command.ExecuteNonQuery();
                         }
                     }
 
@@ -214,45 +257,41 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Product Map(IDataReader reader)
+        public override Product Map(IDataRecord record)
         {
             Product product = null;
-
-            if (reader.Read())
+            
+            if (!(record["MaterialId"] is DBNull))
             {
-                if (!(reader["MaterialId"] is DBNull))
-                {
-                    product = new Material() { CostPrice = (decimal) reader["CostPrice"] };
-                }
-                else if (!(reader["WorkHourId"] is DBNull))
-                {
-                    product = new WorkHour();
-                }
-                else if (!(reader["TransportId"] is DBNull))
-                {
-                    product = new Transport();
-                }
-                else
-                {
-                    // TODO: Handle invalid product.
-                }
-
-                product.Id = (int) reader["ProductId"];
-                product.Name = (string) reader["Name"];
-                product.SalesPrice = (decimal) reader["SalesPrice"];
+                product = new Material() { CostPrice = (decimal) record["CostPrice"] };
             }
+            else if (!(record["WorkHourId"] is DBNull))
+            {
+                product = new WorkHour();
+            }
+            else if (!(record["TransportId"] is DBNull))
+            {
+                product = new Transport();
+            }
+            else
+            {
+                // TODO: Handle invalid product.
+            }
+
+            product.Id = (int) record["ProductId"];
+            product.Name = (string) record["Name"];
+            product.SalesPrice = (decimal) record["SalesPrice"];
 
             return product;
         }
 
-        public IList<Product> MapAll(IDataReader reader)
+        public override IList<Product> MapAll(IDataReader reader)
         {
             var products = new List<Product>();
-            Product product;
 
-            while ((product = Map(reader)) != null)
+            while (reader.Read())
             {
-                products.Add(product);
+                products.Add(Map(reader));
             }
 
             return products;

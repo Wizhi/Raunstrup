@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using Raunstrup.Data.MsSql.Command;
+using Raunstrup.Data.MsSql.Queries;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class CustomerMapper
+    class CustomerMapper : AbstractMapper<Customer>
     {
-        private readonly DataContext _context;
-        private readonly IDictionary<string, FieldInfo> CustomerFields = new Dictionary<string, FieldInfo>
+        private static readonly IDictionary<string, FieldInfo> CustomerFields = new Dictionary<string, FieldInfo>
         {
             { "Id", new FieldInfo("CustomerId") { DbType = DbType.Int32 } },
             { "Name", new FieldInfo("Name") { DbType = DbType.AnsiString, Size = 100 } },
@@ -19,13 +19,13 @@ namespace Raunstrup.Data.MsSql.Mappers
         };
         
         public CustomerMapper(DataContext context)
+            : base(context)
         {
-            _context = context;
         }
         
-        public Customer Get(int id)
+        public override Customer Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT CustomerId, Name, StreetName, StreetNumber, City, PostalCode 
@@ -50,9 +50,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public IList<Customer> GetAll()
+        public override IList<Customer> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT CustomerId, Name, StreetName, StreetNumber, City, PostalCode 
@@ -69,7 +69,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Insert(Customer customer)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 var wrapped = new InsertCommandWrapper(command);
@@ -99,7 +99,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Update(Customer customer)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 var wrapped = new UpdateCommandWrapper(command);
@@ -122,9 +122,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Customer Map(IDataRecord record)
+        public override Customer Map(IDataRecord record)
         {
-            return new Customer()
+            return new Customer
             {
                 Id = (int) record["CustomerId"],
                 Name = (string) record["Name"],
@@ -135,7 +135,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             };
         }
 
-        public IList<Customer> MapAll(IDataReader reader)
+        public override IList<Customer> MapAll(IDataReader reader)
         {
             var customers = new List<Customer>();
 

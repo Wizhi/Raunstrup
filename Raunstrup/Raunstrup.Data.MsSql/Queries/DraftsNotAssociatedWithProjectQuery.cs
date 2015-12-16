@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using Raunstrup.Data.MsSql.Mappers;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Data.MsSql.Query
+namespace Raunstrup.Data.MsSql.Queries
 {
-    class DraftsNotAssociatedWithProjectQuery : IQuery<IList<Draft>>
+    class DraftsNotAssociatedWithProjectQuery : IQuery<Draft>
     {
-        public IList<Draft> Execute(DataContext context)
+        public IDataReader Execute(IDbConnection connection)
         {
-            using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT d.* FROM Draft d
@@ -17,10 +17,7 @@ namespace Raunstrup.Data.MsSql.Query
 
                 connection.Open();
 
-                using (var reader = command.ExecuteReader())
-                {
-                    return new DraftMapper(context).MapAll(reader);
-                }
+                return command.ExecuteReader();
             }
         }
     }

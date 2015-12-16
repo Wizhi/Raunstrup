@@ -3,9 +3,9 @@ using System.Data;
 using Raunstrup.Data.MsSql.Mappers;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Data.MsSql.Query
+namespace Raunstrup.Data.MsSql.Queries
 {
-    class EmployeesByProjectQuery : IQuery<IList<Employee>>
+    class EmployeesByProjectQuery : IQuery<Employee>
     {
         private readonly int _id;
 
@@ -19,9 +19,8 @@ namespace Raunstrup.Data.MsSql.Query
             _id = employee.Id;
         }
 
-        public IList<Employee> Execute(DataContext context)
+        public IDataReader Execute(IDbConnection connection)
         {
-            using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT e.EmployeeId, e.Name 
@@ -40,10 +39,7 @@ namespace Raunstrup.Data.MsSql.Query
                 connection.Open();
                 command.Prepare();
 
-                using (var reader = command.ExecuteReader())
-                {
-                    return new EmployeeMapper(context).MapAll(reader);
-                }
+                return command.ExecuteReader();
             }
         }
     }

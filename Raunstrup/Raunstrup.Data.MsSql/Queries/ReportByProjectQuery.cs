@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using Raunstrup.Data.MsSql.Mappers;
+﻿using System.Data;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Data.MsSql.Query
+namespace Raunstrup.Data.MsSql.Queries
 {
-    class ReportByProjectQuery : IQuery<IList<Report>>
+    class ReportByProjectQuery : IQuery<Report>
     {
         private readonly Project _project;
 
@@ -14,12 +12,11 @@ namespace Raunstrup.Data.MsSql.Query
             _project = project;
         }
 
-        public IList<Report> Execute(DataContext context)
+        public IDataReader Execute(IDbConnection connection)
         {
-            using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT * FROM Report WHERE ProductId = @projectId";
+                command.CommandText = @"SELECT * FROM Report WHERE ProjectId = @projectId";
 
                 var projectIdParam = command.CreateParameter();
 
@@ -31,10 +28,7 @@ namespace Raunstrup.Data.MsSql.Query
 
                 connection.Open();
 
-                using (var reader = command.ExecuteReader())
-                {
-                    return new ReportMapper(context).MapAll(reader);
-                }
+                return command.ExecuteReader();
             }
         }
     }

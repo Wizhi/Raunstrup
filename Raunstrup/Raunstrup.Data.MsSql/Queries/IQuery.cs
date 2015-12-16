@@ -1,4 +1,6 @@
-﻿namespace Raunstrup.Data.MsSql.Query
+﻿using System.Data;
+
+namespace Raunstrup.Data.MsSql.Queries
 {
     /// <summary>
     /// The base interface for all queries.
@@ -15,6 +17,12 @@
         /// </summary>
         /// <param name="context">The <see cref="DataContext"/> to execute the query in.</param>
         /// <returns></returns>
-        T Execute(DataContext context);
+        //T Execute(DataContext context);
+        /// <summary>
+        /// Executes the query in the given context.
+        /// </summary>
+        /// <param name="context">The <see cref="DataContext"/> to execute the query in.</param>
+        /// <returns></returns>
+        IDataReader Execute(IDbConnection context);
     }
 }

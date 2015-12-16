@@ -11,7 +11,7 @@ namespace Raunstrup.Data.MsSql.Mappers
     /// <summary>
     /// The DraftMapper is responsible for mapping database records to and from <see cref="Draft"/> objects.
     /// </summary>
-    class DraftMapper
+    class DraftMapper : AbstractMapper<Draft>
     {
         /// <summary>
         /// Schema information for <see cref="Draft"/>.
@@ -40,19 +40,14 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Product", new FieldInfo("ProductId") { DbType = DbType.Int32 } },
             { "Draft", new FieldInfo("DraftId") { DbType = DbType.Int32 } }
         };
-
-        /// <summary>
-        /// The current <see cref="DataContext"/>.
-        /// </summary>
-        private readonly DataContext _context;
-
+        
         /// <summary>
         /// Creates a <see cref="DraftMapper"/>.
         /// </summary>
         /// <param name="context">The context for the mapper.</param>
         public DraftMapper(DataContext context)
+            : base(context)
         {
-            _context = context;
         }
 
         /// <summary>
@@ -60,9 +55,9 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// </summary>
         /// <param name="id">The id of a a <see cref="Draft"/>.</param>
         /// <returns></returns>
-        public Draft Get(int id)
+        public override Draft Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT 
@@ -94,9 +89,9 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// Gets all <see cref="Draft"/>s in storage.
         /// </summary>
         /// <returns></returns>
-        public IList<Draft> GetAll()
+        public override IList<Draft> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT 
@@ -121,7 +116,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// <param name="draft"></param>
         public void Insert(Draft draft)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var draftInsert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var orderLinesInsert = new InsertCommandWrapper(connection.CreateCommand()))
             {
@@ -191,7 +186,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// <param name="draft">The <see cref="Draft"/> to update.</param>
         public void Update(Draft draft)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             using (var tempCreate = connection.CreateCommand())
             using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
@@ -279,11 +274,11 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// </summary>
         /// <param name="record">The <see cref="IDataRecord"/> to map.</param>
         /// <returns></returns>
-        public Draft Map(IDataRecord record)
+        public override Draft Map(IDataRecord record)
         {
             var id = (int) record["DraftId"];
             return new DraftGhost(
-                new CustomerProxy(_context, (int) record["CustomerId"]), 
+                new CustomerProxy(Context, (int) record["CustomerId"]), 
                 (DateTime) record["CreationDate"],
                 () => LoadOrderLines(id)
             ) {
@@ -294,8 +289,8 @@ namespace Raunstrup.Data.MsSql.Mappers
                 EndDate = (DateTime)record["EndDate"],
                 StartDate = (DateTime) record["StartDate"],
                 Type = (bool) record["IsOffer"] ? Draft.DraftType.Offer : Draft.DraftType.Estimate,
-                ResponsiblEmployee = new EmployeeProxy(_context, (int) record["ResponsibleEmployeeId"]),
-                Project = record["ProjectId"] is DBNull ? null : new ProjectProxy(_context, (int) record["ProjectId"])
+                ResponsiblEmployee = new EmployeeProxy(Context, (int) record["ResponsibleEmployeeId"]),
+                Project = record["ProjectId"] is DBNull ? null : new ProjectProxy(Context, (int) record["ProjectId"])
             };
         }
 
@@ -304,7 +299,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// </summary>
         /// <param name="reader">The <see cref="IDataReader"/> used to read from the database.</param>
         /// <returns></returns>
-        public IList<Draft> MapAll(IDataReader reader)
+        public override IList<Draft> MapAll(IDataReader reader)
         {
             var drafts = new List<Draft>();
             
@@ -323,7 +318,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         /// <returns></returns>
         private IList<OrderLine> LoadOrderLines(int draftId)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT ol.OrderLineId, ol.DraftId, ol.Quantity, ol.PricePerUnit, ap.*

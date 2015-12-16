@@ -3,9 +3,9 @@ using System.Data;
 using Raunstrup.Data.MsSql.Mappers;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Data.MsSql.Query
+namespace Raunstrup.Data.MsSql.Queries
 {
-    class SkillsByEmployeeQuery : IQuery<IList<Skill>>
+    class SkillsByEmployeeQuery : IQuery<Skill>
     {
         private readonly int _id;
 
@@ -19,15 +19,14 @@ namespace Raunstrup.Data.MsSql.Query
             _id = employee.Id;
         }
 
-        public IList<Skill> Execute(DataContext context)
+        public IDataReader Execute(IDbConnection connection)
         {
-            using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = @"SELECT s.SkillId, s.Name 
+                command.CommandText = @"SELECT s.*
                                         FROM Skill s
                                         JOIN EmployeeSkill es ON es.SkillId = s.SkillId
-                                        WHERE es.EmployeeId = @id";
+                                        WHERE es.EmployeeId = @id;";
 
                 var idParam = command.CreateParameter();
 
@@ -40,10 +39,7 @@ namespace Raunstrup.Data.MsSql.Query
                 connection.Open();
                 command.Prepare();
 
-                using (var reader = command.ExecuteReader())
-                {
-                    return new SkillMapper(context).MapAll(reader);
-                }
+                return command.ExecuteReader();
             }
         }
     }

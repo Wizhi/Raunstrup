@@ -8,7 +8,7 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class ReportMapper
+    class ReportMapper : AbstractMapper<Report>
     {
         private static readonly IDictionary<string, FieldInfo> ReportFields = new Dictionary<string, FieldInfo>
         {
@@ -24,17 +24,15 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Report", new FieldInfo("ReportId") { DbType = DbType.Int32 } },
             { "Product", new FieldInfo("ProductId") { DbType = DbType.Int32 } }
         };
-
-        private readonly DataContext _context;
         
-        public ReportMapper(DataContext context)
+        public ReportMapper(DataContext context) 
+            : base(context)
         {
-            _context = context;
         }
         
-        public Report Get(int id)
+        public override Report Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT ReportId, [Date], ProjectId, EmployeeId
@@ -59,9 +57,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public IList<Report> GetAll()
+        public override IList<Report> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT ReportId, [Date], ProjectId, EmployeeId
@@ -79,7 +77,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Insert(Report report)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var reportInsert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var reportLinesInsert = new InsertCommandWrapper(connection.CreateCommand()))
             {
@@ -130,7 +128,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Update(Report report)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             using (var tempCreate = connection.CreateCommand())
             using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
@@ -205,12 +203,12 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Report Map(IDataRecord record)
+        public override Report Map(IDataRecord record)
         {
             var id = (int) record["ReportId"];
             var report = new ReportGhost(
-                new EmployeeProxy(_context, (int) record["EmployeeId"]), 
-                new ProjectProxy(_context, (int) record["ProjectId"]),
+                new EmployeeProxy(Context, (int) record["EmployeeId"]), 
+                new ProjectProxy(Context, (int) record["ProjectId"]),
                 () => LoadReportLines(id)
             ) {
                 Id = id,
@@ -220,7 +218,7 @@ namespace Raunstrup.Data.MsSql.Mappers
             return report;
         }
 
-        public IList<Report> MapAll(IDataReader reader)
+        public override IList<Report> MapAll(IDataReader reader)
         {
             var reports = new List<Report>();
 
@@ -234,7 +232,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         private IList<ReportLine> LoadReportLines(int reportId)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT rl.ReportLineId, rl.Quantity, ap.*

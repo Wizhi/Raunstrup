@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Raunstrup.Data.MsSql.Mappers;
-using Raunstrup.Data.MsSql.Query;
+using Raunstrup.Data.MsSql.Queries;
 using Raunstrup.Data.Repositories;
 using Raunstrup.Domain;
 
@@ -47,12 +47,12 @@ namespace Raunstrup.Data.MsSql.Repositories
 
         public IList<Draft> GetDraftsAssociatedWithAProject()
         {
-            return new DraftsAssociatedWithProjectQuery().Execute(_context);
+            return _mapper.Query(new DraftsAssociatedWithProjectQuery());
         }
 
         public IList<Draft> GetDraftsNotAssociatedWithAProject()
         {
-            return new DraftsNotAssociatedWithProjectQuery().Execute(_context);
+            return _mapper.Query(new DraftsNotAssociatedWithProjectQuery());
         }
     }
 }

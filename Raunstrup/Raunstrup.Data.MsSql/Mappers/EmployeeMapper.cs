@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Data.MsSql.Ghost;
-using Raunstrup.Data.MsSql.Query;
+using Raunstrup.Data.MsSql.Queries;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class EmployeeMapper
+    class EmployeeMapper : AbstractMapper<Employee>
     {
         private static readonly IDictionary<string, FieldInfo> EmployeeFields = new Dictionary<string, FieldInfo>
         {
@@ -19,17 +20,15 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Employee", new FieldInfo("EmployeeId") { DbType = DbType.Int32} },
             { "Skill", new FieldInfo("SkillId") { DbType = DbType.Int32 } }
         };
-
-        private readonly DataContext _context;
-
+        
         public EmployeeMapper(DataContext context)
+            : base(context)
         {
-            _context = context;
         }
 
-        public Employee Get(int id)
+        public override Employee Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT EmployeeId, Name
@@ -54,9 +53,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public IList<Employee> GetAll()
+        public override IList<Employee> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT EmployeeId, Name
@@ -73,7 +72,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Insert(Employee employee)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var employeeInsert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var skillRelation = new InsertCommandWrapper(connection.CreateCommand()))
             {
@@ -111,7 +110,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Update(Employee employee)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             using (var tempCreate = connection.CreateCommand())
             using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
@@ -179,18 +178,18 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Employee Map(IDataRecord record)
+        public override Employee Map(IDataRecord record)
         {
             var id = (int) record["EmployeeId"];
 
-            return new EmployeeGhost(() => new SkillsByEmployeeQuery(id).Execute(_context))
+            return new EmployeeGhost(() => LoadSkills(id))
             {
                 Id = id,
                 Name = (string) record["Name"]
             };
         }
 
-        public IList<Employee> MapAll(IDataReader reader)
+        public override IList<Employee> MapAll(IDataReader reader)
         {
             var employees = new List<Employee>();
 
@@ -201,5 +200,11 @@ namespace Raunstrup.Data.MsSql.Mappers
 
             return employees;
         }
+
+        private IList<Skill> LoadSkills(int id)
+        {
+            // TODO: Query the skills manually!
+            return new SkillMapper(Context).Query(new SkillsByEmployeeQuery(id));
+        } 
     }
 }

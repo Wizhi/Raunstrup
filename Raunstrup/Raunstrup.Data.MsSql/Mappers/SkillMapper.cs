@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class SkillMapper
+    class SkillMapper : AbstractMapper<Skill>
     {
-        private readonly DataContext _context;
-
-        public SkillMapper(DataContext context)
+        private readonly IDictionary<string, FieldInfo> SkillFields = new Dictionary<string, FieldInfo>()
         {
-            _context = context;
+            { "Id", new FieldInfo("SkillId") { DbType = DbType.Int32 } },
+            { "Name", new FieldInfo("Name") { DbType = DbType.AnsiString, Size = 100 } }
+        }; 
+
+        public SkillMapper(DataContext context) 
+            : base(context)
+        {
         }
 
-        public Skill Get(int id)
+        public override Skill Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT SkillId, Name FROM Skill WHERE SkillId=@id";
@@ -34,14 +38,14 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return Map(reader);
+                    return reader.Read() ? Map(reader) : null;
                 }
             }
         }
 
-        public IList<Skill> GetAll()
+        public override IList<Skill> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT SkillId, Name FROM Skill";
@@ -57,69 +61,72 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Insert(Skill skill)
         {
-            using (var connection = _context.CreateConnection())
-            using (var command = connection.CreateCommand())
+            using (var connection = Context.CreateConnection())
+            using (var insert = connection.CreateCommand() /*new InsertCommandWrapper(connection.CreateCommand())*/)
             {
-                command.CommandText = @"INSERT INTO Skill (Name) VALUES (@name);
+                //insert.Target("Skill")
+                //    .Field(SkillFields["Name"])
+                //    .Values(skill.Name)
+                //    .Apply();
+
+                insert.CommandText = @"INSERT INTO Skill (Name) VALUES (@name);
                                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                SetParameters(command, skill);
+                SetParameters(insert, skill);
 
                 connection.Open();
-                command.Prepare();
+                insert.Prepare();
 
-                skill.Id = (int) command.ExecuteScalar();
+                // TODO: Investigate why, when using the wrapper, a NullReferenceException occurs here.
+                skill.Id = (int )insert.ExecuteScalar();
             }
         }
 
         public void Update(Skill skill)
         {
-            using (var connection = _context.CreateConnection())
-            using (var command = connection.CreateCommand())
+            using (var connection = Context.CreateConnection())
+            using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             {
-                command.CommandText = @"UPDATE Skill SET Name=@name WHERE SkillId=@id";
+                update.Target("Skill")
+                    .Set(SkillFields["Name"], skill.Name)
+                    .Parameter(SkillFields["Id"], "@id", skill.Id)
+                    .Where("SkillId = @id")
+                    .Apply();
+                //update.CommandText = @"UPDATE Skill SET Name=@name WHERE SkillId=@id";
 
-                var idParam = command.CreateParameter();
+                //var idParam = update.CreateParameter();
 
-                idParam.ParameterName = "@id";
-                idParam.Value = skill.Id;
-                idParam.DbType = DbType.Int32;
+                //idParam.ParameterName = "@id";
+                //idParam.Value = skill.Id;
+                //idParam.DbType = DbType.Int32;
 
-                command.Parameters.Add(idParam);
+                //update.Parameters.Add(idParam);
 
-                SetParameters(command, skill);
+                //SetParameters(update, skill);
 
                 connection.Open();
-                command.Prepare();
+                update.Command.Prepare();
 
-                command.ExecuteNonQuery();
+                update.Command.ExecuteNonQuery();
             }
         }
 
-        public Skill Map(IDataReader reader)
+        public override Skill Map(IDataRecord reader)
         {
-            Skill skill = null;
-
-            if (reader.Read())
+            return new Skill
             {
-                skill = new Skill()
-                {
-                    Id = (int) reader["SkillId"],
-                    Name = (string) reader["Name"]
-                };
-            }
-
-            return skill;
+                Id = (int) reader["SkillId"],
+                Name = (string) reader["Name"]
+            };
         }
 
-        public IList<Skill> MapAll(IDataReader reader)
+        public override IList<Skill> MapAll(IDataReader reader)
         {
             var skills = new List<Skill>();
-            Skill skill;
 
-            while ((skill = Map(reader)) != null)
+            while (reader.Read())
             {
-                skills.Add(skill);
+                skills.Add(Map(reader));
             }
 
             return skills;

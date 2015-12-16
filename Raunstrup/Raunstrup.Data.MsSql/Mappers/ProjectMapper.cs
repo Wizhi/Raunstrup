@@ -4,12 +4,12 @@ using System.Data;
 using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
-using Raunstrup.Data.MsSql.Query;
+using Raunstrup.Data.MsSql.Queries;
 using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Mappers
 {
-    class ProjectMapper
+    class ProjectMapper : AbstractMapper<Project>
     {
         private static readonly IDictionary<string, FieldInfo> ProjectFields = new Dictionary<string, FieldInfo>
         {
@@ -22,17 +22,15 @@ namespace Raunstrup.Data.MsSql.Mappers
             { "Project", new FieldInfo("ProjectId") { DbType = DbType.Int32 } },
             { "Employee", new FieldInfo("EmployeeId") { DbType = DbType.Int32} }
         };
-
-        private readonly DataContext _context;
-
+        
         public ProjectMapper(DataContext context)
+            : base(context)
         {
-            _context = context;
         }
 
-        public Project Get(int id)
+        public override Project Get(int id)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT ProjectId, OrderDate, DraftId 
@@ -57,9 +55,9 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public IList<Project> GetAll()
+        public override IList<Project> GetAll()
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT ProjectId, OrderDate, DraftId
@@ -77,7 +75,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Insert(Project project)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var insert = new InsertCommandWrapper(connection.CreateCommand()))
             using (var employeeRelation = new InsertCommandWrapper(connection.CreateCommand()))
             {
@@ -118,7 +116,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
         public void Update(Project project)
         {
-            using (var connection = _context.CreateConnection())
+            using (var connection = Context.CreateConnection())
             using (var update = new UpdateCommandWrapper(connection.CreateCommand()))
             using (var tempCreate = connection.CreateCommand())
             using (var tempInsert = new InsertCommandWrapper(connection.CreateCommand()))
@@ -185,20 +183,20 @@ namespace Raunstrup.Data.MsSql.Mappers
             }
         }
 
-        public Project Map(IDataRecord record)
+        public override Project Map(IDataRecord record)
         {
             var id = (int) record["ProjectId"];
 
             return new GhostProject(
-                new DraftProxy(_context, (int) record["DraftId"]),
-                () => new EmployeesByProjectQuery(id).Execute(_context)
+                new DraftProxy(Context, (int) record["DraftId"]),
+                () => LoadEmployees(id)
             ) {
                 Id = id,
                 OrderDate = (DateTime) record["OrderDate"]
             };
         }
 
-        public IList<Project> MapAll(IDataReader reader)
+        public override IList<Project> MapAll(IDataReader reader)
         {
             var projects = new List<Project>();
 
@@ -209,5 +207,11 @@ namespace Raunstrup.Data.MsSql.Mappers
 
             return projects;
         }
+
+        private IList<Employee> LoadEmployees(int id)
+        {
+            // TODO: Query the employees manually!
+            return new EmployeeMapper(Context).Query(new EmployeesByProjectQuery(id));
+        } 
     }
 }

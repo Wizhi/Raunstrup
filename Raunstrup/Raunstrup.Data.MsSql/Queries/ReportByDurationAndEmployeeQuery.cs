@@ -4,9 +4,9 @@ using System.Data;
 using Raunstrup.Data.MsSql.Mappers;
 using Raunstrup.Domain;
 
-namespace Raunstrup.Data.MsSql.Query
+namespace Raunstrup.Data.MsSql.Queries
 {
-    class ReportByDurationAndEmployeeQuery : IQuery<IList<Report>>
+    class ReportByDurationAndEmployeeQuery : IQuery<Report>
     {
         private readonly DateTime _start;
         private readonly DateTime _end;
@@ -19,9 +19,8 @@ namespace Raunstrup.Data.MsSql.Query
             _employee = employee;
         }
 
-        public IList<Report> Execute(DataContext context)
+        public IDataReader Execute(IDbConnection connection)
         {
-            using (var connection = context.CreateConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT * FROM Report
@@ -50,10 +49,7 @@ namespace Raunstrup.Data.MsSql.Query
                 connection.Open();
                 command.Prepare();
 
-                using (var reader = command.ExecuteReader())
-                {
-                    return new ReportMapper(context).MapAll(reader);
-                }
+                return command.ExecuteReader();
             }
         }
     }
