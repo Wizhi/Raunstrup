@@ -127,6 +127,8 @@ namespace Raunstrup.Forms
             _employeeComboBox.DisplayMember = "Name";
             _employeeComboBox.SelectedItem = null;
             _employeeNameTextBox.Text = "";
+            _employeeCRUDController.CreateNewEmployee();
+            _createNewEmployeeRadioButton.Checked = true;
         }
 
         private void _deleteEmployeeButton_Click(object sender, EventArgs e)
