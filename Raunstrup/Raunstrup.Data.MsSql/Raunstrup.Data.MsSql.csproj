@@ -68,6 +68,7 @@
     <Compile Include="Proxies\ProductProxy.cs" />
     <Compile Include="Proxies\ProjectProxy.cs" />
     <Compile Include="Proxies\SkillProxy.cs" />
+    <Compile Include="Query\DraftsNotAssociatedWithProjectQuery.cs" />
     <Compile Include="Query\EmployeesByProjectQuery.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\ReportByDurationAndEmployeeQuery.cs" />

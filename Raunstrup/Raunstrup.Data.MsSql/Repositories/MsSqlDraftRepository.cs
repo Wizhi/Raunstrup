@@ -49,5 +49,10 @@ namespace Raunstrup.Data.MsSql.Repositories
         {
             return new DraftsAssociatedWithProjectQuery().Execute(_context);
         }
+
+        public IList<Draft> GetDraftsNotAssociatedWithAProject()
+        {
+            return new DraftsNotAssociatedWithProjectQuery().Execute(_context);
+        }
     }
 }

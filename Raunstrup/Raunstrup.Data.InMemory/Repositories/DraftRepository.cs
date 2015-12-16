@@ -20,5 +20,10 @@ namespace Raunstrup.Data.InMemory.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public IList<Draft> GetDraftsNotAssociatedWithAProject()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -8,8 +8,13 @@ namespace Raunstrup.Data.Repositories
         /// <summary>
         /// Gets all <see cref="Draft"/>s, which have a <see cref="Project"/> associated with them.
         /// </summary>
-        /// <remarks>What in the flying fishsticks is this stupid name?</remarks>
-        /// <returns>Pain.</returns>
+        /// <returns></returns>
         IList<Draft> GetDraftsAssociatedWithAProject();
+
+        /// <summary>
+        /// Gets all <see cref="Draft"/>s, which do not have a <see cref="Project"/> associated with them.
+        /// </summary>
+        /// <returns></returns>
+        IList<Draft> GetDraftsNotAssociatedWithAProject();
     }
 }
