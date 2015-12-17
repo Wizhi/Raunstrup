@@ -31,6 +31,7 @@ namespace Raunstrup.Forms
             _employeeComboBox.SelectedItem = null;
             _addEmployeeToSkillLVButton.Enabled = false;
             _createNewEmployeeRadioButton.Checked = true;
+            _skillOLV.UseFiltering = true;
         }
 
         
