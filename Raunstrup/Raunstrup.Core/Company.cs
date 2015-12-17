@@ -21,15 +21,11 @@ namespace Raunstrup.Core
 
         public Company()
         {
-            
             // Bootstrapping the DataContext
-            var con = ConfigurationManager.ConnectionStrings["Raunstrup"];
-            var provider = DbProviderFactories.GetFactory(con.ProviderName);
+            var settings = ConfigurationManager.ConnectionStrings["Raunstrup"];
+            var provider = DbProviderFactories.GetFactory(settings.ProviderName);
 
-            var connection = provider.CreateConnection();
-            connection.ConnectionString = con.ConnectionString;
-
-            var context = new DataContext(provider, con.ConnectionString);
+            var context = new DataContext(provider, settings.ConnectionString);
 
             _draftRepository = new MsSqlDraftRepository(context);
             _projectRepository = new MsSqlProjectRepository(context);
