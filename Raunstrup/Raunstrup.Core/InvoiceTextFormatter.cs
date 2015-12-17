@@ -24,10 +24,10 @@ namespace Raunstrup.Core
             {
                 temp = draft.Customer.Name.Length;
             }
-            //if (temp < draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length)
-            //{
-            //    temp = draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length;
-            //}
+            if (temp < draft.Customer.StreetName.Length + draft.Customer.StreetNumber.Length)
+            {
+                temp = draft.Customer.StreetName.Length + draft.Customer.StreetNumber.Length;
+            }
             //if (temp < companyName.Length)
             //{
             //    temp = companyName.Length;
