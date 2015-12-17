@@ -70,7 +70,7 @@ namespace Raunstrup.Core.Statistics
                     hoursinvoiced += valuepair.Value;
                 }
             }
-            return (hoursinvoiced / (workingdays * 7));
+            return (hoursinvoiced / (workingdays * 7)*100);
         }
 
         //This processes the reports, finding all reportlines with workhours in it
