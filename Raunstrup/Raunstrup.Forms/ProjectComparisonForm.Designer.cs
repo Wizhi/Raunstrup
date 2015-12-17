@@ -48,9 +48,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 13);
+            this.label1.Size = new System.Drawing.Size(141, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Indivinduelt forburg for projekt";
+            this.label1.Text = "Individuelt forbrug for projekt";
             // 
             // label2
             // 
