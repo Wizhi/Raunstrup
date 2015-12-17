@@ -44,6 +44,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.statistikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forbrugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EmployeeSkills = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.AvailableEmployeeSkills = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this._employeesOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._availableEmployeesOLV)).BeginInit();
             this._employeesGroupBox.SuspendLayout();
@@ -77,9 +79,11 @@
             // _employeesOLV
             // 
             this._employeesOLV.AllColumns.Add(this.EmployeeName);
+            this._employeesOLV.AllColumns.Add(this.EmployeeSkills);
             this._employeesOLV.CellEditUseWholeCell = false;
             this._employeesOLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.EmployeeName});
+            this.EmployeeName,
+            this.EmployeeSkills});
             this._employeesOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._employeesOLV.FullRowSelect = true;
             this._employeesOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
@@ -89,13 +93,13 @@
             this._employeesOLV.Size = new System.Drawing.Size(256, 313);
             this._employeesOLV.TabIndex = 3;
             this._employeesOLV.UseCompatibleStateImageBehavior = false;
+            this._employeesOLV.UseFiltering = true;
             this._employeesOLV.View = System.Windows.Forms.View.Details;
             this._employeesOLV.SelectionChanged += new System.EventHandler(this._employeesOLV_SelectionChanged);
             // 
             // EmployeeName
             // 
             this.EmployeeName.AspectName = "Name";
-            this.EmployeeName.FillsFreeSpace = true;
             this.EmployeeName.Groupable = false;
             this.EmployeeName.IsEditable = false;
             this.EmployeeName.Text = "Navn";
@@ -103,9 +107,11 @@
             // _availableEmployeesOLV
             // 
             this._availableEmployeesOLV.AllColumns.Add(this.AvailableEmployeeName);
+            this._availableEmployeesOLV.AllColumns.Add(this.AvailableEmployeeSkills);
             this._availableEmployeesOLV.CellEditUseWholeCell = false;
             this._availableEmployeesOLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.AvailableEmployeeName});
+            this.AvailableEmployeeName,
+            this.AvailableEmployeeSkills});
             this._availableEmployeesOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._availableEmployeesOLV.FullRowSelect = true;
             this._availableEmployeesOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
@@ -115,13 +121,13 @@
             this._availableEmployeesOLV.Size = new System.Drawing.Size(258, 313);
             this._availableEmployeesOLV.TabIndex = 4;
             this._availableEmployeesOLV.UseCompatibleStateImageBehavior = false;
+            this._availableEmployeesOLV.UseFiltering = true;
             this._availableEmployeesOLV.View = System.Windows.Forms.View.Details;
             this._availableEmployeesOLV.SelectionChanged += new System.EventHandler(this._availableEmployeesOLV_SelectionChanged);
             // 
             // AvailableEmployeeName
             // 
             this.AvailableEmployeeName.AspectName = "Name";
-            this.AvailableEmployeeName.FillsFreeSpace = true;
             this.AvailableEmployeeName.Groupable = false;
             this.AvailableEmployeeName.IsEditable = false;
             this.AvailableEmployeeName.Text = "Navn";
@@ -230,6 +236,20 @@
             this.forbrugToolStripMenuItem.Text = "Forbrug";
             this.forbrugToolStripMenuItem.Click += new System.EventHandler(this.forbrugToolStripMenuItem_Click);
             // 
+            // EmployeeSkills
+            // 
+            this.EmployeeSkills.AspectName = "Skills";
+            this.EmployeeSkills.FillsFreeSpace = true;
+            this.EmployeeSkills.Groupable = false;
+            this.EmployeeSkills.Text = "Færdigheder";
+            // 
+            // AvailableEmployeeSkills
+            // 
+            this.AvailableEmployeeSkills.AspectName = "Skills";
+            this.AvailableEmployeeSkills.FillsFreeSpace = true;
+            this.AvailableEmployeeSkills.Groupable = false;
+            this.AvailableEmployeeSkills.Text = "Færdigheder";
+            // 
             // ProjectManagementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -270,5 +290,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem statistikToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forbrugToolStripMenuItem;
+        private BrightIdeasSoftware.OLVColumn EmployeeSkills;
+        private BrightIdeasSoftware.OLVColumn AvailableEmployeeSkills;
     }
 }

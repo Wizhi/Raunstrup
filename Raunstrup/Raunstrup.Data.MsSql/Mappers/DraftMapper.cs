@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using Raunstrup.Data.MsSql.Command;
 using Raunstrup.Data.MsSql.Ghost;
 using Raunstrup.Data.MsSql.Proxies;
@@ -163,18 +165,25 @@ namespace Raunstrup.Data.MsSql.Mappers
                     draftInsert.Command.Transaction = transaction;
                     orderLinesInsert.Command.Transaction = transaction;
 
-                    var draftId = draftInsert.Command.ExecuteScalar();
-
-                    if (draft.OrderLines.Count > 0)
+                    try
                     {
-                        draftIdParameter.Value = draftId;
-                        orderLinesInsert.Apply().Command.Prepare();
-                        orderLinesInsert.Command.ExecuteNonQuery();
+                        var draftId = draftInsert.Command.ExecuteScalar();
+                        
+                        if (draft.OrderLines.Count > 0)
+                        {
+                            draftIdParameter.Value = draftId;
+                            orderLinesInsert.Apply().Command.Prepare();
+                            orderLinesInsert.Command.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        
+                        draft.Id = (int)draftId;
                     }
-
-                    transaction.Commit();
-
-                    draft.Id = (int) draftId;
+                    catch (DbException)
+                    {
+                        transaction.Rollback();
+                    }
                 }
             }
         }
@@ -253,18 +262,25 @@ namespace Raunstrup.Data.MsSql.Mappers
                     tempInsert.Command.Transaction = transaction;
                     merge.Transaction = transaction;
 
-                    update.Command.ExecuteNonQuery();
-                    tempCreate.ExecuteNonQuery();
-
-                    if (draft.OrderLines.Count > 0)
+                    try
                     {
-                        tempInsert.Command.Prepare();
-                        tempInsert.Command.ExecuteNonQuery();
+                        update.Command.ExecuteNonQuery();
+                        tempCreate.ExecuteNonQuery();
+
+                        if (draft.OrderLines.Count > 0)
+                        {
+                            tempInsert.Command.Prepare();
+                            tempInsert.Command.ExecuteNonQuery();
+                        }
+
+                        merge.ExecuteNonQuery();
+
+                        transaction.Commit();
                     }
-
-                    merge.ExecuteNonQuery();
-
-                    transaction.Commit();
+                    catch (DbException)
+                    {
+                        transaction.Rollback();
+                    }
                 }
             }
         }

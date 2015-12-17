@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 using Raunstrup.Core;
@@ -24,6 +26,9 @@ namespace Raunstrup.Forms
 
         private void ProjectManagementForm_Load(object sender, EventArgs e)
         {
+            EmployeeSkills.AspectGetter = x => string.Join(", ", ((ReadOnlyEmployee) x).Skills.Select(y => y.Name));
+            AvailableEmployeeSkills.AspectGetter = x => string.Join(", ", ((ReadOnlyEmployee)x).Skills.Select(y => y.Name));
+
             _employeesOLV.SetObjects(_project.Employees);
             _availableEmployeesOLV.SetObjects(_controller.GetAvailableEmployees());
         }
