@@ -336,6 +336,7 @@ namespace Raunstrup.Forms
         private void printInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _draftController.PrintInvoice();
+            MessageBox.Show(@"Filen blev udskrevet.");
         }
     }
 }
