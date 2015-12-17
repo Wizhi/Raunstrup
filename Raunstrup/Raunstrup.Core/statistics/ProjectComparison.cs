@@ -45,13 +45,13 @@ namespace Raunstrup.Core.Statistics
             {
                 foreach (var line in report.ReportLines)
                 {
-                    if (amountsInReportLines.ContainsKey(line.GetLineItem().Id))
+                    if (amountsInReportLines.ContainsKey(line.Product.Id))
                     {
-                        amountsInReportLines[line.GetLineItem().Id] += line.Quantity;
+                        amountsInReportLines[line.Product.Id] += line.Quantity;
                     }
                     else
                     {
-                        amountsInReportLines.Add(line.GetLineItem().Id, line.Quantity);
+                        amountsInReportLines.Add(line.Product.Id, line.Quantity);
                     }
                 }
             }

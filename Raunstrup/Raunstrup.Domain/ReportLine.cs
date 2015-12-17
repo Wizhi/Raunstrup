@@ -28,14 +28,5 @@ namespace Raunstrup.Domain
             Product = product;
             Quantity = quantity;
         }
-        public Product GetLineItem()
-        {
-            return Product;
-        }
-
-        public int GetQuantity()
-        {
-            return Quantity;
-        }
     }
 }
