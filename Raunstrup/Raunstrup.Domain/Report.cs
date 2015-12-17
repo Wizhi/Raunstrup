@@ -33,11 +33,6 @@ namespace Raunstrup.Domain
         public virtual Project Project { get; private set; }
         public virtual DateTime Date { get; set; }
         public virtual IList<ReportLine> ReportLines { get; private set; } 
-        
-        public IList<ReportLine> GetLines()
-        {
-            return ReportLines;
-        }
 
         public void AddReportLine(Product item, int quantity)
         {

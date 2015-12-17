@@ -43,7 +43,7 @@ namespace Raunstrup.Core.Statistics
             var amountsInReportLines = new Dictionary<int , int>();
             foreach (var report in reports)
             {
-                foreach (var line in report.GetLines())
+                foreach (var line in report.ReportLines)
                 {
                     if (amountsInReportLines.ContainsKey(line.GetLineItem().Id))
                     {
