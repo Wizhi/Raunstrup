@@ -4,11 +4,11 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Ghost
 {
-    class ReportGhost : Report
+    class GhostReport : Report
     {
         private readonly Lazy<IList<ReportLine>> _reportLines;
 
-        public ReportGhost(Employee employee, Project project, Func<IList<ReportLine>> reportLines)
+        public GhostReport(Employee employee, Project project, Func<IList<ReportLine>> reportLines)
             : base(employee, project)
         {
             _reportLines = new Lazy<IList<ReportLine>>(reportLines);

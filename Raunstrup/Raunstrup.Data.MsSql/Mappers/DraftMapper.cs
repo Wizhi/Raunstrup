@@ -277,7 +277,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         public override Draft Map(IDataRecord record)
         {
             var id = (int) record["DraftId"];
-            return new DraftGhost(
+            return new GhostDraft(
                 new CustomerProxy(Context, (int) record["CustomerId"]), 
                 (DateTime) record["CreationDate"],
                 () => LoadOrderLines(id)

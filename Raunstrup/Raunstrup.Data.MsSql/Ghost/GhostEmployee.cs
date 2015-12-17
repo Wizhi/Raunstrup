@@ -4,11 +4,11 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Ghost
 {
-    class EmployeeGhost : Employee
+    class GhostEmployee : Employee
     {
         private readonly Lazy<IList<Skill>> _skills;
 
-        public EmployeeGhost(Func<IList<Skill>> skills)
+        public GhostEmployee(Func<IList<Skill>> skills)
         {
             _skills = new Lazy<IList<Skill>>(skills);
         }

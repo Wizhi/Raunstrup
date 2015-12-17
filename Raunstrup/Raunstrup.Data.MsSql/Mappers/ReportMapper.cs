@@ -206,7 +206,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         public override Report Map(IDataRecord record)
         {
             var id = (int) record["ReportId"];
-            var report = new ReportGhost(
+            var report = new GhostReport(
                 new EmployeeProxy(Context, (int) record["EmployeeId"]), 
                 new ProjectProxy(Context, (int) record["ProjectId"]),
                 () => LoadReportLines(id)

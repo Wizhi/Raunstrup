@@ -49,10 +49,10 @@
     <Compile Include="Command\ParameterInfo.cs" />
     <Compile Include="Command\UpdateCommandWrapper.cs" />
     <Compile Include="DataContext.cs" />
-    <Compile Include="Ghost\DraftGhost.cs" />
-    <Compile Include="Ghost\EmployeeGhost.cs" />
+    <Compile Include="Ghost\GhostDraft.cs" />
+    <Compile Include="Ghost\GhostEmployee.cs" />
     <Compile Include="Ghost\GhostProject.cs" />
-    <Compile Include="Ghost\ReportGhost.cs" />
+    <Compile Include="Ghost\GhostReport.cs" />
     <Compile Include="Mappers\AbstractMapper.cs" />
     <Compile Include="Mappers\CustomerMapper.cs" />
     <Compile Include="Mappers\DraftMapper.cs" />

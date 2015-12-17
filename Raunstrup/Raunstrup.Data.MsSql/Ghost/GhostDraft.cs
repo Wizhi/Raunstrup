@@ -4,12 +4,12 @@ using Raunstrup.Domain;
 
 namespace Raunstrup.Data.MsSql.Ghost
 {
-    class DraftGhost : Draft
+    class GhostDraft : Draft
     {
         private readonly Lazy<IList<OrderLine>> _orderLines;
         private readonly DateTime _creationDate;
 
-        public DraftGhost(Customer customer, DateTime creationDate, Func<IList<OrderLine>> orderLines) 
+        public GhostDraft(Customer customer, DateTime creationDate, Func<IList<OrderLine>> orderLines) 
             : base(customer)
         {
             _orderLines = new Lazy<IList<OrderLine>>(orderLines);

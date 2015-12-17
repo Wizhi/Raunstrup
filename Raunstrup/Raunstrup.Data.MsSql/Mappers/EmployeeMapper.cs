@@ -182,7 +182,7 @@ namespace Raunstrup.Data.MsSql.Mappers
         {
             var id = (int) record["EmployeeId"];
 
-            return new EmployeeGhost(() => LoadSkills(id))
+            return new GhostEmployee(() => LoadSkills(id))
             {
                 Id = id,
                 Name = (string) record["Name"]
