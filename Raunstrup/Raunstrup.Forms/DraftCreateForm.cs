@@ -332,5 +332,10 @@ namespace Raunstrup.Forms
             var projectForm = new ProjectManagementForm(_company,_draftController.GetProject().Id);
             projectForm.ShowDialog();
         }
+
+        private void printInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _draftController.PrintInvoice();
+        }
     }
 }
