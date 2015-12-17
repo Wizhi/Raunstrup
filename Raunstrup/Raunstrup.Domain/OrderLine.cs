@@ -34,14 +34,5 @@ namespace Raunstrup.Domain
 
         public OrderLine(Product item, int quantity) : this(item, quantity, item.SalesPrice) { }
 
-        public Product GetProduct()
-        {
-            return Product;
-        }
-
-        public int GetQuantity()
-        {
-            return Quantity;
-        }
     }
 }

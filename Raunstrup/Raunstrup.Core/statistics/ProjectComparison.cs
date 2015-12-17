@@ -29,14 +29,14 @@ namespace Raunstrup.Core.Statistics
             //Finds and maps amount of products in orderlines
             foreach (var line in orderLines)
             {
-                if (amountsInOrderlines.ContainsKey(line.GetProduct().Id))
+                if (amountsInOrderlines.ContainsKey(line.Product.Id))
                 {
-                    amountsInOrderlines[line.GetProduct().Id] += line.GetQuantity();
+                    amountsInOrderlines[line.Product.Id] += line.Quantity;
                 }
                 else
                 {
-                    ProductIdentityMap.Add(line.GetProduct().Id,line.Product);
-                    amountsInOrderlines.Add(line.GetProduct().Id, line.GetQuantity()); 
+                    ProductIdentityMap.Add(line.Product.Id,line.Product);
+                    amountsInOrderlines.Add(line.Product.Id, line.Quantity); 
                 }
             }
             //Do the same for the report lines
@@ -47,11 +47,11 @@ namespace Raunstrup.Core.Statistics
                 {
                     if (amountsInReportLines.ContainsKey(line.GetLineItem().Id))
                     {
-                        amountsInReportLines[line.GetLineItem().Id] += line.GetQuantity();
+                        amountsInReportLines[line.GetLineItem().Id] += line.Quantity;
                     }
                     else
                     {
-                        amountsInReportLines.Add(line.GetLineItem().Id, line.GetQuantity());
+                        amountsInReportLines.Add(line.GetLineItem().Id, line.Quantity);
                     }
                 }
             }
