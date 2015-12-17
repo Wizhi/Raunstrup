@@ -180,7 +180,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                         
                         draft.Id = (int)draftId;
                     }
-                    catch (DbException)
+                    catch (Exception)
                     {
                         transaction.Rollback();
                     }
@@ -277,7 +277,7 @@ namespace Raunstrup.Data.MsSql.Mappers
 
                         transaction.Commit();
                     }
-                    catch (DbException)
+                    catch (Exception)
                     {
                         transaction.Rollback();
                     }
