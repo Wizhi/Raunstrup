@@ -35,7 +35,7 @@ namespace Raunstrup.Core.Controllers
         public IEnumerable<ReadOnlyEmployee> GetAvailableEmployees()
         {
             return _employeeRepository.GetAll()
-                .Except(_project.Employees)
+                .Where(x => _project.Employees.Any(y => y.Id != x.Id))
                 .Select(employee => new ReadOnlyEmployee(employee))
                 .ToList();
         }
