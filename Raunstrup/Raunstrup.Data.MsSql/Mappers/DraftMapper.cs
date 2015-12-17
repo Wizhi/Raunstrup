@@ -137,7 +137,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                         draft.CreationDate, draft.StartDate, 
                         draft.EndDate, draft.DiscountPercentage,
                         draft.Type == Draft.DraftType.Offer,
-                        draft.Customer.Id, draft.ResponsiblEmployee.Id
+                        draft.Customer.Id, draft.ResponsibleEmployee.Id
                     )
                     .Apply();
 
@@ -305,7 +305,7 @@ namespace Raunstrup.Data.MsSql.Mappers
                 EndDate = (DateTime)record["EndDate"],
                 StartDate = (DateTime) record["StartDate"],
                 Type = (bool) record["IsOffer"] ? Draft.DraftType.Offer : Draft.DraftType.Estimate,
-                ResponsiblEmployee = new EmployeeProxy(Context, (int) record["ResponsibleEmployeeId"]),
+                ResponsibleEmployee = new EmployeeProxy(Context, (int) record["ResponsibleEmployeeId"]),
                 Project = record["ProjectId"] is DBNull ? null : new ProjectProxy(Context, (int) record["ProjectId"])
             };
         }

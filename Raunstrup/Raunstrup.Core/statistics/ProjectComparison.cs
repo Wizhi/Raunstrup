@@ -20,7 +20,7 @@ namespace Raunstrup.Core.Statistics
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
-            IList<OrderLine> orderLines = _project.Draft.GetOrderLines();
+            IList<OrderLine> orderLines = _project.Draft.OrderLines;
             Dictionary<int, int> amountsInOrderlines = new Dictionary<int, int>();
             //Creates a identity map, to map an id to a product, this is due to a weakness
             //In the dataacesse code, which create several objects repersenting the same product
