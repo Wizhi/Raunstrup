@@ -275,6 +275,7 @@ namespace Raunstrup.Forms
             _editOrderLineButton.Enabled = _customerComboBox.SelectedIndex > -1;
             _quantityNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
             _priceNumericUpDown.Enabled = _customerComboBox.SelectedIndex > -1;
+            _saveDraftButton.Enabled = _customerComboBox.SelectedIndex > -1;
         }
 
         private void _filterTextBox_TextChanged(object sender, EventArgs e)
