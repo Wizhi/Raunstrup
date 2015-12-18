@@ -122,7 +122,7 @@ namespace Raunstrup.Forms
                 _company.CreateReportController().ReadReport(dialog.FileName);
 
                 // TODO: Handle report not actually being inserted.
-                MessageBox.Show("Rapport blev indlæst.")
+                MessageBox.Show("Rapport blev indlæst.");
             }
         }
 
