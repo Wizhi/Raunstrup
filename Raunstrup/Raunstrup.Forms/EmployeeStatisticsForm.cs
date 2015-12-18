@@ -48,7 +48,7 @@ namespace Raunstrup.Forms
 
         private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(@"Help/EmployeeStatisticsForm.pdf");
+            System.Diagnostics.Process.Start(@"Help\EmployeeStatisticsForm.pdf");
         }
     }
 }

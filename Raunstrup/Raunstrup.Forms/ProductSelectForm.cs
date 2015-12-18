@@ -118,7 +118,7 @@ namespace Raunstrup.Forms
 
         private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(@"Help/ProductSelectForm.pdf");
+            Process.Start(@"Help\ProductSelectForm.pdf");
         }
     }
 }

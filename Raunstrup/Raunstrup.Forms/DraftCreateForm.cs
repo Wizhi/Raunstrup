@@ -343,7 +343,7 @@ namespace Raunstrup.Forms
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(@"Help/DraftCreateForm.pdf");
+            Process.Start(@"Help\DraftCreateForm.pdf");
         }
     }
 }

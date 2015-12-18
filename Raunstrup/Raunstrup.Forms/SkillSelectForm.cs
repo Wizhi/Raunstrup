@@ -80,7 +80,7 @@ namespace Raunstrup.Forms
 
         private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(@"Help/SkillSelectForm.pdf");
+            Process.Start(@"Help\SkillSelectForm.pdf");
         }
     }
 }
