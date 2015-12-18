@@ -120,6 +120,9 @@ namespace Raunstrup.Forms
             {
                 // TODO: Implement a better way of handling reading the report.
                 _company.CreateReportController().ReadReport(dialog.FileName);
+
+                // TODO: Handle report not actually being inserted.
+                MessageBox.Show("Rapport blev indlæst.")
             }
         }
 
