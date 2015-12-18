@@ -80,6 +80,8 @@ namespace Raunstrup.Forms
         private void _saveButton_Click(object sender, EventArgs e)
         {
             _controller.Save();
+
+            MessageBox.Show("Projektet blev opdateret.");
         }
 
         private void _filterTextBox_TextChanged(object sender, EventArgs e)
