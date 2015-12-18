@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -136,5 +137,9 @@ namespace Raunstrup.Forms
             _employeeCRUDController.DeleteEmployee();
         }
 
+        private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"Help/EmplpoyeeCRUDForm.pdf");
+        }
     }
 }

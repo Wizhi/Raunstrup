@@ -45,5 +45,10 @@ namespace Raunstrup.Forms
             }
             InvoicedDegreeLabel.Text = employeeStatistics.GetHoursInvoicedDegree().ToString() + "%";
         }
+
+        private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"Help/EmployeeStatisticsForm.pdf");
+        }
     }
 }

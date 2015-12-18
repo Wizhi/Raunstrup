@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -338,6 +339,11 @@ namespace Raunstrup.Forms
         {
             _draftController.PrintInvoice();
             MessageBox.Show(@"Filen blev udskrevet.");
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"Help/DraftCreateForm.pdf");
         }
     }
 }

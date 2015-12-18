@@ -39,6 +39,7 @@
             this.varerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statistikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ansatteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.indlæsRapportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._draftOLV = new BrightIdeasSoftware.ObjectListView();
             this.DraftTitle = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.DraftDate = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -47,7 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this._openDraftButton = new System.Windows.Forms.Button();
             this._createDraftButton = new System.Windows.Forms.Button();
-            this.indlæsRapportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._projectOLV)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._draftOLV)).BeginInit();
@@ -68,7 +69,7 @@
             this._projectOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._projectOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._projectOLV.Location = new System.Drawing.Point(16, 54);
-            this._projectOLV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._projectOLV.Margin = new System.Windows.Forms.Padding(4);
             this._projectOLV.MultiSelect = false;
             this._projectOLV.Name = "_projectOLV";
             this._projectOLV.Size = new System.Drawing.Size(345, 272);
@@ -104,7 +105,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.katalogToolStripMenuItem,
             this.statistikToolStripMenuItem,
-            this.indlæsRapportToolStripMenuItem});
+            this.indlæsRapportToolStripMenuItem,
+            this._helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
@@ -158,6 +160,13 @@
             this.ansatteToolStripMenuItem1.Text = "Ansatte";
             this.ansatteToolStripMenuItem1.Click += new System.EventHandler(this.ansatteToolStripMenuItem1_Click);
             // 
+            // indlæsRapportToolStripMenuItem
+            // 
+            this.indlæsRapportToolStripMenuItem.Name = "indlæsRapportToolStripMenuItem";
+            this.indlæsRapportToolStripMenuItem.Size = new System.Drawing.Size(118, 24);
+            this.indlæsRapportToolStripMenuItem.Text = "Indlæs rapport";
+            this.indlæsRapportToolStripMenuItem.Click += new System.EventHandler(this.indlæsRapportToolStripMenuItem_Click);
+            // 
             // _draftOLV
             // 
             this._draftOLV.AllColumns.Add(this.DraftTitle);
@@ -173,7 +182,7 @@
             this._draftOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._draftOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
             this._draftOLV.Location = new System.Drawing.Point(371, 54);
-            this._draftOLV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._draftOLV.Margin = new System.Windows.Forms.Padding(4);
             this._draftOLV.MultiSelect = false;
             this._draftOLV.Name = "_draftOLV";
             this._draftOLV.Size = new System.Drawing.Size(345, 272);
@@ -226,7 +235,7 @@
             // _openDraftButton
             // 
             this._openDraftButton.Location = new System.Drawing.Point(617, 335);
-            this._openDraftButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._openDraftButton.Margin = new System.Windows.Forms.Padding(4);
             this._openDraftButton.Name = "_openDraftButton";
             this._openDraftButton.Size = new System.Drawing.Size(100, 28);
             this._openDraftButton.TabIndex = 5;
@@ -237,7 +246,7 @@
             // _createDraftButton
             // 
             this._createDraftButton.Location = new System.Drawing.Point(509, 335);
-            this._createDraftButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._createDraftButton.Margin = new System.Windows.Forms.Padding(4);
             this._createDraftButton.Name = "_createDraftButton";
             this._createDraftButton.Size = new System.Drawing.Size(100, 28);
             this._createDraftButton.TabIndex = 7;
@@ -245,12 +254,13 @@
             this._createDraftButton.UseVisualStyleBackColor = true;
             this._createDraftButton.Click += new System.EventHandler(this._createDraftButton_Click);
             // 
-            // indlæsRapportToolStripMenuItem
+            // _helpToolStripMenuItem
             // 
-            this.indlæsRapportToolStripMenuItem.Name = "indlæsRapportToolStripMenuItem";
-            this.indlæsRapportToolStripMenuItem.Size = new System.Drawing.Size(118, 24);
-            this.indlæsRapportToolStripMenuItem.Text = "Indlæs rapport";
-            this.indlæsRapportToolStripMenuItem.Click += new System.EventHandler(this.indlæsRapportToolStripMenuItem_Click);
+            this._helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._helpToolStripMenuItem.Name = "_helpToolStripMenuItem";
+            this._helpToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this._helpToolStripMenuItem.Text = "Hjælp";
+            this._helpToolStripMenuItem.Click += new System.EventHandler(this._helpToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -265,7 +275,7 @@
             this.Controls.Add(this._projectOLV);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -300,5 +310,6 @@
         private System.Windows.Forms.ToolStripMenuItem ansatteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem varerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem indlæsRapportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _helpToolStripMenuItem;
     }
 }

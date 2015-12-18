@@ -32,8 +32,10 @@
             this._employeeAddButton = new System.Windows.Forms.Button();
             this._employeesOLV = new BrightIdeasSoftware.ObjectListView();
             this.EmployeeName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.EmployeeSkills = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this._availableEmployeesOLV = new BrightIdeasSoftware.ObjectListView();
             this.AvailableEmployeeName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.AvailableEmployeeSkills = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this._filterTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,8 +46,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.statistikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forbrugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EmployeeSkills = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.AvailableEmployeeSkills = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this._helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._employeesOLV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._availableEmployeesOLV)).BeginInit();
             this._employeesGroupBox.SuspendLayout();
@@ -104,6 +105,13 @@
             this.EmployeeName.IsEditable = false;
             this.EmployeeName.Text = "Navn";
             // 
+            // EmployeeSkills
+            // 
+            this.EmployeeSkills.AspectName = "Skills";
+            this.EmployeeSkills.FillsFreeSpace = true;
+            this.EmployeeSkills.Groupable = false;
+            this.EmployeeSkills.Text = "Færdigheder";
+            // 
             // _availableEmployeesOLV
             // 
             this._availableEmployeesOLV.AllColumns.Add(this.AvailableEmployeeName);
@@ -131,6 +139,13 @@
             this.AvailableEmployeeName.Groupable = false;
             this.AvailableEmployeeName.IsEditable = false;
             this.AvailableEmployeeName.Text = "Navn";
+            // 
+            // AvailableEmployeeSkills
+            // 
+            this.AvailableEmployeeSkills.AspectName = "Skills";
+            this.AvailableEmployeeSkills.FillsFreeSpace = true;
+            this.AvailableEmployeeSkills.Groupable = false;
+            this.AvailableEmployeeSkills.Text = "Færdigheder";
             // 
             // _filterTextBox
             // 
@@ -214,7 +229,8 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statistikToolStripMenuItem});
+            this.statistikToolStripMenuItem,
+            this._helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(630, 28);
@@ -236,19 +252,13 @@
             this.forbrugToolStripMenuItem.Text = "Forbrug";
             this.forbrugToolStripMenuItem.Click += new System.EventHandler(this.forbrugToolStripMenuItem_Click);
             // 
-            // EmployeeSkills
+            // _helpToolStripMenuItem
             // 
-            this.EmployeeSkills.AspectName = "Skills";
-            this.EmployeeSkills.FillsFreeSpace = true;
-            this.EmployeeSkills.Groupable = false;
-            this.EmployeeSkills.Text = "Færdigheder";
-            // 
-            // AvailableEmployeeSkills
-            // 
-            this.AvailableEmployeeSkills.AspectName = "Skills";
-            this.AvailableEmployeeSkills.FillsFreeSpace = true;
-            this.AvailableEmployeeSkills.Groupable = false;
-            this.AvailableEmployeeSkills.Text = "Færdigheder";
+            this._helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._helpToolStripMenuItem.Name = "_helpToolStripMenuItem";
+            this._helpToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
+            this._helpToolStripMenuItem.Text = "Hælp";
+            this._helpToolStripMenuItem.Click += new System.EventHandler(this._helpToolStripMenuItem_Click);
             // 
             // ProjectManagementForm
             // 
@@ -292,5 +302,6 @@
         private System.Windows.Forms.ToolStripMenuItem forbrugToolStripMenuItem;
         private BrightIdeasSoftware.OLVColumn EmployeeSkills;
         private BrightIdeasSoftware.OLVColumn AvailableEmployeeSkills;
+        private System.Windows.Forms.ToolStripMenuItem _helpToolStripMenuItem;
     }
 }

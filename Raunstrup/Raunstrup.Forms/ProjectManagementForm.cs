@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
@@ -61,11 +62,13 @@ namespace Raunstrup.Forms
 
         private void _employeesOLV_SelectionChanged(object sender, EventArgs e)
         {
+            _availableEmployeesOLV.SelectedIndex = -1;
             _employeeRemoveButton.Enabled = _employeesOLV.SelectedIndices.Count > 0;
         }
 
         private void _availableEmployeesOLV_SelectionChanged(object sender, EventArgs e)
         {
+            _employeesOLV.SelectedIndex = -1;
             _employeeAddButton.Enabled = _availableEmployeesOLV.SelectedIndices.Count > 0;
         }
 
@@ -91,6 +94,11 @@ namespace Raunstrup.Forms
         private void forbrugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ProjectComparisonForm(_company, _project.Id).ShowDialog();
+        }
+
+        private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"Help/ProjectManagementForm.pdf");
         }
     }
 }

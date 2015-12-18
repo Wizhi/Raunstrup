@@ -37,6 +37,9 @@
             this._createNewProductButton = new System.Windows.Forms.Button();
             this._editProductButton = new System.Windows.Forms.Button();
             this._deleteProductButton = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this._helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _productListView
@@ -55,9 +58,10 @@
             listViewGroup1,
             listViewGroup2,
             listViewGroup3});
-            this._productListView.Location = new System.Drawing.Point(12, 12);
+            this._productListView.Location = new System.Drawing.Point(13, 28);
+            this._productListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this._productListView.Name = "_productListView";
-            this._productListView.Size = new System.Drawing.Size(237, 243);
+            this._productListView.Size = new System.Drawing.Size(315, 298);
             this._productListView.TabIndex = 0;
             this._productListView.UseCompatibleStateImageBehavior = false;
             this._productListView.View = System.Windows.Forms.View.Details;
@@ -74,9 +78,10 @@
             // 
             // _createNewProductButton
             // 
-            this._createNewProductButton.Location = new System.Drawing.Point(12, 261);
+            this._createNewProductButton.Location = new System.Drawing.Point(13, 334);
+            this._createNewProductButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this._createNewProductButton.Name = "_createNewProductButton";
-            this._createNewProductButton.Size = new System.Drawing.Size(75, 23);
+            this._createNewProductButton.Size = new System.Drawing.Size(100, 28);
             this._createNewProductButton.TabIndex = 1;
             this._createNewProductButton.Text = "Opret ny";
             this._createNewProductButton.UseVisualStyleBackColor = true;
@@ -84,9 +89,10 @@
             // 
             // _editProductButton
             // 
-            this._editProductButton.Location = new System.Drawing.Point(93, 261);
+            this._editProductButton.Location = new System.Drawing.Point(121, 334);
+            this._editProductButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this._editProductButton.Name = "_editProductButton";
-            this._editProductButton.Size = new System.Drawing.Size(75, 23);
+            this._editProductButton.Size = new System.Drawing.Size(100, 28);
             this._editProductButton.TabIndex = 2;
             this._editProductButton.Text = "Rediger";
             this._editProductButton.UseVisualStyleBackColor = true;
@@ -94,26 +100,52 @@
             // 
             // _deleteProductButton
             // 
-            this._deleteProductButton.Location = new System.Drawing.Point(174, 261);
+            this._deleteProductButton.Location = new System.Drawing.Point(229, 334);
+            this._deleteProductButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this._deleteProductButton.Name = "_deleteProductButton";
-            this._deleteProductButton.Size = new System.Drawing.Size(75, 23);
+            this._deleteProductButton.Size = new System.Drawing.Size(100, 28);
             this._deleteProductButton.TabIndex = 3;
             this._deleteProductButton.Text = "Slet";
             this._deleteProductButton.UseVisualStyleBackColor = true;
             this._deleteProductButton.Click += new System.EventHandler(this._deleteProductButton_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(342, 28);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // _helpToolStripMenuItem
+            // 
+            this._helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this._helpToolStripMenuItem.Name = "_helpToolStripMenuItem";
+            this._helpToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this._helpToolStripMenuItem.Text = "Hjælp";
+            this._helpToolStripMenuItem.Click += new System.EventHandler(this._helpToolStripMenuItem_Click);
+            // 
             // ProductSelectForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 293);
+            this.ClientSize = new System.Drawing.Size(342, 374);
             this.Controls.Add(this._deleteProductButton);
             this.Controls.Add(this._editProductButton);
             this.Controls.Add(this._createNewProductButton);
             this.Controls.Add(this._productListView);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ProductSelectForm";
             this.Text = "ProductSelectForm";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -125,5 +157,7 @@
         private System.Windows.Forms.Button _createNewProductButton;
         private System.Windows.Forms.Button _editProductButton;
         private System.Windows.Forms.Button _deleteProductButton;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem _helpToolStripMenuItem;
     }
 }

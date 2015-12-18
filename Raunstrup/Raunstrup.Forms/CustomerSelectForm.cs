@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -85,6 +86,11 @@ namespace Raunstrup.Forms
                     }
                 }
             }
+        }
+
+        private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"Help/CustomerSelectForm.pdf");
         }
     }
 }

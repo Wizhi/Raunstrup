@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -120,6 +121,11 @@ namespace Raunstrup.Forms
                 // TODO: Implement a better way of handling reading the report.
                 _company.CreateReportController().ReadReport(dialog.FileName);
             }
+        }
+
+        private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"Help/MainForm.pdf");
         }
     }
 }

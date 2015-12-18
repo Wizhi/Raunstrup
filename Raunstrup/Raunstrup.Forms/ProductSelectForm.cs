@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -113,6 +114,11 @@ namespace Raunstrup.Forms
         {
             _productController.DeleteProduct((int)_productListView.FocusedItem.Tag);
             _productListView.Items.Remove(_productListView.FocusedItem);
+        }
+
+        private void _helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"Help/ProductSelectForm.pdf");
         }
     }
 }
