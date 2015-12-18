@@ -31,7 +31,7 @@ namespace Raunstrup.Forms
         {
             foreach (var line in comparison.GetComparisonLines())
             {
-                ComparisonListBox.Items.Add(line.GetProductName() + ": " + line.AmountUsed + " brugt af " + line.AmountOrdered + " = " + line.CalculatePercentage() + "%");
+                ComparisonListBox.Items.Add(line.GetProductName() + ": " + line.AmountUsed + " brugt af " + line.AmountOrdered + " = " + string.Format("{0:0.##}", line.CalculatePercentage()) + "%");
             }
         }
 

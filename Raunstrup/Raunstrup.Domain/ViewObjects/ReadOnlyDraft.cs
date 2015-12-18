@@ -44,7 +44,7 @@ namespace Raunstrup.Domain.ViewObjects
 
         public ReadOnlyEmployee ResponsiblEmployee
         {
-            get { return new ReadOnlyEmployee(_draft.ResponsiblEmployee);}
+            get { return new ReadOnlyEmployee(_draft.ResponsibleEmployee);}
         }
 
         public ReadOnlyCustomer Customer

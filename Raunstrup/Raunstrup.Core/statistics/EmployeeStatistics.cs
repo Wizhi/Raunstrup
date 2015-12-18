@@ -47,7 +47,7 @@ namespace Raunstrup.Core.Statistics
         private void SetupDictionary()
         {
             DateTime current = Start;
-            while (current.CompareTo(End) < 0)
+            while (current.CompareTo(End) <= 0)
             {
                 HoursWorked.Add(current,0);
                 current = current.AddDays(1);

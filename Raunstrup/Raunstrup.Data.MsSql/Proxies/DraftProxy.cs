@@ -21,7 +21,7 @@ namespace Raunstrup.Data.MsSql.Proxies
         public override DateTime EndDate { get { return _real.Value.EndDate; } }
         public override string Title { get { return _real.Value.Title; } }
         public override string Description { get { return _real.Value.Description; } }
-        public override Employee ResponsiblEmployee { get { return _real.Value.ResponsiblEmployee; } }
+        public override Employee ResponsibleEmployee { get { return _real.Value.ResponsibleEmployee; } }
         public override DateTime CreationDate { get { return _real.Value.CreationDate; } }
         public override Customer Customer { get { return _real.Value.Customer; } }
         public override IList<OrderLine> OrderLines { get { return _real.Value.OrderLines; } }

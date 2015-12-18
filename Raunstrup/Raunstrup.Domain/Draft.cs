@@ -75,7 +75,7 @@ namespace Raunstrup.Domain
 
         public virtual string Description { get; set; }
 
-        public virtual Employee ResponsiblEmployee { get; set; }
+        public virtual Employee ResponsibleEmployee { get; set; }
 
         public virtual DateTime CreationDate { get; private set; }
 
@@ -114,10 +114,5 @@ namespace Raunstrup.Domain
             OrderLines.Remove(line);
         }
         
-        //TODO: This need to be removed, is still there for compability
-        public IList<OrderLine> GetOrderLines()
-        {
-            return OrderLines;
-        }
     }
 }

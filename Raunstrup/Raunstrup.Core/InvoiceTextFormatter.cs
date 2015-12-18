@@ -16,18 +16,18 @@ namespace Raunstrup.Core
 
             int temp = 20;
 
-            if (temp < draft.OrderLines.Max(x => x.GetProduct().Name.Length + x.GetQuantity().ToString().Length))
+            if (temp < draft.OrderLines.Max(x => x.Product.Name.Length + x.Quantity.ToString().Length))
             {
-                temp = draft.OrderLines.Max(x => x.GetProduct().Name.Length + x.GetQuantity().ToString().Length);
+                temp = draft.OrderLines.Max(x => x.Product.Name.Length + x.Quantity.ToString().Length);
             }
             if (temp < draft.Customer.Name.Length)
             {
                 temp = draft.Customer.Name.Length;
             }
-            //if (temp < draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length)
-            //{
-            //    temp = draft.Customer.SteetName.Length + draft.Customer.StreetNumber.Length;
-            //}
+            if (temp < draft.Customer.StreetName.Length + draft.Customer.StreetNumber.Length)
+            {
+                temp = draft.Customer.StreetName.Length + draft.Customer.StreetNumber.Length;
+            }
             //if (temp < companyName.Length)
             //{
             //    temp = companyName.Length;
@@ -44,7 +44,7 @@ namespace Raunstrup.Core
             sb.AppendLine();
             foreach (var orderLine in draft.OrderLines)
             {
-                sb.AppendLine(string.Format("{0} x{1}", orderLine.GetProduct().Name, orderLine.GetQuantity()));
+                sb.AppendLine(string.Format("{0} x{1}", orderLine.Product.Name, orderLine.Quantity));
                 sb.AppendLine(string.Format(" {0:C}", orderLine.SubTotal));
             }
 

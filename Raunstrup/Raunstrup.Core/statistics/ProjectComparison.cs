@@ -20,7 +20,7 @@ namespace Raunstrup.Core.Statistics
         {
             //Create dictionary which maps items to the amount of them in the order
             //This is neccesary because there can be multiple orderlines with them same item
-            IList<OrderLine> orderLines = _project.Draft.GetOrderLines();
+            IList<OrderLine> orderLines = _project.Draft.OrderLines;
             Dictionary<int, int> amountsInOrderlines = new Dictionary<int, int>();
             //Creates a identity map, to map an id to a product, this is due to a weakness
             //In the dataacesse code, which create several objects repersenting the same product
@@ -29,29 +29,29 @@ namespace Raunstrup.Core.Statistics
             //Finds and maps amount of products in orderlines
             foreach (var line in orderLines)
             {
-                if (amountsInOrderlines.ContainsKey(line.GetProduct().Id))
+                if (amountsInOrderlines.ContainsKey(line.Product.Id))
                 {
-                    amountsInOrderlines[line.GetProduct().Id] += line.GetQuantity();
+                    amountsInOrderlines[line.Product.Id] += line.Quantity;
                 }
                 else
                 {
-                    ProductIdentityMap.Add(line.GetProduct().Id,line.Product);
-                    amountsInOrderlines.Add(line.GetProduct().Id, line.GetQuantity()); 
+                    ProductIdentityMap.Add(line.Product.Id,line.Product);
+                    amountsInOrderlines.Add(line.Product.Id, line.Quantity); 
                 }
             }
             //Do the same for the report lines
             var amountsInReportLines = new Dictionary<int , int>();
             foreach (var report in reports)
             {
-                foreach (var line in report.GetLines())
+                foreach (var line in report.ReportLines)
                 {
-                    if (amountsInReportLines.ContainsKey(line.GetLineItem().Id))
+                    if (amountsInReportLines.ContainsKey(line.Product.Id))
                     {
-                        amountsInReportLines[line.GetLineItem().Id] += line.GetQuantity();
+                        amountsInReportLines[line.Product.Id] += line.Quantity;
                     }
                     else
                     {
-                        amountsInReportLines.Add(line.GetLineItem().Id, line.GetQuantity());
+                        amountsInReportLines.Add(line.Product.Id, line.Quantity);
                     }
                 }
             }

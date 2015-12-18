@@ -123,7 +123,7 @@ namespace Raunstrup.Core.Controllers
         public void SetResponsibleEmployee(int id)
         {
             Employee employee = _employeeRepository.Get(id);
-            _currentDraft.ResponsiblEmployee = employee;
+            _currentDraft.ResponsibleEmployee = employee;
         }
 
         public void SetTitle(string title)

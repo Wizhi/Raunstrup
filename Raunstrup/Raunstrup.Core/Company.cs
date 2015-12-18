@@ -133,7 +133,7 @@ namespace Raunstrup.Core
                 new Draft(_customerRepository.Get(1))
                 {
                     Title = "Draft #1", 
-                    ResponsiblEmployee = _employeeRepository.Get(1),
+                    ResponsibleEmployee = _employeeRepository.Get(1),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Fyldning af Tobias ører."
@@ -141,7 +141,7 @@ namespace Raunstrup.Core
                 new Draft(_customerRepository.Get(1))
                 {
                     Title = "Draft #2", 
-                    ResponsiblEmployee = _employeeRepository.Get(2),
+                    ResponsibleEmployee = _employeeRepository.Get(2),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Lapning af Simons mund."
@@ -149,7 +149,7 @@ namespace Raunstrup.Core
                 new Draft(_customerRepository.Get(2))
                 {
                     Title = "Draft #3", 
-                    ResponsiblEmployee = _employeeRepository.Get(3),
+                    ResponsibleEmployee = _employeeRepository.Get(3),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Udsugning af Emils bussemænd."
@@ -157,7 +157,7 @@ namespace Raunstrup.Core
                 new Draft(_customerRepository.Get(2))
                 {
                     Title = "Draft #4", 
-                    ResponsiblEmployee = _employeeRepository.Get(1),
+                    ResponsibleEmployee = _employeeRepository.Get(1),
                     StartDate = DateTime.Today,
                     EndDate = DateTime.Today.AddDays(1),
                     Description = "Seppoku."
