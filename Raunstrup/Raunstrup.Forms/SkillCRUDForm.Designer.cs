@@ -68,7 +68,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this._saveSkillButton);
             this.Name = "SkillCRUDForm";
-            this.Text = "SkillCRUDForm";
+            this.Text = "Speciale";
             this.ResumeLayout(false);
             this.PerformLayout();
 

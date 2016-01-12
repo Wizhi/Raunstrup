@@ -40,10 +40,9 @@
             // 
             // _deleteSkillButton
             // 
-            this._deleteSkillButton.Location = new System.Drawing.Point(229, 260);
-            this._deleteSkillButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._deleteSkillButton.Location = new System.Drawing.Point(172, 211);
             this._deleteSkillButton.Name = "_deleteSkillButton";
-            this._deleteSkillButton.Size = new System.Drawing.Size(100, 28);
+            this._deleteSkillButton.Size = new System.Drawing.Size(75, 23);
             this._deleteSkillButton.TabIndex = 7;
             this._deleteSkillButton.Text = "Slet";
             this._deleteSkillButton.UseVisualStyleBackColor = true;
@@ -51,10 +50,9 @@
             // 
             // _editSkillButton
             // 
-            this._editSkillButton.Location = new System.Drawing.Point(121, 260);
-            this._editSkillButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._editSkillButton.Location = new System.Drawing.Point(91, 211);
             this._editSkillButton.Name = "_editSkillButton";
-            this._editSkillButton.Size = new System.Drawing.Size(100, 28);
+            this._editSkillButton.Size = new System.Drawing.Size(75, 23);
             this._editSkillButton.TabIndex = 6;
             this._editSkillButton.Text = "Rediger";
             this._editSkillButton.UseVisualStyleBackColor = true;
@@ -62,10 +60,9 @@
             // 
             // _createNewSkillButton
             // 
-            this._createNewSkillButton.Location = new System.Drawing.Point(13, 260);
-            this._createNewSkillButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._createNewSkillButton.Location = new System.Drawing.Point(10, 211);
             this._createNewSkillButton.Name = "_createNewSkillButton";
-            this._createNewSkillButton.Size = new System.Drawing.Size(100, 28);
+            this._createNewSkillButton.Size = new System.Drawing.Size(75, 23);
             this._createNewSkillButton.TabIndex = 5;
             this._createNewSkillButton.Text = "Opret ny";
             this._createNewSkillButton.UseVisualStyleBackColor = true;
@@ -76,10 +73,9 @@
             this._skillsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Skill});
             this._skillsListView.FullRowSelect = true;
-            this._skillsListView.Location = new System.Drawing.Point(13, 28);
-            this._skillsListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._skillsListView.Location = new System.Drawing.Point(10, 23);
             this._skillsListView.Name = "_skillsListView";
-            this._skillsListView.Size = new System.Drawing.Size(315, 224);
+            this._skillsListView.Size = new System.Drawing.Size(237, 183);
             this._skillsListView.TabIndex = 4;
             this._skillsListView.UseCompatibleStateImageBehavior = false;
             this._skillsListView.View = System.Windows.Forms.View.Details;
@@ -96,7 +92,8 @@
             this._helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(342, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(256, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -104,24 +101,23 @@
             // 
             this._helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this._helpToolStripMenuItem.Name = "_helpToolStripMenuItem";
-            this._helpToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this._helpToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this._helpToolStripMenuItem.Text = "Hjælp";
             this._helpToolStripMenuItem.Click += new System.EventHandler(this._helpToolStripMenuItem_Click);
             // 
             // SkillSelectForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 301);
+            this.ClientSize = new System.Drawing.Size(256, 245);
             this.Controls.Add(this._deleteSkillButton);
             this.Controls.Add(this._editSkillButton);
             this.Controls.Add(this._createNewSkillButton);
             this.Controls.Add(this._skillsListView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SkillSelectForm";
-            this.Text = "SkillSelectForm";
+            this.Text = "Specialer";
             this.Load += new System.EventHandler(this.SkillSelectForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

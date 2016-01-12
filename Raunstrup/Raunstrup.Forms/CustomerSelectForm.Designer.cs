@@ -47,10 +47,9 @@
             this.CustomerName,
             this.PostalCode});
             this._customerListView.FullRowSelect = true;
-            this._customerListView.Location = new System.Drawing.Point(13, 28);
-            this._customerListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._customerListView.Location = new System.Drawing.Point(10, 23);
             this._customerListView.Name = "_customerListView";
-            this._customerListView.Size = new System.Drawing.Size(316, 269);
+            this._customerListView.Size = new System.Drawing.Size(238, 219);
             this._customerListView.TabIndex = 0;
             this._customerListView.UseCompatibleStateImageBehavior = false;
             this._customerListView.View = System.Windows.Forms.View.Details;
@@ -70,10 +69,9 @@
             // 
             // _createNewCustomerButton
             // 
-            this._createNewCustomerButton.Location = new System.Drawing.Point(13, 306);
-            this._createNewCustomerButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._createNewCustomerButton.Location = new System.Drawing.Point(10, 249);
             this._createNewCustomerButton.Name = "_createNewCustomerButton";
-            this._createNewCustomerButton.Size = new System.Drawing.Size(100, 28);
+            this._createNewCustomerButton.Size = new System.Drawing.Size(75, 23);
             this._createNewCustomerButton.TabIndex = 1;
             this._createNewCustomerButton.Text = "Opret ny";
             this._createNewCustomerButton.UseVisualStyleBackColor = true;
@@ -81,10 +79,9 @@
             // 
             // _editCustomerButton
             // 
-            this._editCustomerButton.Location = new System.Drawing.Point(123, 306);
-            this._editCustomerButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._editCustomerButton.Location = new System.Drawing.Point(92, 249);
             this._editCustomerButton.Name = "_editCustomerButton";
-            this._editCustomerButton.Size = new System.Drawing.Size(100, 28);
+            this._editCustomerButton.Size = new System.Drawing.Size(75, 23);
             this._editCustomerButton.TabIndex = 2;
             this._editCustomerButton.Text = "Rediger";
             this._editCustomerButton.UseVisualStyleBackColor = true;
@@ -92,10 +89,9 @@
             // 
             // _deleteCustomerButton
             // 
-            this._deleteCustomerButton.Location = new System.Drawing.Point(232, 306);
-            this._deleteCustomerButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._deleteCustomerButton.Location = new System.Drawing.Point(174, 249);
             this._deleteCustomerButton.Name = "_deleteCustomerButton";
-            this._deleteCustomerButton.Size = new System.Drawing.Size(100, 28);
+            this._deleteCustomerButton.Size = new System.Drawing.Size(75, 23);
             this._deleteCustomerButton.TabIndex = 3;
             this._deleteCustomerButton.Text = "Slet";
             this._deleteCustomerButton.UseVisualStyleBackColor = true;
@@ -108,7 +104,8 @@
             this._helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(345, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(259, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -116,24 +113,23 @@
             // 
             this._helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this._helpToolStripMenuItem.Name = "_helpToolStripMenuItem";
-            this._helpToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this._helpToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this._helpToolStripMenuItem.Text = "Hjælp";
             this._helpToolStripMenuItem.Click += new System.EventHandler(this._helpToolStripMenuItem_Click);
             // 
             // CustomerSelectForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 350);
+            this.ClientSize = new System.Drawing.Size(259, 284);
             this.Controls.Add(this._deleteCustomerButton);
             this.Controls.Add(this._editCustomerButton);
             this.Controls.Add(this._createNewCustomerButton);
             this.Controls.Add(this._customerListView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "CustomerSelectForm";
-            this.Text = "CustomerSelectForm";
+            this.Text = "Kundekartotek";
             this.Load += new System.EventHandler(this.CustomerSelectForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -88,7 +88,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ComparisonListBox);
             this.Name = "ProjectComparisonForm";
-            this.Text = "ProjectComparisonForm";
+            this.Text = "Projekt sammenligning";
             this.ResumeLayout(false);
             this.PerformLayout();
 

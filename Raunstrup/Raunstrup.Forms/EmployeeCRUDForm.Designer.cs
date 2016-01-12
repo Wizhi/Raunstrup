@@ -54,10 +54,9 @@
             // _employeeNameLabel
             // 
             this._employeeNameLabel.AutoSize = true;
-            this._employeeNameLabel.Location = new System.Drawing.Point(14, 104);
-            this._employeeNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this._employeeNameLabel.Location = new System.Drawing.Point(10, 84);
             this._employeeNameLabel.Name = "_employeeNameLabel";
-            this._employeeNameLabel.Size = new System.Drawing.Size(49, 17);
+            this._employeeNameLabel.Size = new System.Drawing.Size(39, 13);
             this._employeeNameLabel.TabIndex = 0;
             this._employeeNameLabel.Text = "Navn: ";
             // 
@@ -67,19 +66,17 @@
             this._employeeComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this._employeeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._employeeComboBox.FormattingEnabled = true;
-            this._employeeComboBox.Location = new System.Drawing.Point(75, 33);
-            this._employeeComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._employeeComboBox.Location = new System.Drawing.Point(56, 27);
             this._employeeComboBox.Name = "_employeeComboBox";
-            this._employeeComboBox.Size = new System.Drawing.Size(177, 24);
+            this._employeeComboBox.Size = new System.Drawing.Size(134, 21);
             this._employeeComboBox.TabIndex = 1;
             this._employeeComboBox.SelectedIndexChanged += new System.EventHandler(this._employeeComboBox_SelectedIndexChanged);
             // 
             // _employeeNameTextBox
             // 
-            this._employeeNameTextBox.Location = new System.Drawing.Point(75, 101);
-            this._employeeNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._employeeNameTextBox.Location = new System.Drawing.Point(56, 82);
             this._employeeNameTextBox.Name = "_employeeNameTextBox";
-            this._employeeNameTextBox.Size = new System.Drawing.Size(177, 22);
+            this._employeeNameTextBox.Size = new System.Drawing.Size(134, 20);
             this._employeeNameTextBox.TabIndex = 2;
             // 
             // _skillOLV
@@ -91,10 +88,9 @@
             this._skillOLV.Cursor = System.Windows.Forms.Cursors.Default;
             this._skillOLV.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this._skillOLV.HighlightForegroundColor = System.Drawing.Color.Empty;
-            this._skillOLV.Location = new System.Drawing.Point(586, 32);
-            this._skillOLV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._skillOLV.Location = new System.Drawing.Point(440, 26);
             this._skillOLV.Name = "_skillOLV";
-            this._skillOLV.Size = new System.Drawing.Size(233, 158);
+            this._skillOLV.Size = new System.Drawing.Size(176, 129);
             this._skillOLV.TabIndex = 12;
             this._skillOLV.UseCompatibleStateImageBehavior = false;
             this._skillOLV.View = System.Windows.Forms.View.Details;
@@ -108,10 +104,9 @@
             // 
             // _addEmployeeToSkillLVButton
             // 
-            this._addEmployeeToSkillLVButton.Location = new System.Drawing.Point(492, 66);
-            this._addEmployeeToSkillLVButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._addEmployeeToSkillLVButton.Location = new System.Drawing.Point(369, 54);
             this._addEmployeeToSkillLVButton.Name = "_addEmployeeToSkillLVButton";
-            this._addEmployeeToSkillLVButton.Size = new System.Drawing.Size(85, 28);
+            this._addEmployeeToSkillLVButton.Size = new System.Drawing.Size(64, 23);
             this._addEmployeeToSkillLVButton.TabIndex = 13;
             this._addEmployeeToSkillLVButton.Text = "<-- Tilføj";
             this._addEmployeeToSkillLVButton.UseVisualStyleBackColor = true;
@@ -119,10 +114,9 @@
             // 
             // _removeFromEmployeeSkillLV
             // 
-            this._removeFromEmployeeSkillLV.Location = new System.Drawing.Point(492, 102);
-            this._removeFromEmployeeSkillLV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._removeFromEmployeeSkillLV.Location = new System.Drawing.Point(369, 83);
             this._removeFromEmployeeSkillLV.Name = "_removeFromEmployeeSkillLV";
-            this._removeFromEmployeeSkillLV.Size = new System.Drawing.Size(85, 28);
+            this._removeFromEmployeeSkillLV.Size = new System.Drawing.Size(64, 23);
             this._removeFromEmployeeSkillLV.TabIndex = 14;
             this._removeFromEmployeeSkillLV.Text = "Fjern";
             this._removeFromEmployeeSkillLV.UseVisualStyleBackColor = true;
@@ -131,19 +125,17 @@
             // _customerLabel
             // 
             this._customerLabel.AutoSize = true;
-            this._customerLabel.Location = new System.Drawing.Point(14, 35);
-            this._customerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this._customerLabel.Location = new System.Drawing.Point(10, 28);
             this._customerLabel.Name = "_customerLabel";
-            this._customerLabel.Size = new System.Drawing.Size(52, 17);
+            this._customerLabel.Size = new System.Drawing.Size(40, 13);
             this._customerLabel.TabIndex = 15;
             this._customerLabel.Text = "Ansat: ";
             // 
             // _saveEmployeeButton
             // 
-            this._saveEmployeeButton.Location = new System.Drawing.Point(59, 193);
-            this._saveEmployeeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._saveEmployeeButton.Location = new System.Drawing.Point(44, 157);
             this._saveEmployeeButton.Name = "_saveEmployeeButton";
-            this._saveEmployeeButton.Size = new System.Drawing.Size(93, 28);
+            this._saveEmployeeButton.Size = new System.Drawing.Size(70, 23);
             this._saveEmployeeButton.TabIndex = 16;
             this._saveEmployeeButton.Text = "Gem ansat";
             this._saveEmployeeButton.UseVisualStyleBackColor = true;
@@ -154,11 +146,10 @@
             this._employeeSkillsLV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.EmployeeSkills});
             this._employeeSkillsLV.FullRowSelect = true;
-            this._employeeSkillsLV.Location = new System.Drawing.Point(262, 32);
-            this._employeeSkillsLV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._employeeSkillsLV.Location = new System.Drawing.Point(196, 26);
             this._employeeSkillsLV.MultiSelect = false;
             this._employeeSkillsLV.Name = "_employeeSkillsLV";
-            this._employeeSkillsLV.Size = new System.Drawing.Size(221, 189);
+            this._employeeSkillsLV.Size = new System.Drawing.Size(167, 154);
             this._employeeSkillsLV.TabIndex = 20;
             this._employeeSkillsLV.UseCompatibleStateImageBehavior = false;
             this._employeeSkillsLV.View = System.Windows.Forms.View.Details;
@@ -171,30 +162,27 @@
             // 
             // _filterTextBox
             // 
-            this._filterTextBox.Location = new System.Drawing.Point(642, 198);
-            this._filterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._filterTextBox.Location = new System.Drawing.Point(482, 161);
             this._filterTextBox.Name = "_filterTextBox";
-            this._filterTextBox.Size = new System.Drawing.Size(177, 22);
+            this._filterTextBox.Size = new System.Drawing.Size(134, 20);
             this._filterTextBox.TabIndex = 29;
             this._filterTextBox.TextChanged += new System.EventHandler(this._filterTextBox_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(591, 200);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(443, 162);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 17);
+            this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 28;
             this.label4.Text = "Søg: ";
             // 
             // _createNewEmployeeRadioButton
             // 
             this._createNewEmployeeRadioButton.AutoSize = true;
-            this._createNewEmployeeRadioButton.Location = new System.Drawing.Point(18, 66);
-            this._createNewEmployeeRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._createNewEmployeeRadioButton.Location = new System.Drawing.Point(14, 54);
             this._createNewEmployeeRadioButton.Name = "_createNewEmployeeRadioButton";
-            this._createNewEmployeeRadioButton.Size = new System.Drawing.Size(84, 21);
+            this._createNewEmployeeRadioButton.Size = new System.Drawing.Size(65, 17);
             this._createNewEmployeeRadioButton.TabIndex = 30;
             this._createNewEmployeeRadioButton.TabStop = true;
             this._createNewEmployeeRadioButton.Text = "Opret ny";
@@ -204,10 +192,9 @@
             // _editEmployeeRadioButton
             // 
             this._editEmployeeRadioButton.AutoSize = true;
-            this._editEmployeeRadioButton.Location = new System.Drawing.Point(146, 66);
-            this._editEmployeeRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._editEmployeeRadioButton.Location = new System.Drawing.Point(110, 54);
             this._editEmployeeRadioButton.Name = "_editEmployeeRadioButton";
-            this._editEmployeeRadioButton.Size = new System.Drawing.Size(79, 21);
+            this._editEmployeeRadioButton.Size = new System.Drawing.Size(62, 17);
             this._editEmployeeRadioButton.TabIndex = 31;
             this._editEmployeeRadioButton.TabStop = true;
             this._editEmployeeRadioButton.Text = "Rediger";
@@ -216,10 +203,9 @@
             // 
             // _deleteEmployeeButton
             // 
-            this._deleteEmployeeButton.Location = new System.Drawing.Point(160, 193);
-            this._deleteEmployeeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._deleteEmployeeButton.Location = new System.Drawing.Point(120, 157);
             this._deleteEmployeeButton.Name = "_deleteEmployeeButton";
-            this._deleteEmployeeButton.Size = new System.Drawing.Size(93, 28);
+            this._deleteEmployeeButton.Size = new System.Drawing.Size(70, 23);
             this._deleteEmployeeButton.TabIndex = 32;
             this._deleteEmployeeButton.Text = "Slet";
             this._deleteEmployeeButton.UseVisualStyleBackColor = true;
@@ -227,10 +213,9 @@
             // 
             // _editSkillButton
             // 
-            this._editSkillButton.Location = new System.Drawing.Point(492, 138);
-            this._editSkillButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._editSkillButton.Location = new System.Drawing.Point(369, 112);
             this._editSkillButton.Name = "_editSkillButton";
-            this._editSkillButton.Size = new System.Drawing.Size(85, 28);
+            this._editSkillButton.Size = new System.Drawing.Size(64, 23);
             this._editSkillButton.TabIndex = 33;
             this._editSkillButton.Text = "Rediger";
             this._editSkillButton.UseVisualStyleBackColor = true;
@@ -243,7 +228,8 @@
             this._helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(832, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(624, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -251,15 +237,15 @@
             // 
             this._helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this._helpToolStripMenuItem.Name = "_helpToolStripMenuItem";
-            this._helpToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this._helpToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this._helpToolStripMenuItem.Text = "Hjælp";
             this._helpToolStripMenuItem.Click += new System.EventHandler(this._helpToolStripMenuItem_Click);
             // 
             // EmployeeCRUDForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 236);
+            this.ClientSize = new System.Drawing.Size(624, 192);
             this.Controls.Add(this._editSkillButton);
             this.Controls.Add(this._deleteEmployeeButton);
             this.Controls.Add(this._editEmployeeRadioButton);
@@ -277,9 +263,8 @@
             this.Controls.Add(this._employeeNameLabel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "EmployeeCRUDForm";
-            this.Text = "EmployeeCRUDForm";
+            this.Text = "Ansatte";
             this.Load += new System.EventHandler(this.EmployeeCRUDForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this._skillOLV)).EndInit();
             this.menuStrip1.ResumeLayout(false);

@@ -137,7 +137,7 @@
             this.Controls.Add(this._customerNameTextBox);
             this.Controls.Add(this.label1);
             this.Name = "CustomerCRUDForm";
-            this.Text = "CustomerCRUDForm";
+            this.Text = "Kunde";
             this.ResumeLayout(false);
             this.PerformLayout();
 

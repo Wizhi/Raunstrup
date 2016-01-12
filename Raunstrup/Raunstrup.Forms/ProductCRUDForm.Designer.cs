@@ -154,7 +154,7 @@
             this.Controls.Add(this._productNameTextBox);
             this.Controls.Add(this.label1);
             this.Name = "ProductCRUDForm";
-            this.Text = "ProductEditForm";
+            this.Text = "Produkt";
             ((System.ComponentModel.ISupportInitialize)(this._productPriceNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._costPriceNumericUpDown)).EndInit();
             this.ResumeLayout(false);
