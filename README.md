@@ -2,6 +2,17 @@
 
 Repository exists for archival purposes only.
 
+For this project, we decided to write our own data access layer, instead of using an ORM, for which I was responsible.
+
+* [Raunstrup.Data](Raunstrup/Raunstrup.Data/) contains the repository interfaces.
+* [Raunstrup.Data.InMemory](Raunstrup/Raunstrup.Data.InMemory/) contains a simplistic in-memory implementation for testing/prototyping.
+* [Raunstrup.Data.MsSql](Raunstrup/Raunstrup.Data.MsSql/) contains an implementation for MSSQL Server.
+
+Regrets:
+
+* Using a generic repository pattern - I've come to dislike this pattern a lot.
+* Explicitly defined datamappers and proxy/ghost objects - these should have been made in a smarter more generic way.
+
 ---
 
 ```
