@@ -1,4 +1,4 @@
-**Note:** This is an old school project done in collaboration with other students. None of use really knew git back then, not were we particularly..disciplined, in its usage. Don't judge me too hard.
+**Note:** This is an old school project done in collaboration with other students. None of use really knew git back then, nor were we particularly..disciplined, in its usage. Don't judge me too hard.
 
 Repository exists for archival purposes only.
 
